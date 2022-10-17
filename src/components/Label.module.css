@@ -1,0 +1,10 @@
+.label {
+  position: absolute;
+  right: -30%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  background-color: #44b3fd;
+  -webkit-clip-path: polygon(25% 0%, 100% 0, 100% 100%, 25% 100%, 0% 50%);
+  clip-path: polygon(25% 0%, 100% 0, 100% 100%, 25% 100%, 0% 50%);
+}

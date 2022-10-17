@@ -1,0 +1,77 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 25%;
+  bottom: 25%;
+  left: 35%;
+  right: 35%;
+  width: fit-content;
+  background-color: #f8f9fd;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.content {
+  padding: 5rem;
+  /* height: 100%;
+  width: 100%; */
+}
+
+button {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 1.5rem;
+  text-transform: uppercase;
+  width: auto;
+  background-color: #85caf9;
+  transition: all 0.5s;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+button:hover {
+  background-color: #85caf9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px #6ca3c7;
+}
+
+button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 4px #6ca3c7;
+}
+/* @media (min-width: 768px) {
+  .modal {
+    width: 40rem;
+    left: calc(50% - 20rem);
+  }
+} */
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

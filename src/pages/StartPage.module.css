@@ -1,0 +1,266 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  padding: 5rem;
+}
+
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+  width: fit-content;
+  border-top-left-radius: 4rem;
+  border-bottom-left-radius: 4rem;
+  box-shadow: 2px 0 8px #aeb5cc;
+  transition: all 1s;
+  z-index: 10;
+}
+
+.sidebarDropdown {
+  position: relative;
+  padding: 3rem 3rem;
+  width: max-content;
+  background-color: #c7e7fc;
+  animation: slide-right 300ms ease-out forwards;
+  box-shadow: 2px 0 8px #aeb5cc;
+  /* overflow-y: scroll;
+  overflow-x: none; */
+}
+
+.sidebarDropdownHide {
+  animation: slide-left 300ms ease-out forwards;
+  width: 10%;
+}
+
+.sidebarDropdownHide ul {
+  visibility: hidden;
+  display: none;
+  opacity: 0;
+}
+
+.sidebarDropdown ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.hidden {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  width: 80%;
+  gap: 2rem;
+  background-color: #fcfcfc;
+  padding: 5rem;
+  border-top-right-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+  box-shadow: 2px 0 8px #aeb5cc;
+  overflow-x: hidden;
+}
+
+.user {
+  width: 100%;
+  padding: 3rem;
+  position: relative;
+  display: flex;
+}
+
+.icon {
+  height: 150%;
+}
+
+.accordionContainer {
+  position: relative;
+  border-top: 1px solid #c7e7fc;
+  padding: 2rem 1rem 2rem 2rem;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 1.6rem;
+  color: #fff;
+  text-transform: uppercase;
+  overflow-y: scroll;
+}
+
+.accordionItem {
+  padding: 1.5rem;
+  border-radius: 5px;
+  background-color: #85caf9;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  transition: all 0.4s;
+}
+
+.accordionItem:hover {
+  background-color: #74b2db;
+}
+
+.accordionItem:active {
+  background-color: #639bc0;
+}
+
+.itemDescription {
+  color: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.itemList {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tasks,
+.messages {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.tasks {
+  height: max-content;
+}
+
+.messages {
+  min-height: 35%;
+  height: auto;
+}
+
+.name {
+  width: 100%;
+  text-align: left;
+  font-size: 2rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #85caf9;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+.categoriesTask,
+.categoriesMessage {
+  margin-top: 1rem;
+  display: grid;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.categoriesTask {
+  grid-template-columns: repeat(5, 1fr);
+}
+.categoriesMessage {
+  grid-template-columns: repeat(3, 1fr) 3fr;
+  /* grid-template-columns: 1fr 3fr; */
+}
+
+.item {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.6rem;
+  width: max-content;
+  background-color: #85caf9;
+  color: #fff;
+  text-decoration: none;
+  list-style: none;
+  padding: 1rem;
+  border-radius: 5px;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #74b2db;
+}
+
+.item:active {
+  background-color: #639bc0;
+}
+
+.action {
+  background-color: #44b3fd;
+}
+
+.label {
+  position: absolute;
+  padding: 1rem;
+  background-color: #44b3fd;
+}
+
+.arrowClose {
+  position: absolute;
+  background-color: #c7e7fc;
+  box-sizing: border-box;
+  border-radius: 50%;
+  padding: 10px;
+  top: 50%;
+  right: -8%;
+}
+
+.mLeft {
+  margin-left: 3rem;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #85caf9;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #85caf9;
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    margin-left: -8%;
+    /* transform: translateX(-100%); */
+  }
+  to {
+    opacity: 1;
+    margin-left: 0;
+    /* transform: translateX(0); */
+  }
+}
+
+@keyframes slide-left {
+  from {
+    margin-left: 0;
+    /* transform: translateX(0); */
+  }
+  to {
+    margin-left: -8%;
+    /* transform: translateX(-85%); */
+  }
+}

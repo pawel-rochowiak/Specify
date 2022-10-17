@@ -1,0 +1,18 @@
+/* .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 5rem;
+  
+} */
+
+.card {
+  padding: 10rem 10rem;
+  /* width: 50vw;
+  height: 50vh; */
+  box-shadow: 0 2px 8px #aeb5cc;
+  border-radius: 5rem;
+  background-color: #f8f9fd;
+  box-sizing: border-box;
+}

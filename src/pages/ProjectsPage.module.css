@@ -1,0 +1,19 @@
+.mainContent {
+  background-color: #fcfcfc;
+  width: auto;
+  padding: 5rem;
+  border-top-right-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+  box-shadow: 2px 0 8px #aeb5cc;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.col_7 {
+  grid-template-columns: 1fr repeat(2, 2fr) 1fr 3fr repeat(2, 1fr);
+}

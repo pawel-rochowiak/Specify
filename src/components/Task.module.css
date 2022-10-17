@@ -1,0 +1,35 @@
+.task {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border: 1px solid #c7e7fc;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.task :not(div:first-of-type) {
+  border-left: 1px solid #c7e7fc;
+}
+
+.date,
+.sender,
+.message,
+.projectName,
+.projectTask,
+.projectTeam,
+.projectDate,
+.projectStatus {
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.overdue {
+  border: 2px solid rgb(255, 62, 62) !important;
+  font-weight: 700;
+}

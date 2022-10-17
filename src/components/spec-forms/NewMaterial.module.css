@@ -1,0 +1,61 @@
+tbody td {
+  border-left: none;
+  /* width: calc(100% / 6); */
+  padding: 1rem;
+}
+
+input {
+  width: 100%;
+  border: 2px solid #c7e7fc;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  color: #0671b8;
+}
+
+input:focus {
+  border: 2px solid #85caf9;
+  box-shadow: none;
+}
+
+.label_row {
+  width: 100%;
+  font-size: 1rem;
+  text-align: left;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.label_row th {
+  padding-left: 1rem;
+}
+
+.header_labels td {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: left;
+  color: #888;
+  border: none;
+}
+
+span {
+  display: block;
+}
+
+.border_bt {
+  border-bottom: 1px solid #888;
+}
+
+.code {
+  width: calc(100% / 10);
+}
+.item {
+  width: calc(100% / 10);
+}
+.date {
+  width: min-content;
+}
+.picture {
+  width: calc(100% / 5);
+}

@@ -1,0 +1,21 @@
+.footer {
+  position: absolute;
+  display: flex;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: center;
+}
+
+.footer span:not(:first-child) {
+  margin-left: 0.5rem;
+}
+
+a {
+  margin-left: 0.5rem;
+  text-decoration: none;
+  color: #3c6e8f;
+}

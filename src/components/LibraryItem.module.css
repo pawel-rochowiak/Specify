@@ -1,0 +1,28 @@
+.item {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border: 1px solid #c7e7fc;
+  display: grid;
+  grid-template-columns: 1fr repeat(2, 2fr) 1fr 3fr repeat(2, 1fr);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.item :not(div:first-of-type) {
+  border-left: 1px solid #c7e7fc;
+}
+
+.materialNumber,
+.materialName,
+.materialSupplier,
+.materialCertificate,
+.materialInfo,
+.materialImage,
+.materialLink {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
