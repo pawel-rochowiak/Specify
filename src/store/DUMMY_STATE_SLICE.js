@@ -122,7 +122,7 @@ const DUMMY_STATE_SLICE = {
   suppliers: [
     {
       name: "Preciosa",
-      specialisation: "lighting",
+      field: "lighting",
       adress: {
         country: "Czech Republic",
         city: "n/a",
@@ -139,7 +139,7 @@ const DUMMY_STATE_SLICE = {
     },
     {
       name: "Marine Interior",
-      specialisation: "lighting",
+      field: "lighting",
       adress: {
         country: "Czech Republic",
         city: "n/a",
@@ -157,7 +157,7 @@ const DUMMY_STATE_SLICE = {
     {
       name: "TSI",
       path: "s3",
-      specialisation: "lighting",
+      field: "lighting",
       adress: {
         country: "Czech Republic",
         city: "n/a",

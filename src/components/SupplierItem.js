@@ -26,11 +26,11 @@ const SupplierItem = (props) => {
       <div className={classes.supplierContact}>
         <div>
           <span className={classes.detailInfo}>Name:</span>
-          {props.contact.name}
+          {props.contact.fullName}
         </div>
         <div>
           <span className={classes.detailInfo}>Mail:</span>
-          {props.contact.mail}
+          {props.contact.email}
         </div>
         <div>
           <span className={classes.detailInfo}>Tel.:</span>

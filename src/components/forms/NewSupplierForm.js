@@ -69,13 +69,13 @@ const NewProjectForm = (props) => {
         street: enteredStreet,
         number: enteredNumber,
       },
-      person: {
+      contactPerson: {
         fullName: enteredFullName,
         email: enteredEmail,
-        telephoneNumber: enteredTelephoneNumber,
+        tel: enteredTelephoneNumber,
       },
-      path: `p${SLICE.suppliers.length + 1}`,
       matCollections: [],
+      path: `p${SLICE.suppliers.length + 1}`,
     });
 
     setEnteredName("");
