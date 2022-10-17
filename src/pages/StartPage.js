@@ -7,7 +7,7 @@ import HomeIcon from "../components/icons/HomeIcon";
 import UserIcon from "../components/icons/UserIcon";
 //FORMS//
 import Accordion from "../components/Accordion";
-import NewAreaForm from "../components/forms/NewAreaForm";
+import NewSupplierForm from "../components/forms/NewSupplierForm";
 import NewMaterialForm from "../components/forms/NewMaterialForm";
 import NewProjectForm from "../components/forms/NewProjectForm";
 import NewTaskForm from "../components/forms/NewTaskForm";
@@ -134,7 +134,7 @@ const StartPage = (props) => {
   }
   if (currTarget === "suppliers") {
     TargetForm = (
-      <NewAreaForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
   if (currTarget === "library") {
