@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
@@ -103,10 +103,9 @@ const NewMaterialForm = (props) => {
         </div>
         <div className={`${classes.formGroup} ${classes.custom_select}`}>
           <select ref={enteredCat}>
-            <option>Wood</option>
-            <option>Tiles</option>
-            <option>Curtain</option>
-            <option>Upholstery</option>
+            {SLICE.library.map((el) => {
+              return <option>{el.name}</option>;
+            })}
           </select>
           <p className={classes.description}>Category</p>
         </div>

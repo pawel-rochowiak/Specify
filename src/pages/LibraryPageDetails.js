@@ -1,5 +1,4 @@
 import classes from "./ProjectPageDetails.module.css";
-import ProjectDetailsItem from "../components/ProjectDetailsItem";
 import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import Note from "../components/Note";
@@ -7,8 +6,6 @@ import { Fragment } from "react";
 import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const LibraryPageDetails = (props) => {
-  console.log(props.path);
-
   function findCategory(el) {
     return el.path === props.path;
   }
@@ -29,22 +26,6 @@ const LibraryPageDetails = (props) => {
             <div>Status</div>
           </div>
           <div className={classes.taskList}>
-            {/* <ProjectDetailsItem
-              number="1"
-              name="International Restaurants"
-              deck="6-9"
-              fz="1-2"
-              team="Marielle, Linda"
-              status="50%"
-            />
-            <ProjectDetailsItem
-              number="2"
-              name="Lido Pool"
-              deck="17-18"
-              fz="3-4"
-              team="Marielle, Ilonka"
-              status="70%"
-            /> */}
             {materialArrayByCategory.map((el, index) => (
               <LibraryItem
                 key={index + 1}
