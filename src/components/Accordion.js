@@ -23,22 +23,6 @@ const Accordion = (props) => {
     props.accordionActivation(target);
 
     props.stateTransfer(SLICE[target]);
-
-    // const selectedProject = SLICE.projects.find(
-    //   (el) => el.name === "Princess Cruises"
-    // );
-
-    // console.log(selectedProject);
-
-    // selectedProject.area.push({
-    //   name: "Toilet",
-    //   deck: "9",
-    //   fz: "3-4",
-    //   team: "Adam,Gadam",
-    //   status: "0%",
-    // });
-
-    // console.log(SLICE);
   };
 
   const componentNames = {

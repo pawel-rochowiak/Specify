@@ -1,10 +1,4 @@
-// NAME
-// SUPPLIER
-// CERTIFICATES
-// DESCRIPTION
-// IMAGE
-
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
@@ -12,16 +6,22 @@ import SLICE from "../../store/DUMMY_STATE_SLICE";
 const NewMaterialForm = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredSupplier, setEnteredSupplier] = useState("");
+  const [enteredCollection, setEnteredCollection] = useState("");
   const [enteredCertificates, setEnteredCertificates] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
   const [enteredImage, setEnteredImage] = useState("");
   const [enteredLink, setEnteredLink] = useState("");
+
+  const enteredCat = useRef();
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
   const supplierInputChangeHandler = (event) => {
     setEnteredSupplier(event.target.value);
+  };
+  const collectionInputChangeHandler = (event) => {
+    setEnteredCollection(event.target.value);
   };
   const certificatesInputChangeHandler = (event) => {
     setEnteredCertificates(event.target.value);
@@ -44,6 +44,7 @@ const NewMaterialForm = (props) => {
       enteredSupplier.trim() === "" ||
       enteredCertificates.trim() === "" ||
       enteredDescription.trim() === "" ||
+      enteredCollection.trim() === "" ||
       enteredImage.trim() === "" ||
       enteredLink.trim() === ""
     ) {
@@ -51,17 +52,22 @@ const NewMaterialForm = (props) => {
       return;
     }
 
-    // SLICE.tasks.push({
-    //   name: `${enteredTaskName} - ${enteredName}`,
-    //   path: `t${SLICE.tasks.length + 1}`,
-    //   dk: "5", //deck should be taken from the AREA info
-    //   fireZone: "1", //FZ should be taken from the AREA info
-    //   project: enteredName,
-    //   specification: "Carpet", //to be choosen from dropdown
-    //   team: enteredTeam,
-    //   date: enteredDate,
-    //   status: "0%", //initial as 0%
-    // });
+    function findCategory(el) {
+      return el.name === enteredCat.current.value;
+    }
+
+    SLICE.library.find(findCategory).materials.push({
+      name: enteredName,
+      supplier: enteredSupplier,
+      collection: enteredCollection,
+      certificates: enteredCertificates,
+      info: enteredDescription,
+      image: enteredImage,
+      link: enteredLink,
+      path: `cat${SLICE.library.length + 1}`,
+    });
+
+    console.log(SLICE);
 
     setEnteredName("");
     setEnteredSupplier("");
@@ -85,6 +91,24 @@ const NewMaterialForm = (props) => {
             value={enteredName}
           ></input>
           <p className={classes.description}>Material name</p>
+        </div>
+        <div className={classes.formGroup}>
+          <input
+            type="text"
+            id="collection"
+            onChange={collectionInputChangeHandler}
+            value={enteredCollection}
+          ></input>
+          <p className={classes.description}>Collection</p>
+        </div>
+        <div className={`${classes.formGroup} ${classes.custom_select}`}>
+          <select ref={enteredCat}>
+            <option>Wood</option>
+            <option>Tiles</option>
+            <option>Curtain</option>
+            <option>Upholstery</option>
+          </select>
+          <p className={classes.description}>Type (f.ex.: New biuld, refit)</p>
         </div>
         <div className={classes.formGroup}>
           <input
