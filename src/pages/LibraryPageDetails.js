@@ -1,11 +1,20 @@
 import classes from "./ProjectPageDetails.module.css";
 import ProjectDetailsItem from "../components/ProjectDetailsItem";
-import DetailItem from "../components/DetailsItem";
+import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import Note from "../components/Note";
 import { Fragment } from "react";
+import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const LibraryPageDetails = (props) => {
+  console.log(props.path);
+
+  function findCategory(el) {
+    return el.path === props.path;
+  }
+
+  const materialArrayByCategory = SLICE.library.find(findCategory).materials;
+
   return (
     <Fragment>
       <div className={classes.mainContent}>
@@ -20,7 +29,7 @@ const LibraryPageDetails = (props) => {
             <div>Status</div>
           </div>
           <div className={classes.taskList}>
-            <ProjectDetailsItem
+            {/* <ProjectDetailsItem
               number="1"
               name="International Restaurants"
               deck="6-9"
@@ -35,7 +44,20 @@ const LibraryPageDetails = (props) => {
               fz="3-4"
               team="Marielle, Ilonka"
               status="70%"
-            />
+            /> */}
+            {materialArrayByCategory.map((el, index) => (
+              <LibraryItem
+                key={index + 1}
+                number={index + 1}
+                name={el.name}
+                collection={el.collection}
+                supplier={el.supplier}
+                certificate={el.certificates}
+                info={el.info}
+                imageUrl={el.imageUrl}
+                link={el.link}
+              />
+            ))}
             <div
               className={`${classes.item} ${classes.action}`}
               onClick={props.createItem}

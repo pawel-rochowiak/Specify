@@ -22,8 +22,6 @@ const TaskPageDetails = (props) => {
     setMaterialArr(materialsArr.slice(0, -1));
   };
 
-  // console.log(materialsArr);
-
   return (
     <Fragment>
       <div className={classes.mainContent}>

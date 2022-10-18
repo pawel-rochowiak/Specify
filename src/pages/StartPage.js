@@ -89,6 +89,7 @@ const StartPage = (props) => {
           deck={dk}
           project={project}
           createItem={newItemHandler}
+          path={path}
         />
       ) : (
         <DynamicComponentDetails name={name} createItem={newItemHandler} />
