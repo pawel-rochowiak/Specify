@@ -108,7 +108,7 @@ const NewMaterialForm = (props) => {
             <option>Curtain</option>
             <option>Upholstery</option>
           </select>
-          <p className={classes.description}>Type (f.ex.: New biuld, refit)</p>
+          <p className={classes.description}>Category</p>
         </div>
         <div className={classes.formGroup}>
           <input
