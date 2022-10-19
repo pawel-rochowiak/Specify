@@ -1,39 +1,70 @@
 import classes from "./ProjectPageDetails.module.css";
-import ProjectDetailsItem from "../components/ProjectDetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
+import SLICE from "../store/DUMMY_STATE_SLICE";
 import { Fragment } from "react";
 
 const SuppliersPageDetails = (props) => {
+  function findSupplier(el) {
+    return el.name === props.name;
+  }
+
+  const correctSupplier = SLICE.suppliers.find(findSupplier);
+
+  console.log(correctSupplier);
   return (
     <Fragment>
       <div className={classes.mainContent}>
         <div className={classes.tasks}>
           <div className={classes.name}>{props.name}</div>
-          <div className={classes.categoriesTask}>
-            <div>No.</div>
-            <div>Name</div>
-            <div>Deck</div>
-            <div>Fire Zone</div>
-            <div>Team</div>
-            <div>Status</div>
-          </div>
           <div className={classes.taskList}>
-            <ProjectDetailsItem
-              number="1"
-              name="International Restaurants"
-              deck="6-9"
-              fz="1-2"
-              team="Marielle, Linda"
-              status="50%"
-            />
-            <ProjectDetailsItem
-              number="2"
-              name="Lido Pool"
-              deck="17-18"
-              fz="3-4"
-              team="Marielle, Ilonka"
-              status="70%"
-            />
+            <div className={classes.details}>
+              <h3>Supplier details</h3>
+              <div className={classes.details_title}>
+                <div>
+                  <h4>Adress</h4>
+                </div>
+                <div>
+                  <h4>Contact person</h4>
+                </div>
+              </div>
+              <div className={classes.detail_container}>
+                <div className={classes.detail_data}>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>Country:</span>
+                    {correctSupplier.adress.country}
+                  </div>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>City:</span>
+                    {correctSupplier.adress.city}
+                  </div>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>Street:</span>
+                    {correctSupplier.adress.street}
+                  </div>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>Number:</span>
+                    {correctSupplier.adress.number}
+                  </div>
+                </div>
+                <div className={classes.detail_data}>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>
+                      Contact person:
+                    </span>
+                    {correctSupplier.contactPerson.fullName}
+                  </div>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>Email:</span>
+                    {correctSupplier.contactPerson.email}
+                  </div>
+                  <div className={classes.detail_info}>
+                    <span className={classes.detail_label}>Tel:</span>
+                    {correctSupplier.contactPerson.tel}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div
               className={`${classes.item} ${classes.action}`}
               onClick={props.createItem}

@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
@@ -66,8 +66,6 @@ const NewMaterialForm = (props) => {
       link: enteredLink,
       path: `cat${SLICE.library.length + 1}`,
     });
-
-    console.log(SLICE);
 
     setEnteredName("");
     setEnteredSupplier("");

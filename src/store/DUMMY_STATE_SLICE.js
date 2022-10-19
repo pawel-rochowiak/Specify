@@ -139,9 +139,9 @@ const DUMMY_STATE_SLICE = {
     },
     {
       name: "Marine Interior",
-      field: "lighting",
+      field: "manufacturer",
       adress: {
-        country: "Czech Republic",
+        country: "Italy",
         city: "n/a",
         street: "n/a",
         number: "n/a",
