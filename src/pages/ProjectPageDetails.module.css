@@ -242,6 +242,26 @@ span {
   justify-content: center;
 }
 
+.material_collections h3 {
+  text-transform: uppercase;
+}
+
+.collection {
+  display: flex;
+  flex-direction: column;
+}
+
+.info_message {
+  margin: 2rem 0;
+  font-size: 2rem;
+}
+
+.highlight {
+  color: #0671b8;
+  font-weight: 500;
+  display: inline-block;
+}
+
 /* Utility classes */
 
 .mLeft {

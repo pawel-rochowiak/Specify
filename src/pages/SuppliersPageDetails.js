@@ -1,5 +1,6 @@
 import classes from "./ProjectPageDetails.module.css";
 import PlusIcon from "../components/icons/PlusIcon";
+import LibraryItem from "../components/LibraryItem";
 import SLICE from "../store/DUMMY_STATE_SLICE";
 import { Fragment } from "react";
 
@@ -10,7 +11,19 @@ const SuppliersPageDetails = (props) => {
 
   const correctSupplier = SLICE.suppliers.find(findSupplier);
 
-  console.log(correctSupplier);
+  const supplierCollections = correctSupplier.matCollections;
+
+  const noCollectionsInfo =
+    supplierCollections.length === 0 ? (
+      <div className={classes.info_message}>
+        No collection has been added. Please press{" "}
+        <span className={classes.highlight}>"Create item"</span> button to
+        create new collection
+      </div>
+    ) : (
+      ""
+    );
+
   return (
     <Fragment>
       <div className={classes.mainContent}>
@@ -64,7 +77,32 @@ const SuppliersPageDetails = (props) => {
                 </div>
               </div>
             </div>
-
+          </div>
+          <div className={classes.material_collections}>
+            <h3>material collections</h3>
+            <div className={classes.collections_container}>
+              {noCollectionsInfo}
+              {supplierCollections.map((el) => (
+                <Fragment>
+                  <div className={classes.collection}>
+                    <h4>{el.name}</h4>
+                  </div>
+                  {el.materials.map((el, index) => (
+                    <LibraryItem
+                      key={index + 1}
+                      number={index + 1}
+                      name={el.name}
+                      collection={el.collection}
+                      supplier={el.supplier}
+                      certificate={el.certificates}
+                      info={el.info}
+                      imageUrl={el.imageUrl}
+                      link={el.link}
+                    />
+                  ))}
+                </Fragment>
+              ))}
+            </div>
             <div
               className={`${classes.item} ${classes.action}`}
               onClick={props.createItem}

@@ -134,7 +134,11 @@ const DUMMY_STATE_SLICE = {
         email: "pavel.koziel@pepiczek.cz",
         tel: "0700-88-07-88",
       },
-      matCollections: [],
+      matCollections: [
+        { name: "Col1", materials: ["mat1", "mat2", "mat3"] },
+        { name: "Col2", materials: ["mat4", "mat5", "ma6"] },
+        { name: "Col3", materials: ["mat7", "mat8", "mat9"] },
+      ],
       path: "s1",
     },
     {
