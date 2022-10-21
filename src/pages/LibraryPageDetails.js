@@ -1,4 +1,5 @@
 import classes from "./ProjectPageDetails.module.css";
+import classesLibrary from "./LibraryPage.module.css";
 import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import Note from "../components/Note";
@@ -17,13 +18,14 @@ const LibraryPageDetails = (props) => {
       <div className={classes.mainContent}>
         <div className={classes.tasks}>
           <div className={classes.name}>{props.name}</div>
-          <div className={classes.categoriesTask}>
+          <div className={classesLibrary.categoriesTask}>
             <div>No.</div>
             <div>Name</div>
-            <div>Deck</div>
-            <div>Fire Zone</div>
-            <div>Team</div>
-            <div>Status</div>
+            <div>Collection</div>
+            <div>Supplier</div>
+            <div>Certificates</div>
+            <div>Description</div>
+            <div>Image</div>
           </div>
           <div className={classes.taskList}>
             {materialArrayByCategory.map((el, index) => (

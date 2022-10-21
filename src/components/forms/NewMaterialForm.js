@@ -24,8 +24,6 @@ const NewMaterialForm = (props) => {
     return el;
   });
 
-  console.log(selectOptionsArr);
-
   const allCollectionsOption = selectOptionsArr.map((el) => (
     <optgroup label={el[0]}>
       {el[1].map((el) => (
@@ -33,8 +31,6 @@ const NewMaterialForm = (props) => {
       ))}
     </optgroup>
   ));
-
-  console.log(allCollectionsOption);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -62,13 +58,14 @@ const NewMaterialForm = (props) => {
     event.preventDefault();
 
     if (
-      enteredName.trim() === "" ||
-      enteredSupplier.trim() === "" ||
-      enteredCertificates.trim() === "" ||
-      enteredDescription.trim() === "" ||
-      enteredCollection.trim() === "" ||
-      enteredImage.trim() === "" ||
-      enteredLink.trim() === ""
+      (enteredName.trim() === "" ||
+        enteredSupplier.trim() === "" ||
+        enteredCertificates.trim() === "" ||
+        enteredDescription.trim() === "" ||
+        enteredImage.trim() === "" ||
+        enteredLink.trim() === "") &&
+      (enteredCollection.trim() === "" ||
+        enteredExistingCollection.current.value === "")
     ) {
       console.log("empty");
       return;
@@ -81,7 +78,9 @@ const NewMaterialForm = (props) => {
     SLICE.library.find(findCategory).materials.push({
       name: enteredName,
       supplier: enteredSupplier,
-      collection: enteredCollection,
+      collection: enteredCollection
+        ? enteredCollection
+        : enteredExistingCollection.current.value,
       certificates: enteredCertificates,
       info: enteredDescription,
       image: enteredImage,
