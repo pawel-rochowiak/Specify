@@ -12,7 +12,29 @@ const NewMaterialForm = (props) => {
   const [enteredImage, setEnteredImage] = useState("");
   const [enteredLink, setEnteredLink] = useState("");
 
+  const enteredExistingCollection = useRef();
   const enteredCat = useRef();
+
+  const supplierList = SLICE.suppliers.map((el) => [el.name]);
+
+  const allCollections = SLICE.suppliers.map((el) => el.matCollections);
+
+  const selectOptionsArr = supplierList.map((el, index) => {
+    el.push(allCollections[index]);
+    return el;
+  });
+
+  console.log(selectOptionsArr);
+
+  const allCollectionsOption = selectOptionsArr.map((el) => (
+    <optgroup label={el[0]}>
+      {el[1].map((el) => (
+        <option value={el.name}>{el.name}</option>
+      ))}
+    </optgroup>
+  ));
+
+  console.log(allCollectionsOption);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -90,6 +112,12 @@ const NewMaterialForm = (props) => {
           ></input>
           <p className={classes.description}>Material name</p>
         </div>
+        <div className={`${classes.formGroup} ${classes.custom_select}`}>
+          <select ref={enteredExistingCollection}>
+            {allCollectionsOption}
+          </select>
+          <p className={classes.description}>Pick existing collection</p>
+        </div>
         <div className={classes.formGroup}>
           <input
             type="text"
@@ -97,7 +125,7 @@ const NewMaterialForm = (props) => {
             onChange={collectionInputChangeHandler}
             value={enteredCollection}
           ></input>
-          <p className={classes.description}>Collection</p>
+          <p className={classes.description}>or type new</p>
         </div>
         <div className={`${classes.formGroup} ${classes.custom_select}`}>
           <select ref={enteredCat}>
