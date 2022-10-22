@@ -9,12 +9,19 @@
 }
 
 .modal {
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
   position: fixed;
-  top: 25%;
+  top: 15%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  /* top: 25%;
   bottom: 25%;
   left: 35%;
-  right: 35%;
-  width: fit-content;
+  right: 35%; */
+  /* width: fit-content; */
   background-color: #f8f9fd;
   padding: 1rem;
   border-radius: 15px;
@@ -25,8 +32,6 @@
 
 .content {
   padding: 5rem;
-  /* height: 100%;
-  width: 100%; */
 }
 
 button {
