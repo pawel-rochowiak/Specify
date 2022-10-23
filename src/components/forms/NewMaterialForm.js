@@ -78,8 +78,20 @@ const NewMaterialForm = (props) => {
       return;
     }
 
+    ///Utility functions///
+
+    const pushInto = (el, arr) => {
+      arr.push(el);
+      return arr;
+    };
+
     function findCategory(el) {
-      return el.name === enteredCat.current.value;
+      if (el.name && enteredCategory === "") {
+        return el.name === enteredCat.current.value;
+      }
+      if (!el.name && enteredCategory !== "") {
+        return el.name === enteredCategory;
+      }
     }
 
     function findSupplier(el) {
@@ -94,6 +106,8 @@ const NewMaterialForm = (props) => {
         return el.name === enteredCollection;
       }
     }
+
+    ///////////////////////
 
     const newMaterialObjMarkup = {
       name: enteredName,
@@ -115,16 +129,9 @@ const NewMaterialForm = (props) => {
       SLICE.library.push({
         name: enteredCategory,
         path: `cat${SLICE.library.length + 1}`,
-        materials: [].push(newMaterialObjMarkup),
+        materials: pushInto(newMaterialObjMarkup, []),
       });
     }
-
-    ///Utility functions///
-
-    const pushInto = (el, arr) => {
-      arr.push(el);
-      return arr;
-    };
 
     ///Checking if collection picked from the form is existing if not new collection is created within corect supplier///
 
@@ -136,7 +143,9 @@ const NewMaterialForm = (props) => {
       materialCollection.materials.push(newMaterialObjMarkup);
     } else if (!materialCollection) {
       SLICE.suppliers.find(findSupplier).matCollections.push({
-        name: enteredCollection,
+        name: enteredCollection
+          ? enteredCollection
+          : enteredExistingCollection.current.value,
         materials: pushInto(newMaterialObjMarkup, []),
       });
     }
