@@ -78,16 +78,26 @@ const NewMaterialForm = (props) => {
       return;
     }
 
+    // function findSupplier(el) {
+    //   return el.name === props.name;
+    // }
+
     function findCategory(el) {
-      return el.name === enteredCat.current.value;
+      return enteredCategory === ""
+        ? el.name === enteredCat.current.value
+        : el.name === enteredCategory;
     }
 
     function findSupplier(el) {
-      return el.name === pickedSupplier.current.value;
+      return enteredSupplier === ""
+        ? el.name === pickedSupplier.current.value
+        : el.name === enteredSupplier;
     }
 
     function findCollection(el) {
-      return el.name === enteredExistingCollection.current.value;
+      return enteredCollection === ""
+        ? el.name === enteredExistingCollection.current.value
+        : el.name === enteredCollection;
     }
 
     const newMaterialObjMarkup = {
@@ -98,6 +108,7 @@ const NewMaterialForm = (props) => {
       collection: enteredCollection
         ? enteredCollection
         : enteredExistingCollection.current.value,
+      category: enteredCategory ? enteredCategory : enteredCat.current.value,
       certificates: enteredCertificates,
       info: enteredDescription,
       image: enteredImage,
@@ -109,16 +120,35 @@ const NewMaterialForm = (props) => {
       SLICE.library.find(findCategory).materials.push(newMaterialObjMarkup);
     } else if (!SLICE.library.find(findCategory)) {
       SLICE.library.push({
-        name: enteredName,
+        name: enteredCategory,
         path: `cat${SLICE.library.length + 1}`,
         materials: [].push(newMaterialObjMarkup),
       });
     }
 
-    SLICE.suppliers
-      .find(findSupplier)
-      .matCollections.find(findCollection)
-      .materials.push(newMaterialObjMarkup);
+    const pushInto = (el, arr) => {
+      arr.push(el);
+      return arr;
+    };
+
+    // const selectOptionsArr = supplierList.map((el, index) => {
+    //   el.push(allCollections[index]);
+    //   return el;
+    // });
+
+    if (SLICE.suppliers.find(findCollection)) {
+      SLICE.suppliers
+        .find(findSupplier)
+        .matCollections.find(findCollection)
+        .materials.push(newMaterialObjMarkup);
+    } else if (!SLICE.suppliers.find(findCollection)) {
+      SLICE.suppliers.find(findSupplier).matCollections.push({
+        name: enteredCollection,
+        materials: pushInto(newMaterialObjMarkup, []),
+      });
+    }
+
+    console.log(SLICE);
 
     setEnteredName("");
     setEnteredSupplier("");
@@ -233,7 +263,6 @@ const NewMaterialForm = (props) => {
               id="img"
               name="img"
               accept="image/*"
-              id="image"
               onChange={imageInputChangeHandler}
               value={enteredImage}
             ></input>
