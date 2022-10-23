@@ -5,7 +5,7 @@ import SLICE from "../../store/DUMMY_STATE_SLICE";
 
 const NewMaterialForm = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredSupplier, setEnteredSupplier] = useState("");
+  // const [enteredSupplier, setEnteredSupplier] = useState("");
   const [enteredCollection, setEnteredCollection] = useState("");
   const [enteredCertificates, setEnteredCertificates] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
@@ -38,9 +38,9 @@ const NewMaterialForm = (props) => {
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
-  const supplierInputChangeHandler = (event) => {
-    setEnteredSupplier(event.target.value);
-  };
+  // const supplierInputChangeHandler = (event) => {
+  //   setEnteredSupplier(event.target.value);
+  // };
   const collectionInputChangeHandler = (event) => {
     setEnteredCollection(event.target.value);
   };
@@ -72,39 +72,32 @@ const NewMaterialForm = (props) => {
       (enteredCollection.trim() === "" ||
         enteredExistingCollection.current.value === "") &&
       (enteredCategory.trim() === "" || enteredCat.current.value === "") &&
-      (enteredSupplier.trim() === "" || pickedSupplier.current.value === "")
+      pickedSupplier.current.value === ""
     ) {
       console.log("empty");
       return;
     }
 
-    // function findSupplier(el) {
-    //   return el.name === props.name;
-    // }
-
     function findCategory(el) {
-      return enteredCategory === ""
-        ? el.name === enteredCat.current.value
-        : el.name === enteredCategory;
+      return el.name === enteredCat.current.value;
     }
 
     function findSupplier(el) {
-      return enteredSupplier === ""
-        ? el.name === pickedSupplier.current.value
-        : el.name === enteredSupplier;
+      return el.name === pickedSupplier.current.value;
     }
 
     function findCollection(el) {
-      return enteredCollection === ""
-        ? el.name === enteredExistingCollection.current.value
-        : el.name === enteredCollection;
+      if (el.name && enteredCollection === "") {
+        return el.name === enteredExistingCollection.current.value;
+      }
+      if (!el.name && enteredCollection !== "") {
+        return el.name === enteredCollection;
+      }
     }
 
     const newMaterialObjMarkup = {
       name: enteredName,
-      supplier: enteredSupplier
-        ? enteredSupplier
-        : pickedSupplier.current.value,
+      supplier: pickedSupplier.current.value,
       collection: enteredCollection
         ? enteredCollection
         : enteredExistingCollection.current.value,
@@ -126,32 +119,33 @@ const NewMaterialForm = (props) => {
       });
     }
 
+    ///Utility functions///
+
     const pushInto = (el, arr) => {
       arr.push(el);
       return arr;
     };
 
-    // const selectOptionsArr = supplierList.map((el, index) => {
-    //   el.push(allCollections[index]);
-    //   return el;
-    // });
+    ///Checking if collection picked from the form is existing if not new collection is created within corect supplier///
 
-    if (SLICE.suppliers.find(findCollection)) {
-      SLICE.suppliers
-        .find(findSupplier)
-        .matCollections.find(findCollection)
-        .materials.push(newMaterialObjMarkup);
-    } else if (!SLICE.suppliers.find(findCollection)) {
+    const materialCollection = SLICE.suppliers
+      .find(findSupplier)
+      .matCollections.find(findCollection);
+
+    if (materialCollection) {
+      materialCollection.materials.push(newMaterialObjMarkup);
+    } else if (!materialCollection) {
       SLICE.suppliers.find(findSupplier).matCollections.push({
         name: enteredCollection,
         materials: pushInto(newMaterialObjMarkup, []),
       });
     }
 
-    console.log(SLICE);
+    console.log(SLICE.suppliers);
+
+    ///Setting all input walues back to empty string///
 
     setEnteredName("");
-    setEnteredSupplier("");
     setEnteredCategory("");
     setEnteredCertificates("");
     setEnteredDescription("");
@@ -222,17 +216,7 @@ const NewMaterialForm = (props) => {
                   return <option key={el.name}>{el.name}</option>;
                 })}
               </select>
-              <p className={classes.description}>Pick existing category</p>
-            </div>
-            <span>OR</span>
-            <div>
-              <input
-                type="text"
-                id="supplier"
-                onChange={supplierInputChangeHandler}
-                value={enteredSupplier}
-              ></input>
-              <p className={classes.description}>or type new</p>
+              <p className={classes.description}>Pick existing supplier</p>
             </div>
             <p>Supplier</p>
           </div>
