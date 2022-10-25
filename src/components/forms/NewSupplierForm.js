@@ -93,7 +93,7 @@ const NewProjectForm = (props) => {
 
   const mainContent = (
     <div className={classes.container}>
-      <p className={classes.header}>New project</p>
+      <p className={classes.header}>New supplier</p>
       <form className={classes.form} onSubmit={formSubmissionHandler}>
         <div className={classes.formGroup}>
           <input

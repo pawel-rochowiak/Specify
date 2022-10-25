@@ -24,26 +24,14 @@ import LibraryPageDetails from "./LibraryPageDetails";
 import TasksPage from "./TasksPage";
 import TasksPageDetails from "./TaskPageDetails";
 import LogOutIcon from "../components/icons/LogOutIcon";
+//STATE//
+import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const StartPage = (props) => {
   const [data, setData] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currTarget, setTarget] = useState("");
-
-  const accordionActivationHandler = (target) => {
-    if (target === "tasks") {
-      setTarget(target);
-    }
-    if (target === "projects") {
-      setTarget(target);
-    }
-    if (target === "suppliers") {
-      setTarget(target);
-    }
-    if (target === "library") {
-      setTarget(target);
-    }
-  };
+  const [detailTarget, setDetailTarget] = useState("");
 
   const stateDataTransferHandler = (slice) => {
     setData(slice);
@@ -59,6 +47,50 @@ const StartPage = (props) => {
 
   const closeNewTaskForm = () => {
     setIsFormVisible(false);
+  };
+
+  let TargetForm;
+
+  if (currTarget === "tasks") {
+    TargetForm = (
+      <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "projects") {
+    TargetForm = (
+      <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "suppliers") {
+    TargetForm = (
+      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "library" || detailTarget === "detailSupplier") {
+    TargetForm = (
+      <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+
+  ////issue how to add new material form to the supplier detail page?
+  //maybe router? create routes form different forms and links on bhttons in locatons f ex button from suppliers would create link to new supplier form but inside detail supplier btn will link to route new material/category
+
+  const targetActivationHandler = (target) => {
+    if (target === "tasks") {
+      setTarget(target);
+    }
+    if (target === "projects") {
+      setTarget(target);
+    }
+    if (target === "suppliers") {
+      setTarget(target);
+    }
+    if (target === "library") {
+      setTarget(target);
+    }
+    if (target.includes("/suppliers/s")) {
+      setDetailTarget("detailSupplier");
+    }
   };
 
   const componentNames = {
@@ -80,20 +112,13 @@ const StartPage = (props) => {
 
   let DynamicComponentDetails = componentNamesDetails[category];
 
-  const reactRoutesMain = data.map(({ name, path, fireZone, dk, project }) => (
+  const reactRoutesMain = data.map(({ name, path }) => (
     <Route key={path} path={`/${currTarget}/${path}`}>
-      {path.includes("t") ? (
-        <DynamicComponentDetails
-          name={name}
-          fz={fireZone}
-          deck={dk}
-          project={project}
-          createItem={newItemHandler}
-          path={path}
-        />
-      ) : (
-        <DynamicComponentDetails name={name} createItem={newItemHandler} />
-      )}
+      <DynamicComponentDetails
+        name={name}
+        path={path}
+        createItem={newItemHandler}
+      />
     </Route>
   ));
 
@@ -117,32 +142,12 @@ const StartPage = (props) => {
 
   const reactRoutesSidebar = componentNamesKeys.map((key) => (
     <Route key={key} path={`/${key}`}>
-      <SideMenuLinks links={routerLinks} />
+      <SideMenuLinks
+        targetActivation={targetActivationHandler}
+        links={routerLinks}
+      />
     </Route>
   ));
-
-  let TargetForm;
-
-  if (currTarget === "tasks") {
-    TargetForm = (
-      <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "projects") {
-    TargetForm = (
-      <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "suppliers") {
-    TargetForm = (
-      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "library") {
-    TargetForm = (
-      <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
 
   return (
     <Fragment>
@@ -170,25 +175,25 @@ const StartPage = (props) => {
                 name="Tasks"
                 data="Tasks"
                 stateTransfer={stateDataTransferHandler}
-                accordionActivation={accordionActivationHandler}
+                accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Projects"
                 data="Projects"
                 stateTransfer={stateDataTransferHandler}
-                accordionActivation={accordionActivationHandler}
+                accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Suppliers"
                 data="Suppliers"
                 stateTransfer={stateDataTransferHandler}
-                accordionActivation={accordionActivationHandler}
+                accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Library"
                 data="Library"
                 stateTransfer={stateDataTransferHandler}
-                accordionActivation={accordionActivationHandler}
+                accordionActivation={targetActivationHandler}
               />
             </div>
           </div>

@@ -6,8 +6,8 @@ import { Fragment } from "react";
 import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const TasksPage = (props) => {
-  // const tasksArr = props.data;
   const tasksArr = SLICE.tasks;
+
   return (
     <Fragment>
       <div className={classesTaskPage.tasks}>

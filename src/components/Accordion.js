@@ -5,8 +5,7 @@ import TasksIcon from "./icons/TasksIcon";
 import ProjectsIcon from "./icons/ProjectsIcon";
 import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
-///COMPONENTS///
-import Label from "./Label";
+///TEMP STATE///
 import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const Accordion = (props) => {
