@@ -66,32 +66,44 @@ const StartPage = (props) => {
       <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
-  if (currTarget === "library" || detailTarget === "detailSupplier") {
+  if (currTarget === "library") {
     TargetForm = (
       <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
-
-  ////issue how to add new material form to the supplier detail page?
-  //maybe router? create routes form different forms and links on bhttons in locatons f ex button from suppliers would create link to new supplier form but inside detail supplier btn will link to route new material/category
+  if (detailTarget[0] === "detailSupplier") {
+    TargetForm = (
+      <NewMaterialForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        supplier={detailTarget[1]}
+      />
+    );
+  }
 
   const targetActivationHandler = (target) => {
     if (target === "tasks") {
+      setDetailTarget("");
       setTarget(target);
     }
     if (target === "projects") {
+      setDetailTarget("");
       setTarget(target);
     }
     if (target === "suppliers") {
+      setDetailTarget("");
       setTarget(target);
     }
     if (target === "library") {
+      setDetailTarget("");
       setTarget(target);
     }
     if (target.includes("/suppliers/s")) {
-      setDetailTarget("detailSupplier");
+      setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
     }
   };
+
+  console.log(detailTarget);
 
   const componentNames = {
     tasks: TasksPage,

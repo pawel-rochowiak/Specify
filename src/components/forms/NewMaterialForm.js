@@ -5,7 +5,6 @@ import SLICE from "../../store/DUMMY_STATE_SLICE";
 
 const NewMaterialForm = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  // const [enteredSupplier, setEnteredSupplier] = useState("");
   const [enteredCollection, setEnteredCollection] = useState("");
   const [enteredCertificates, setEnteredCertificates] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
@@ -16,6 +15,40 @@ const NewMaterialForm = (props) => {
   const enteredCat = useRef();
   const pickedSupplier = useRef();
 
+  console.log(props.supplier);
+
+  const pushInto = (el, arr) => {
+    arr.push(el);
+    return arr;
+  };
+
+  let ss, specificSupplier, specificSupplierOptions, allCollectionsOption2;
+
+  if (props.supplier) {
+    //Specific supplier case
+    ss = SLICE.suppliers.find((el) => el.path === props.supplier);
+
+    specificSupplier = pushInto(
+      SLICE.suppliers.find((el) => el.path === props.supplier).name,
+      []
+    );
+
+    specificSupplierOptions = [pushInto(ss.matCollections, specificSupplier)];
+
+    allCollectionsOption2 = specificSupplierOptions.map((el) => (
+      <optgroup label={el[0]} key={el[0]}>
+        {el[1].map((el) => (
+          <option value={el.name} key={el.name}>
+            {el.name}
+          </option>
+        ))}
+      </optgroup>
+    ));
+
+    console.log(allCollectionsOption2);
+  }
+
+  //All suppliers case
   const supplierList = SLICE.suppliers.map((el) => [el.name]);
 
   const allCollections = SLICE.suppliers.map((el) => el.matCollections);
@@ -38,9 +71,7 @@ const NewMaterialForm = (props) => {
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
-  // const supplierInputChangeHandler = (event) => {
-  //   setEnteredSupplier(event.target.value);
-  // };
+
   const collectionInputChangeHandler = (event) => {
     setEnteredCollection(event.target.value);
   };
@@ -79,11 +110,6 @@ const NewMaterialForm = (props) => {
     }
 
     ///Utility functions///
-
-    const pushInto = (el, arr) => {
-      arr.push(el);
-      return arr;
-    };
 
     function findCategory(el) {
       if (el.name && enteredCategory === "") {
@@ -181,7 +207,7 @@ const NewMaterialForm = (props) => {
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
               <select ref={enteredExistingCollection}>
-                {allCollectionsOption}
+                {props.supplier ? allCollectionsOption2 : allCollectionsOption}
               </select>
               <p className={classes.description}>Pick</p>
             </div>
@@ -221,9 +247,15 @@ const NewMaterialForm = (props) => {
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
               <select ref={pickedSupplier}>
-                {SLICE.suppliers.map((el) => {
-                  return <option key={el.name}>{el.name}</option>;
-                })}
+                {!props.supplier ? (
+                  SLICE.suppliers.map((el) => {
+                    return <option key={el.name}>{el.name}</option>;
+                  })
+                ) : (
+                  <option key={specificSupplier[0]}>
+                    {specificSupplier[0]}
+                  </option>
+                )}
               </select>
               <p className={classes.description}>Pick existing supplier</p>
             </div>

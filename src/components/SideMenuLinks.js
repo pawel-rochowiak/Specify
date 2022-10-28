@@ -13,9 +13,7 @@ const SideMenuLinks = (props) => {
   };
 
   const targetHandler = (ev) => {
-    // props.targetActivation(ev.target.closest("a").getAttribute("href"));
     props.targetActivation(window.location.href);
-    console.log(window.location.href);
   };
 
   const classList = !isVisible
