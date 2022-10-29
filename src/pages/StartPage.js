@@ -103,8 +103,6 @@ const StartPage = (props) => {
     }
   };
 
-  console.log(detailTarget);
-
   const componentNames = {
     tasks: TasksPage,
     projects: ProjectPage,

@@ -22,6 +22,3 @@ const ProjectDetailsItem = (props) => {
 };
 
 export default ProjectDetailsItem;
-
-//komponenet dla wszystkich musi miec dataset atrybut zeby pomoc w edycji i kasowaniu
-//musi miec propsy z arrayem potrzebnych kategorii i klase specjalna zeby zmienialy sie wartosci w csssie

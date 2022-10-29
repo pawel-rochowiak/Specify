@@ -5,7 +5,9 @@ import CloseIcon from "../components/icons/CloseIcon";
 const DetailsItem = (props) => {
   let gridClass;
 
-  const itemsArr = Object.entries(props.items).slice(0, -3);
+  console.log(props);
+
+  const itemsArr = Object.entries(props.items).slice(0, 5);
 
   const elArray = itemsArr.map((el, index) => {
     return (
@@ -14,6 +16,8 @@ const DetailsItem = (props) => {
       </div>
     );
   });
+
+  console.log(elArray);
 
   if (props.grid === "4") {
     gridClass = `DetailsItem_col_${props.grid}__qscj9`;
@@ -42,6 +46,3 @@ const DetailsItem = (props) => {
 };
 
 export default DetailsItem;
-
-//komponenet dla wszystkich musi miec dataset atrybut zeby pomoc w edycji i kasowaniu
-//musi miec propsy z arrayem potrzebnych kategorii i klase specjalna zeby zmienialy sie wartosci w csssie

@@ -15,8 +15,6 @@ const NewMaterialForm = (props) => {
   const enteredCat = useRef();
   const pickedSupplier = useRef();
 
-  console.log(props.supplier);
-
   const pushInto = (el, arr) => {
     arr.push(el);
     return arr;
@@ -44,8 +42,6 @@ const NewMaterialForm = (props) => {
         ))}
       </optgroup>
     ));
-
-    console.log(allCollectionsOption2);
   }
 
   //All suppliers case

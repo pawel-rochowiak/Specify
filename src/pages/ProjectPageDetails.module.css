@@ -142,7 +142,8 @@ span {
 }
 
 .categoriesTask,
-.categoriesNotes {
+.categoriesNotes,
+.categoriesAreas {
   margin-top: 1rem;
   display: grid;
   font-size: 1.1rem;
@@ -151,6 +152,9 @@ span {
 
 .categoriesTask {
   grid-template-columns: repeat(6, 1fr);
+}
+.categoriesAreas {
+  grid-template-columns: repeat(4, 1fr);
 }
 .categoriesNotes {
   grid-template-columns: 1fr 3fr;

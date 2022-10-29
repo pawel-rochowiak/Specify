@@ -75,7 +75,20 @@ const DUMMY_STATE_SLICE = {
       date: "",
       team: "Anna, Hanna",
       path: "p1",
-      area: [],
+      area: [
+        {
+          name: "International Restaurant",
+          deck: "7-9",
+          fireZone: "4",
+          subcontractor: "TSI",
+        },
+        {
+          name: "Lido Pools",
+          deck: "17-18",
+          fireZone: "2-3",
+          subcontractor: "DeWave",
+        },
+      ],
       projectTasks: [],
     },
     {
@@ -85,7 +98,20 @@ const DUMMY_STATE_SLICE = {
       date: "",
       team: "Anna, Hanna",
       path: "p2",
-      area: [],
+      area: [
+        {
+          name: "4 seasons Lounge 1",
+          deck: "5-6",
+          fireZone: "2",
+          subcontractor: "TSI",
+        },
+        {
+          name: "4 seasons Lounge 2",
+          deck: "7",
+          fireZone: "4",
+          subcontractor: "Molteni",
+        },
+      ],
       projectTasks: [],
     },
     {
@@ -95,7 +121,20 @@ const DUMMY_STATE_SLICE = {
       date: "",
       team: "Anna, Hanna",
       path: "p3",
-      area: [],
+      area: [
+        {
+          name: "MSC restaurant 1",
+          deck: "5",
+          fireZone: "1",
+          subcontractor: "TSI",
+        },
+        {
+          name: "MSC restaurant 2",
+          deck: "9",
+          fireZone: "2",
+          subcontractor: "TSI",
+        },
+      ],
       projectTasks: [],
     },
     {
