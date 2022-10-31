@@ -13,6 +13,7 @@ const SideMenuLinks = (props) => {
   };
 
   const targetHandler = (ev) => {
+    console.log(window.location.href);
     props.targetActivation(window.location.href);
   };
 

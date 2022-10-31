@@ -7,6 +7,7 @@ import HomeIcon from "../components/icons/HomeIcon";
 import UserIcon from "../components/icons/UserIcon";
 //FORMS//
 import Accordion from "../components/Accordion";
+import NewAreaForm from "../components/forms/NewAreaForm";
 import NewSupplierForm from "../components/forms/NewSupplierForm";
 import NewMaterialForm from "../components/forms/NewMaterialForm";
 import NewProjectForm from "../components/forms/NewProjectForm";
@@ -80,6 +81,15 @@ const StartPage = (props) => {
       />
     );
   }
+  if (detailTarget[0] === "detailProject") {
+    TargetForm = (
+      <NewAreaForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        project={detailTarget[1]}
+      />
+    );
+  }
 
   const targetActivationHandler = (target) => {
     if (target === "tasks") {
@@ -100,6 +110,9 @@ const StartPage = (props) => {
     }
     if (target.includes("/suppliers/s")) {
       setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
+    }
+    if (target.includes("/projects/p")) {
+      setDetailTarget(["detailProject", target.split("/").at(-1)]);
     }
   };
 

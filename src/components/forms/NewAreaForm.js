@@ -4,11 +4,11 @@ import classes from "./NewTaskForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
 
 const NewAreaForm = (props) => {
+  console.log(props);
   const [enteredName, setEnteredName] = useState("");
   const [enteredDeck, setEnteredDeck] = useState("");
   const [enteredFz, setEnteredFz] = useState("");
-  const [enteredStatus, setEnteredStatus] = useState("");
-  const [enteredTeam, setEnteredTeam] = useState("");
+  const [enteredSubcontractor, setEnteredSubcontractor] = useState("");
 
   // const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   // const [enteredNumberIsValid, setEnteredNumberIsValid] = useState(false);
@@ -27,12 +27,8 @@ const NewAreaForm = (props) => {
     setEnteredFz(event.target.value);
   };
 
-  const teamInputChangeHandler = (event) => {
-    setEnteredTeam(event.target.value);
-  };
-
-  const statusInputChangeHandler = (event) => {
-    setEnteredStatus(event.target.value);
+  const subcontractorInputChangeHandler = (event) => {
+    setEnteredSubcontractor(event.target.value);
   };
 
   const formSubmissionHandler = (event) => {
@@ -42,8 +38,7 @@ const NewAreaForm = (props) => {
       enteredName.trim() === "" ||
       enteredDeck.trim() === "" ||
       enteredFz.trim() === "" ||
-      enteredTeam.trim() === "" ||
-      enteredStatus.trim() === ""
+      enteredSubcontractor.trim() === ""
     ) {
       console.log("empty");
       return;
@@ -51,25 +46,23 @@ const NewAreaForm = (props) => {
 
     ///Logic for getting project name and adding areas
 
-    // const selectedProject = SLICE.projects.find(
-    //   (el) => el.name === "Princess Cruises"
-    // );
+    const selectedProject = SLICE.projects.find(
+      (el) => el.path === props.project
+    );
 
-    // console.log(selectedProject);
+    console.log(selectedProject);
 
-    // selectedProject.area.push({
-    //   name: "Toilet",
-    //   deck: "9",
-    //   fz: "3-4",
-    //   team: "Adam,Gadam",
-    //   status: "0%",
-    // });
+    selectedProject.area.push({
+      name: enteredName,
+      deck: enteredDeck,
+      fz: enteredFz,
+      subcontractor: enteredSubcontractor,
+    });
 
     setEnteredName("");
     setEnteredDeck("");
     setEnteredFz("");
-    setEnteredStatus("");
-    setEnteredTeam("");
+    setEnteredSubcontractor("");
 
     props.onExit();
   };
@@ -109,19 +102,10 @@ const NewAreaForm = (props) => {
           <input
             type="text"
             id="team"
-            onChange={teamInputChangeHandler}
-            value={enteredTeam}
+            onChange={subcontractorInputChangeHandler}
+            value={enteredSubcontractor}
           ></input>
-          <p className={classes.description}>Team</p>
-        </div>
-        <div className={classes.formGroup}>
-          <input
-            type="text"
-            id="status"
-            onChange={statusInputChangeHandler}
-            value={enteredStatus}
-          ></input>
-          <p className={classes.description}>Status</p>
+          <p className={classes.description}>Subcontractor</p>
         </div>
 
         <button type="submit">submit</button>

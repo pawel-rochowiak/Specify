@@ -5,8 +5,6 @@ import CloseIcon from "../components/icons/CloseIcon";
 const DetailsItem = (props) => {
   let gridClass;
 
-  console.log(props);
-
   const itemsArr = Object.entries(props.items).slice(0, 5);
 
   const elArray = itemsArr.map((el, index) => {
@@ -16,8 +14,6 @@ const DetailsItem = (props) => {
       </div>
     );
   });
-
-  console.log(elArray);
 
   if (props.grid === "4") {
     gridClass = `DetailsItem_col_${props.grid}__qscj9`;
