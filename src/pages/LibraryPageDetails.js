@@ -4,14 +4,16 @@ import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import Note from "../components/Note";
 import { Fragment } from "react";
-import SLICE from "../store/DUMMY_STATE_SLICE";
+import { useSelector } from "react-redux";
 
 const LibraryPageDetails = (props) => {
   function findCategory(el) {
     return el.path === props.path;
   }
 
-  const materialArrayByCategory = SLICE.library.find(findCategory).materials;
+  const stateMaterials = useSelector((state) => state.library);
+
+  const materialArrayByCategory = stateMaterials.find(findCategory).materials;
 
   return (
     <Fragment>

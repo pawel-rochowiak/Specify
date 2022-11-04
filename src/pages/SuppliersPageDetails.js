@@ -1,15 +1,17 @@
 import classes from "./ProjectPageDetails.module.css";
 import PlusIcon from "../components/icons/PlusIcon";
 import LibraryItem from "../components/LibraryItem";
-import SLICE from "../store/DUMMY_STATE_SLICE";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
 
 const SuppliersPageDetails = (props) => {
   function findSupplier(el) {
     return el.name === props.name;
   }
 
-  const correctSupplier = SLICE.suppliers.find(findSupplier);
+  const stateSuppliers = useSelector((state) => state.suppliers);
+
+  const correctSupplier = stateSuppliers.find(findSupplier);
 
   const supplierCollections = correctSupplier.matCollections;
 

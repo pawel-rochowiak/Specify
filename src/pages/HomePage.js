@@ -7,7 +7,6 @@ import { Fragment } from "react";
 const HomePage = () => {
   const stateTasks = useSelector((state) => state.tasks);
 
-  console.log(stateTasks);
   return (
     <Fragment>
       <div className={classes.tasks}>

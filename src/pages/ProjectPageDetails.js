@@ -1,11 +1,11 @@
 import classes from "./ProjectPageDetails.module.css";
 import DetailItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
-import { Fragment, useState } from "react";
-import NewAreaForm from "../components/forms/NewAreaForm";
+import { useSelector } from "react-redux";
 import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const ProjectPageDetails = (props) => {
+  const stateProjects = useSelector((state) => state.projects);
   return (
     <div className={classes.mainContent}>
       <div className={classes.tasks}>
@@ -17,9 +17,9 @@ const ProjectPageDetails = (props) => {
           <div>Outfitter</div>
         </div>
         <div className={classes.taskList}>
-          {SLICE.projects.find((el) => el.name === props.name).area.length !==
+          {stateProjects.find((el) => el.name === props.name).area.length !==
           0 ? (
-            SLICE.projects
+            stateProjects
               .find((el) => el.name === props.name)
               .area.map((el, index) => (
                 <DetailItem
