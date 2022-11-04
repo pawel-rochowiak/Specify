@@ -7,9 +7,11 @@ import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
 ///TEMP STATE///
 import SLICE from "../store/DUMMY_STATE_SLICE";
+import { useSelector } from "react-redux";
 
 const Accordion = (props) => {
   //later to be replaced by data coming from redus and database REDUX SLICE
+  const state = useSelector((state) => state);
 
   const showListHandler = (event) => {
     event.preventDefault();
@@ -21,7 +23,7 @@ const Accordion = (props) => {
 
     props.accordionActivation(target);
 
-    props.stateTransfer(SLICE[target]);
+    props.stateTransfer(state[target]);
   };
 
   const componentNames = {
