@@ -1,19 +1,14 @@
 import React, { useState } from "react";
+
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
 
 const NewAreaForm = (props) => {
-  console.log(props);
   const [enteredName, setEnteredName] = useState("");
   const [enteredDeck, setEnteredDeck] = useState("");
   const [enteredFz, setEnteredFz] = useState("");
   const [enteredSubcontractor, setEnteredSubcontractor] = useState("");
-
-  // const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
-  // const [enteredNumberIsValid, setEnteredNumberIsValid] = useState(false);
-  // const [enteredDateIsValid, setEnteredDateIsValid] = useState(false);
-  // const [enteredTeamIsValid, setEnteredTeamIsValid] = useState(false);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);

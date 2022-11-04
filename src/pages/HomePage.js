@@ -1,10 +1,13 @@
 import classes from "./StartPage.module.css";
 import Task from "../components/Task";
+import { useSelector } from "react-redux";
 import Message from "../components/Message";
-import DUMMY_STATE_SLICE from "../store/DUMMY_STATE_SLICE";
 import { Fragment } from "react";
 
 const HomePage = () => {
+  const stateTasks = useSelector((state) => state.tasks);
+
+  console.log(stateTasks);
   return (
     <Fragment>
       <div className={classes.tasks}>
@@ -17,7 +20,7 @@ const HomePage = () => {
           <div>Status</div>
         </div>
         <div className={classes.taskList}>
-          {DUMMY_STATE_SLICE.tasks.map((el, index) => {
+          {stateTasks.map((el, index) => {
             return (
               <Task
                 key={el.path}

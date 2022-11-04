@@ -3,10 +3,10 @@ import classesTaskPage from "./TaskPage.module.css";
 import Task from "../components/Task";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
-import SLICE from "../store/DUMMY_STATE_SLICE";
+import { useSelector } from "react-redux";
 
 const TasksPage = (props) => {
-  const tasksArr = SLICE.tasks;
+  const stateTasks = useSelector((state) => state.tasks);
 
   return (
     <Fragment>
@@ -20,7 +20,7 @@ const TasksPage = (props) => {
           <div>Status</div>
         </div>
         <div className={classes.taskList}>
-          {tasksArr.map((el) => (
+          {stateTasks.map((el) => (
             <Task
               key={el.path}
               name={el.project}

@@ -1,10 +1,11 @@
 import classes from "./SuppliersPage.module.css";
 import SupplierItem from "../components/SupplierItem";
 import PlusIcon from "../components/icons/PlusIcon";
-import SLICE from "../store/DUMMY_STATE_SLICE";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
 
 const SuppliersPage = (props) => {
+  const stateSuppliers = useSelector((state) => state.suppliers);
   return (
     <Fragment>
       <div className={classes.tasks}>
@@ -16,7 +17,7 @@ const SuppliersPage = (props) => {
           <div>Contact</div>
         </div>
         <div className={classes.taskList}>
-          {SLICE.suppliers.map((el) => (
+          {stateSuppliers.map((el) => (
             <SupplierItem
               name={el.name}
               field={el.field}

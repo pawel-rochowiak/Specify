@@ -3,10 +3,12 @@ import { Fragment } from "react";
 import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import SLICE from "../store/DUMMY_STATE_SLICE";
+import { useSelector } from "react-redux";
 
 const LibraryPage = (props) => {
-  const materialArray = SLICE.library.flatMap((el) => el.materials);
+  const stateMaterials = useSelector((state) => state.library);
 
+  const materialArray = stateMaterials.flatMap((el) => el.materials);
   return (
     <Fragment>
       <div className={classes.tasks}>
