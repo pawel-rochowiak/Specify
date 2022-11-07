@@ -5,7 +5,7 @@ import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
 
 const LibraryPage = (props) => {
-  const stateMaterials = useSelector((state) => state.library);
+  const stateMaterials = useSelector((state) => state.all.library);
 
   const materialArray = stateMaterials.flatMap((el) => el.materials);
   return (

@@ -6,7 +6,7 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 const TasksPage = (props) => {
-  const stateTasks = useSelector((state) => state.tasks);
+  const stateTasks = useSelector((state) => state.all.tasks);
 
   return (
     <Fragment>

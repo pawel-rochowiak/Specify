@@ -6,12 +6,12 @@ import ProjectsIcon from "./icons/ProjectsIcon";
 import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
 ///TEMP STATE///
-import SLICE from "../store/DUMMY_STATE_SLICE";
+
 import { useSelector } from "react-redux";
 
 const Accordion = (props) => {
   //later to be replaced by data coming from redus and database REDUX SLICE
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.all);
 
   const showListHandler = (event) => {
     event.preventDefault();

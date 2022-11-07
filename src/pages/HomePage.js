@@ -5,7 +5,7 @@ import Message from "../components/Message";
 import { Fragment } from "react";
 
 const HomePage = () => {
-  const stateTasks = useSelector((state) => state.tasks);
+  const stateTasks = useSelector((state) => state.all.tasks);
 
   return (
     <Fragment>

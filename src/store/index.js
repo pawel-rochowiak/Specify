@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
   tasks: [
@@ -243,13 +244,43 @@ const initialState = {
   ],
 };
 
-const addUserReducer = (state = initialState, action) => {
-  // if ((action.type = "add")) {
-  //   console.log("hej");
-  // }
-  return state;
-};
+const allSlice = createSlice({
+  name: "all",
+  initialState: initialState,
+  reducers: {
+    test(state) {
+      console.log("test1 dispatched");
+    },
+    test2(state, action) {
+      console.log(`print ${action.payload}`);
+    },
+  },
+});
 
-const store = createStore(addUserReducer);
+const projectSlice = createSlice({
+  name: "projects",
+  initialState: initialState.projects,
+  reducers: {
+    addProjects(state, action) {
+      state.push({
+        name: action.payload.name,
+        type: action.payload.type,
+        scope: action.payload.scope,
+        date: action.payload.date,
+        team: action.payload.team,
+        path: `p${state.length + 1}`,
+        area: [],
+        projectTasks: [],
+      });
+    },
+  },
+});
+
+const store = configureStore({
+  reducer: { all: allSlice.reducer, projects: projectSlice.reducer },
+});
+
+export const allSLiceActions = allSlice.actions;
+export const projectActions = projectSlice.actions;
 
 export default store;

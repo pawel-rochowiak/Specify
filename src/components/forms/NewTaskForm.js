@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
+import { allSLiceActions } from "../../store/index";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
+import { useSelector, useDispatch } from "react-redux";
 
 const NewTaskForm = (props) => {
+  const dispatch = useDispatch();
+
   const [enteredName, setEnteredName] = useState("");
   const [enteredNumber, setEnteredNumber] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
