@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 //CSS module//
 import classes from "./StartPage.module.css";
@@ -26,87 +26,59 @@ import TasksPage from "./TasksPage";
 import TasksPageDetails from "./TaskPageDetails";
 import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
-import SLICE from "../store/DUMMY_STATE_SLICE";
+import {
+  allSLiceActions,
+  tasksActions,
+  projectActions,
+  suppliersActions,
+  libraryActions,
+} from "../store/index";
+
+import { useSelector, useDispatch } from "react-redux";
 
 const StartPage = (props) => {
+  //State slices//
+  const state = useSelector((state) => state.all);
+  const stateTasks = useSelector((state) => state.tasks);
+  const stateProjects = useSelector((state) => state.projects);
+  const stateSuppliers = useSelector((state) => state.suppliers);
+  const stateLibrary = useSelector((state) => state.library);
+  ////////////////
   const [data, setData] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currTarget, setTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
 
-  const stateDataTransferHandler = (slice) => {
-    setData(slice);
-  };
-
   const newItemHandler = () => {
     setIsFormVisible(true);
   };
-
   const addNewTaskHandler = () => {
     setIsFormVisible(true);
   };
-
   const closeNewTaskForm = () => {
     setIsFormVisible(false);
   };
-
-  let TargetForm;
-
-  if (currTarget === "tasks") {
-    TargetForm = (
-      <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "projects") {
-    TargetForm = (
-      <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "suppliers") {
-    TargetForm = (
-      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (currTarget === "library") {
-    TargetForm = (
-      <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
-    );
-  }
-  if (detailTarget[0] === "detailSupplier") {
-    TargetForm = (
-      <NewMaterialForm
-        onClick={addNewTaskHandler}
-        onExit={closeNewTaskForm}
-        supplier={detailTarget[1]}
-      />
-    );
-  }
-  if (detailTarget[0] === "detailProject") {
-    TargetForm = (
-      <NewAreaForm
-        onClick={addNewTaskHandler}
-        onExit={closeNewTaskForm}
-        project={detailTarget[1]}
-      />
-    );
-  }
 
   const targetActivationHandler = (target) => {
     if (target === "tasks") {
       setDetailTarget("");
       setTarget(target);
+      setData(stateTasks);
     }
     if (target === "projects") {
       setDetailTarget("");
       setTarget(target);
+      setData(stateProjects);
     }
     if (target === "suppliers") {
       setDetailTarget("");
       setTarget(target);
+      setData(stateSuppliers);
     }
     if (target === "library") {
       setDetailTarget("");
       setTarget(target);
+      setData(stateLibrary);
     }
     if (target.includes("/suppliers/s")) {
       setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
@@ -172,6 +144,47 @@ const StartPage = (props) => {
     </Route>
   ));
 
+  let TargetForm;
+
+  if (currTarget === "tasks") {
+    TargetForm = (
+      <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "projects") {
+    TargetForm = (
+      <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "suppliers") {
+    TargetForm = (
+      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (currTarget === "library") {
+    TargetForm = (
+      <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+    );
+  }
+  if (detailTarget[0] === "detailSupplier") {
+    TargetForm = (
+      <NewMaterialForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        supplier={detailTarget[1]}
+      />
+    );
+  }
+  if (detailTarget[0] === "detailProject") {
+    TargetForm = (
+      <NewAreaForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        project={detailTarget[1]}
+      />
+    );
+  }
+
   return (
     <Fragment>
       <Router>
@@ -197,25 +210,21 @@ const StartPage = (props) => {
               <Accordion
                 name="Tasks"
                 data="Tasks"
-                stateTransfer={stateDataTransferHandler}
                 accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Projects"
                 data="Projects"
-                stateTransfer={stateDataTransferHandler}
                 accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Suppliers"
                 data="Suppliers"
-                stateTransfer={stateDataTransferHandler}
                 accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Library"
                 data="Library"
-                stateTransfer={stateDataTransferHandler}
                 accordionActivation={targetActivationHandler}
               />
             </div>

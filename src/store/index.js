@@ -254,6 +254,64 @@ const allSlice = createSlice({
     test2(state, action) {
       console.log(`print ${action.payload}`);
     },
+    addProjects(state, action) {
+      state.projects.push({
+        name: action.payload.name,
+        type: action.payload.type,
+        scope: action.payload.scope,
+        date: action.payload.date,
+        team: action.payload.team,
+        path: `p${state.length + 1}`,
+        area: [],
+        projectTasks: [],
+      });
+    },
+  },
+});
+
+const tasksSlice = createSlice({
+  name: "tasks",
+  initialState: initialState.tasks,
+  reducers: {
+    addTasks(state, action) {
+      state.push({
+        name: `${action.payload.task} - ${action.payload.name}`,
+        path: `t${state.length + 1}`,
+        dk: "5",
+        fireZone: "1",
+        project: action.payload.name,
+        specification: "Carpet",
+        team: action.payload.team,
+        date: action.payload.date,
+        status: "0%",
+      });
+    },
+  },
+});
+
+const suppliersSlice = createSlice({
+  name: "suppliers",
+  initialState: initialState.suppliers,
+  reducers: {
+    addSuppliers(state, action) {
+      state.push({
+        name: action.payload.name,
+        field: action.payload.field,
+        adress: {
+          country: action.payload.country,
+          city: action.payload.city,
+          street: action.payload.street,
+          number: action.payload.number,
+        },
+        contactPerson: {
+          fullName: action.payload.fullName,
+          email: action.payload.email,
+          tel: action.payload.tel,
+        },
+        matCollections: [],
+        path: `p${state.length + 1}`,
+      });
+    },
   },
 });
 
@@ -274,13 +332,40 @@ const projectSlice = createSlice({
       });
     },
   },
+  addAreas(state, action) {
+    state.push({
+      name: action.payload.name,
+      deck: action.payload.deck,
+      fz: action.payload.fz,
+      subcontractor: action.payload.subcontractor,
+    });
+  },
+});
+
+const librarySlice = createSlice({
+  name: "library",
+  initialState: initialState.library,
+  reducers: {
+    testTasks(state, action) {
+      console.log(`Library slice: ${state}`);
+    },
+  },
 });
 
 const store = configureStore({
-  reducer: { all: allSlice.reducer, projects: projectSlice.reducer },
+  reducer: {
+    all: allSlice.reducer,
+    tasks: tasksSlice.reducer,
+    projects: projectSlice.reducer,
+    suppliers: suppliersSlice.reducer,
+    library: librarySlice.reducer,
+  },
 });
 
 export const allSLiceActions = allSlice.actions;
+export const tasksActions = tasksSlice.actions;
 export const projectActions = projectSlice.actions;
+export const suppliersActions = suppliersSlice.actions;
+export const libraryActions = librarySlice.actions;
 
 export default store;

@@ -5,15 +5,9 @@ import TasksIcon from "./icons/TasksIcon";
 import ProjectsIcon from "./icons/ProjectsIcon";
 import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
-///TEMP STATE///
-
-import { useSelector } from "react-redux";
 
 const Accordion = (props) => {
-  //later to be replaced by data coming from redus and database REDUX SLICE
-  const state = useSelector((state) => state.all);
-
-  const showListHandler = (event) => {
+  const liftTargetHandler = (event) => {
     event.preventDefault();
 
     const targetStart = event.target.closest("div[class*='accordionItem']")
@@ -22,8 +16,6 @@ const Accordion = (props) => {
     const target = targetStart.toLowerCase();
 
     props.accordionActivation(target);
-
-    props.stateTransfer(state[target]);
   };
 
   const componentNames = {
@@ -38,7 +30,7 @@ const Accordion = (props) => {
 
   return (
     <div className={classes.accordionItem} data-accordion={props.data}>
-      <div className={classes.itemDescription} onClick={showListHandler}>
+      <div className={classes.itemDescription} onClick={liftTargetHandler}>
         <Link key={props.name} to={`/${props.name.toLowerCase()}`}>
           <DynamicComponent />
         </Link>

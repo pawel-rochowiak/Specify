@@ -2,8 +2,7 @@ import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { projectActions } from "../../store/index";
-import { useSelector, useDispatch } from "react-redux";
-import SLICE from "../../store/DUMMY_STATE_SLICE";
+import { useDispatch } from "react-redux";
 
 const NewProjectForm = (props) => {
   const dispatch = useDispatch();
@@ -47,17 +46,6 @@ const NewProjectForm = (props) => {
         team: enteredTeam,
       })
     );
-
-    // SLICE.projects.push({
-    //   name: enteredName,
-    //   type: enteredType.current.value,
-    //   scope: enteredScope.current.value,
-    //   date: enteredDate,
-    //   team: enteredTeam,
-    //   path: `p${SLICE.projects.length + 1}`,
-    //   area: [],
-    //   projectTasks: [],
-    // });
 
     setEnteredName("");
     setEnteredDate("");

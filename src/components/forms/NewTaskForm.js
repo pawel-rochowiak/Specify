@@ -3,7 +3,8 @@ import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { allSLiceActions } from "../../store/index";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
-import { useSelector, useDispatch } from "react-redux";
+import { tasksActions } from "../../store/index";
+import { useDispatch } from "react-redux";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
@@ -52,17 +53,26 @@ const NewTaskForm = (props) => {
       return;
     }
 
-    SLICE.tasks.push({
-      name: `${enteredTaskName} - ${enteredName}`,
-      path: `t${SLICE.tasks.length + 1}`,
-      dk: "5", //deck should be taken from the AREA info
-      fireZone: "1", //FZ should be taken from the AREA info
-      project: enteredName,
-      specification: "Carpet", //to be choosen from dropdown
-      team: enteredTeam,
-      date: enteredDate,
-      status: "0%", //initial as 0%
-    });
+    // SLICE.tasks.push({
+    //   name: `${enteredTaskName} - ${enteredName}`,
+    //   path: `t${SLICE.tasks.length + 1}`,
+    //   dk: "5", //deck should be taken from the AREA info
+    //   fireZone: "1", //FZ should be taken from the AREA info
+    //   project: enteredName,
+    //   specification: "Carpet", //to be choosen from dropdown
+    //   team: enteredTeam,
+    //   date: enteredDate,
+    //   status: "0%", //initial as 0%
+    // });
+
+    dispatch(
+      tasksActions.addTasks({
+        task: enteredTaskName,
+        name: enteredName,
+        date: enteredDate,
+        team: enteredTeam,
+      })
+    );
 
     setEnteredName("");
     setEnteredNumber("");

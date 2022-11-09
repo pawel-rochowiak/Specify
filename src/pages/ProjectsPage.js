@@ -1,5 +1,4 @@
 import classes from "./StartPage.module.css";
-import classesProjectsPage from "./ProjectsPage.module.css";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import DetailsItem from "../components/DetailsItem";

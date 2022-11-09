@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 const SuppliersPage = (props) => {
-  const stateSuppliers = useSelector((state) => state.all.suppliers);
+  const stateSuppliers = useSelector((state) => state.suppliers);
   return (
     <Fragment>
       <div className={classes.tasks}>

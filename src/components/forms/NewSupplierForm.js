@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
-import SLICE from "../../store/DUMMY_STATE_SLICE";
+import { suppliersActions } from "../../store/index";
+import { useDispatch } from "react-redux";
 
 const NewProjectForm = (props) => {
+  const dispatch = useDispatch();
   const [enteredName, setEnteredName] = useState("");
   const [enteredField, setEnteredField] = useState("");
   const [enteredCountry, setEnteredCountry] = useState("");
@@ -60,23 +62,19 @@ const NewProjectForm = (props) => {
       return;
     }
 
-    SLICE.suppliers.push({
-      name: enteredName,
-      field: enteredField,
-      adress: {
+    dispatch(
+      suppliersActions.addSuppliers({
+        name: enteredName,
+        field: enteredField,
         country: enteredCountry,
         city: enteredCity,
         street: enteredStreet,
         number: enteredNumber,
-      },
-      contactPerson: {
         fullName: enteredFullName,
         email: enteredEmail,
         tel: enteredTelephoneNumber,
-      },
-      matCollections: [],
-      path: `p${SLICE.suppliers.length + 1}`,
-    });
+      })
+    );
 
     setEnteredName("");
     setEnteredField("");
