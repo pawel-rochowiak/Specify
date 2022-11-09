@@ -254,18 +254,6 @@ const allSlice = createSlice({
     test2(state, action) {
       console.log(`print ${action.payload}`);
     },
-    addProjects(state, action) {
-      state.projects.push({
-        name: action.payload.name,
-        type: action.payload.type,
-        scope: action.payload.scope,
-        date: action.payload.date,
-        team: action.payload.team,
-        path: `p${state.length + 1}`,
-        area: [],
-        projectTasks: [],
-      });
-    },
   },
 });
 
@@ -312,8 +300,55 @@ const suppliersSlice = createSlice({
         path: `p${state.length + 1}`,
       });
     },
+    addCollection(state, action) {
+      const newMaterialObjMarkup = {
+        name: action.payload.name,
+        supplier: action.payload.supplier,
+        collection: action.payload.collection
+          ? action.payload.collection
+          : action.payload.existingCollection,
+        category: action.payload.category
+          ? action.payload.category
+          : action.payload.existingCategory,
+        certificates: action.payload.certificates,
+        info: action.payload.info,
+        image: action.payload.image,
+        link: action.payload.link,
+        path: `cat${state.length + 1}`,
+      };
+
+      const materialCollection = state
+        .find(action.payload.findSupplier)
+        .matCollections.find(action.payload.findCollection);
+
+      if (materialCollection) {
+        materialCollection.materials.push(newMaterialObjMarkup);
+      } else if (!materialCollection) {
+        state.find(action.payload.findSupplier).matCollections.push({
+          name: action.payload.collection
+            ? action.payload.collection
+            : action.payload.existingCollection,
+          materials: action.payload.pushInto(newMaterialObjMarkup, []),
+        });
+      }
+    },
   },
 });
+
+// if (materialCollection) {
+//   materialCollection.materials.push(newMaterialObjMarkup);
+// } else if (!materialCollection) {
+//   SLICE.suppliers.find(findSupplier).matCollections.push({
+//     name: enteredCollection
+//       ? enteredCollection
+//       : enteredExistingCollection.current.value,
+//     materials: pushInto(newMaterialObjMarkup, []),
+//   });
+// }
+
+// const materialCollection = SLICE.suppliers
+//   .find(findSupplier)
+//   .matCollections.find(findCollection);
 
 const projectSlice = createSlice({
   name: "projects",
@@ -331,14 +366,14 @@ const projectSlice = createSlice({
         projectTasks: [],
       });
     },
-  },
-  addAreas(state, action) {
-    state.push({
-      name: action.payload.name,
-      deck: action.payload.deck,
-      fz: action.payload.fz,
-      subcontractor: action.payload.subcontractor,
-    });
+    addAreas(state, action) {
+      state[action.payload.project].area.push({
+        name: action.payload.name,
+        deck: action.payload.deck,
+        fz: action.payload.fz,
+        subcontractor: action.payload.subcontractor,
+      });
+    },
   },
 });
 
@@ -346,8 +381,34 @@ const librarySlice = createSlice({
   name: "library",
   initialState: initialState.library,
   reducers: {
-    testTasks(state, action) {
-      console.log(`Library slice: ${state}`);
+    addMaterials(state, action) {
+      const newMaterialObjMarkup = {
+        name: action.payload.name,
+        supplier: action.payload.supplier,
+        collection: action.payload.collection
+          ? action.payload.collection
+          : action.payload.existingCollection,
+        category: action.payload.category
+          ? action.payload.category
+          : action.payload.existingCategory,
+        certificates: action.payload.certificates,
+        info: action.payload.info,
+        image: action.payload.image,
+        link: action.payload.link,
+        path: `cat${state.length + 1}`,
+      };
+
+      if (state.find(action.payload.findCategory)) {
+        state
+          .find(action.payload.findCategory)
+          .materials.push(newMaterialObjMarkup);
+      } else if (!state.find(action.payload.findCategory)) {
+        state.push({
+          name: action.payload.category,
+          path: `cat${state.length + 1}`,
+          materials: action.payload.pushInto(newMaterialObjMarkup, []),
+        });
+      }
     },
   },
 });

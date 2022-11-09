@@ -2,8 +2,14 @@ import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewMaterialForm.module.css";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
+import { libraryActions, suppliersActions } from "../../store/index";
+import { useSelector, useDispatch } from "react-redux";
 
 const NewMaterialForm = (props) => {
+  const suppliersState = useSelector((state) => state.suppliers);
+  const dispatch = useDispatch();
+  const materialState = useSelector((state) => state.library);
+
   const [enteredName, setEnteredName] = useState("");
   const [enteredCollection, setEnteredCollection] = useState("");
   const [enteredCertificates, setEnteredCertificates] = useState("");
@@ -24,10 +30,10 @@ const NewMaterialForm = (props) => {
 
   if (props.supplier) {
     //Specific supplier case
-    ss = SLICE.suppliers.find((el) => el.path === props.supplier);
+    ss = suppliersState.find((el) => el.path === props.supplier);
 
     specificSupplier = pushInto(
-      SLICE.suppliers.find((el) => el.path === props.supplier).name,
+      suppliersState.find((el) => el.path === props.supplier).name,
       []
     );
 
@@ -45,9 +51,9 @@ const NewMaterialForm = (props) => {
   }
 
   //All suppliers case
-  const supplierList = SLICE.suppliers.map((el) => [el.name]);
+  const supplierList = suppliersState.map((el) => [el.name]);
 
-  const allCollections = SLICE.suppliers.map((el) => el.matCollections);
+  const allCollections = suppliersState.map((el) => el.matCollections);
 
   const selectOptionsArr = supplierList.map((el, index) => {
     el.push(allCollections[index]);
@@ -131,48 +137,48 @@ const NewMaterialForm = (props) => {
 
     ///////////////////////
 
-    const newMaterialObjMarkup = {
-      name: enteredName,
-      supplier: pickedSupplier.current.value,
-      collection: enteredCollection
-        ? enteredCollection
-        : enteredExistingCollection.current.value,
-      category: enteredCategory ? enteredCategory : enteredCat.current.value,
-      certificates: enteredCertificates,
-      info: enteredDescription,
-      image: enteredImage,
-      link: enteredLink,
-      path: `cat${SLICE.library.length + 1}`,
-    };
-
-    if (SLICE.library.find(findCategory)) {
-      SLICE.library.find(findCategory).materials.push(newMaterialObjMarkup);
-    } else if (!SLICE.library.find(findCategory)) {
-      SLICE.library.push({
-        name: enteredCategory,
-        path: `cat${SLICE.library.length + 1}`,
-        materials: pushInto(newMaterialObjMarkup, []),
-      });
+    if (materialState.find(findCategory) || !materialState.find(findCategory)) {
+      dispatch(
+        libraryActions.addMaterials({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          collection: enteredCollection,
+          existingCollection: enteredExistingCollection.current.value,
+          category: enteredCategory,
+          existingCategory: enteredCat.current.value,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          findCategory: findCategory,
+          pushInto: pushInto,
+        })
+      );
     }
 
-    ///Checking if collection picked from the form is existing if not new collection is created within corect supplier///
-
-    const materialCollection = SLICE.suppliers
+    const materialCollection = suppliersState
       .find(findSupplier)
       .matCollections.find(findCollection);
 
-    if (materialCollection) {
-      materialCollection.materials.push(newMaterialObjMarkup);
-    } else if (!materialCollection) {
-      SLICE.suppliers.find(findSupplier).matCollections.push({
-        name: enteredCollection
-          ? enteredCollection
-          : enteredExistingCollection.current.value,
-        materials: pushInto(newMaterialObjMarkup, []),
-      });
+    if (materialCollection || !materialCollection) {
+      dispatch(
+        suppliersActions.addCollection({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          collection: enteredCollection,
+          existingCollection: enteredExistingCollection.current.value,
+          category: enteredCategory,
+          existingCategory: enteredCat.current.value,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          findSupplier: findSupplier,
+          findCollection: findCollection,
+          pushInto: pushInto,
+        })
+      );
     }
-
-    console.log(SLICE.suppliers);
 
     ///Setting all input walues back to empty string///
 

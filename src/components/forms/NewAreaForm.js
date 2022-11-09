@@ -4,7 +4,6 @@ import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { projectActions } from "../../store/index";
 import { useSelector, useDispatch } from "react-redux";
-import SLICE from "../../store/DUMMY_STATE_SLICE";
 
 const NewAreaForm = (props) => {
   const stateProjects = useSelector((state) => state.projects);
@@ -49,25 +48,17 @@ const NewAreaForm = (props) => {
       (el) => el.path === props.project
     );
 
-    const selectedProjectAreas = selectedProject.area;
-
-    console.log(selectedProjectAreas);
+    const projectIndex = stateProjects.indexOf(selectedProject);
 
     dispatch(
-      projectActions.addArea({
+      projectActions.addAreas({
         name: enteredName,
         deck: enteredDeck,
         fz: enteredFz,
         subcontractor: enteredSubcontractor,
+        project: projectIndex,
       })
     );
-
-    // selectedProject.area.push({
-    //   name: enteredName,
-    //   deck: enteredDeck,
-    //   fz: enteredFz,
-    //   subcontractor: enteredSubcontractor,
-    // });
 
     setEnteredName("");
     setEnteredDeck("");
