@@ -1,4 +1,3 @@
-import { createStore } from "redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -244,6 +243,30 @@ const initialState = {
   ],
 };
 
+// export const fetchState = () => {
+//   return async (dispatch) => {
+//     const fetchData = async () => {
+//       const response = await fetch(
+//         "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json"
+//       );
+
+//       if (!response.ok) {
+//         throw new Error("Could not fetch App state!");
+//       }
+
+//       const data = await response.json();
+
+//       return data;
+//     };
+
+//     try {
+//       const initialState = await fetchData();
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   };
+// };
+
 const allSlice = createSlice({
   name: "all",
   initialState: initialState,
@@ -334,21 +357,6 @@ const suppliersSlice = createSlice({
     },
   },
 });
-
-// if (materialCollection) {
-//   materialCollection.materials.push(newMaterialObjMarkup);
-// } else if (!materialCollection) {
-//   SLICE.suppliers.find(findSupplier).matCollections.push({
-//     name: enteredCollection
-//       ? enteredCollection
-//       : enteredExistingCollection.current.value,
-//     materials: pushInto(newMaterialObjMarkup, []),
-//   });
-// }
-
-// const materialCollection = SLICE.suppliers
-//   .find(findSupplier)
-//   .matCollections.find(findCollection);
 
 const projectSlice = createSlice({
   name: "projects",

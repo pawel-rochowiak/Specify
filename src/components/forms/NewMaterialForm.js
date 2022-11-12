@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewMaterialForm.module.css";
-import SLICE from "../../store/DUMMY_STATE_SLICE";
 import { libraryActions, suppliersActions } from "../../store/index";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -228,7 +227,7 @@ const NewMaterialForm = (props) => {
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
               <select ref={enteredCat}>
-                {SLICE.library.map((el) => {
+                {materialState.map((el) => {
                   return <option key={el.name}>{el.name}</option>;
                 })}
               </select>
@@ -250,7 +249,7 @@ const NewMaterialForm = (props) => {
             <div className={`${classes.custom_select}`}>
               <select ref={pickedSupplier}>
                 {!props.supplier ? (
-                  SLICE.suppliers.map((el) => {
+                  suppliersState.map((el) => {
                     return <option key={el.name}>{el.name}</option>;
                   })
                 ) : (
