@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
-import { suppliersActions } from "../../store/index";
+import { suppliersActions } from "../../store/suppliers-slice";
 import { useDispatch } from "react-redux";
 
 const NewProjectForm = (props) => {

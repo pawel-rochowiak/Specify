@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
-import { projectActions } from "../../store/index";
+import { projectActions } from "../../store/projects-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 const NewAreaForm = (props) => {

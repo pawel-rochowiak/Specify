@@ -3,7 +3,7 @@ import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { allSLiceActions } from "../../store/index";
 import SLICE from "../../store/DUMMY_STATE_SLICE";
-import { tasksActions } from "../../store/index";
+import { tasksActions } from "../../store/tasks-slice";
 import { useDispatch } from "react-redux";
 
 const NewTaskForm = (props) => {

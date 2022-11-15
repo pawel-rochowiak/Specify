@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewMaterialForm.module.css";
-import { libraryActions, suppliersActions } from "../../store/index";
+import { libraryActions } from "../../store/library-slice";
+import { suppliersActions } from "../../store/suppliers-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 const NewMaterialForm = (props) => {
