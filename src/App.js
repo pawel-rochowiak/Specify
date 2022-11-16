@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { allSLiceActions } from "./store/index";
+import { fetchStateData } from "./store/all-actions";
 
 let isInitial = true;
 
@@ -18,6 +19,10 @@ function App() {
   let store = useSelector((state) => state);
 
   useEffect(() => {
+    dispatch(fetchStateData());
+  }, [dispatch]);
+
+  useEffect(() => {
     const fetchStatus = async () => {
       const response = await fetch(
         "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json",
@@ -28,24 +33,23 @@ function App() {
       }
     };
 
-    const fetchStatus1 = async () => {
-      const response = await fetch(
-        "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json"
-      );
-      const responseData = await response.json();
-      console.log(responseData);
-      if (!response.ok) {
-        throw new Error("sending cart date failed");
-      }
-    };
+    // const fetchInitialStatus = async () => {
+    //   const response = await fetch(
+    //     "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json"
+    //   );
+    //   const responseData = await response.json();
+    //   console.log(responseData);
+    //   if (!response.ok) {
+    //     throw new Error("sending cart date failed");
+    //   }
+    // };
 
     if (isInitial) {
-      fetchStatus1().catch((error) => console.log(error));
+      // fetchInitialStatus().catch((error) => console.log(error));
       isInitial = false;
       return;
     }
 
-    console.log("asda");
     fetchStatus().catch((error) => console.log(error));
   }, [store, dispatch]);
 

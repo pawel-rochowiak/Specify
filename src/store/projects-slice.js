@@ -77,7 +77,20 @@ const initialState = [
     date: "",
     team: "Anna, Hanna",
     path: "p4",
-    area: [],
+    area: [
+      {
+        name: "MSC restaurant 1",
+        deck: "5",
+        fireZone: "1",
+        subcontractor: "TSI",
+      },
+      {
+        name: "MSC restaurant 2",
+        deck: "9",
+        fireZone: "2",
+        subcontractor: "TSI",
+      },
+    ],
     projectTasks: [],
   },
   {
@@ -87,7 +100,20 @@ const initialState = [
     date: "",
     team: "Anna, Hanna",
     path: "p5",
-    area: [],
+    area: [
+      {
+        name: "MSC restaurant 1",
+        deck: "5",
+        fireZone: "1",
+        subcontractor: "TSI",
+      },
+      {
+        name: "MSC restaurant 2",
+        deck: "9",
+        fireZone: "2",
+        subcontractor: "TSI",
+      },
+    ],
     projectTasks: [],
   },
 ];
@@ -104,7 +130,20 @@ const projectSlice = createSlice({
         date: action.payload.date,
         team: action.payload.team,
         path: `p${state.length + 1}`,
-        area: [],
+        area: [
+          {
+            name: "MSC restaurant 1",
+            deck: "5",
+            fireZone: "1",
+            subcontractor: "TSI",
+          },
+          {
+            name: "MSC restaurant 2",
+            deck: "9",
+            fireZone: "2",
+            subcontractor: "TSI",
+          },
+        ],
         projectTasks: [],
       });
     },
@@ -115,6 +154,9 @@ const projectSlice = createSlice({
         fz: action.payload.fz,
         subcontractor: action.payload.subcontractor,
       });
+    },
+    replceProjects(state, action) {
+      return action.payload;
     },
   },
 });

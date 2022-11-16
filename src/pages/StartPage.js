@@ -30,24 +30,6 @@ import LogOutIcon from "../components/icons/LogOutIcon";
 import { useSelector, useDispatch } from "react-redux";
 
 const StartPage = (props) => {
-  // useEffect(() => {
-  //   // const fetchData = async () => {
-  //   //   const response = await fetch(
-  //   //     "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json"
-  //   //   );
-  //   //   const responseData = await response.json();
-  //   //   console.log(responseData);
-  //   // };
-  //   // fetchData();
-
-  //   fetch(
-  //     "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json",
-  //     {
-  //       method: "PUT",
-  //       body: JSON.stringify(state),
-  //     }
-  //   );
-  // }, []);
   //State slices//
   const state = useSelector((state) => state.all);
   const stateTasks = useSelector((state) => state.tasks);

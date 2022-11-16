@@ -2,7 +2,6 @@ import classes from "./ProjectPageDetails.module.css";
 import DetailItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
-import SLICE from "../store/DUMMY_STATE_SLICE";
 
 const ProjectPageDetails = (props) => {
   const stateProjects = useSelector((state) => state.projects);
