@@ -3,10 +3,11 @@ import tasksSlice from "./tasks-slice";
 import librarySlice from "./library-slice";
 import projectSlice from "./projects-slice";
 import suppliersSlice from "./suppliers-slice";
+import globalSlice from "./global-slice";
 
 const store = configureStore({
   reducer: {
-    // all: allSlice.reducer,
+    global: globalSlice.reducer,
     tasks: tasksSlice.reducer,
     projects: projectSlice.reducer,
     suppliers: suppliersSlice.reducer,

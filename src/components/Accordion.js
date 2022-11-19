@@ -6,7 +6,11 @@ import ProjectsIcon from "./icons/ProjectsIcon";
 import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
 
+import { globalActions } from "../store/global-slice";
+import { useSelector, useDispatch } from "react-redux";
+
 const Accordion = (props) => {
+  const dispatch = useDispatch();
   const liftTargetHandler = (event) => {
     event.preventDefault();
 
@@ -15,7 +19,9 @@ const Accordion = (props) => {
 
     const target = targetStart.toLowerCase();
 
-    props.accordionActivation(target);
+    dispatch(globalActions.setTarget(target));
+
+    // props.accordionActivation(target);
   };
 
   const componentNames = {

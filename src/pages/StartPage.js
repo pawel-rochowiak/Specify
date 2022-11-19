@@ -26,12 +26,14 @@ import TasksPage from "./TasksPage";
 import TasksPageDetails from "./TaskPageDetails";
 import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
-
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const StartPage = (props) => {
+  const stateTarget = useSelector((state) => state.global.target);
+  // console.log(stateTarget);
+
   //State slices//
-  const state = useSelector((state) => state.all);
+
   const stateTasks = useSelector((state) => state.tasks);
   const stateProjects = useSelector((state) => state.projects);
   const stateSuppliers = useSelector((state) => state.suppliers);
@@ -39,7 +41,6 @@ const StartPage = (props) => {
   ////////////////
   const [data, setData] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [currTarget, setTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
 
   const newItemHandler = () => {
@@ -52,34 +53,34 @@ const StartPage = (props) => {
     setIsFormVisible(false);
   };
 
-  const targetActivationHandler = (target) => {
-    if (target === "tasks") {
+  useEffect(() => {
+    if (stateTarget === "tasks") {
       setDetailTarget("");
-      setTarget(target);
       setData(stateTasks);
+      console.log(data, stateTarget);
     }
-    if (target === "projects") {
+    if (stateTarget === "projects") {
       setDetailTarget("");
-      setTarget(target);
       setData(stateProjects);
     }
-    if (target === "suppliers") {
+    if (stateTarget === "suppliers") {
       setDetailTarget("");
-      setTarget(target);
       setData(stateSuppliers);
     }
-    if (target === "library") {
+    if (stateTarget === "library") {
       setDetailTarget("");
-      setTarget(target);
       setData(stateLibrary);
     }
-    if (target.includes("/suppliers/s")) {
-      setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
-    }
-    if (target.includes("/projects/p")) {
-      setDetailTarget(["detailProject", target.split("/").at(-1)]);
-    }
-  };
+  }, [stateTarget]);
+
+  // const targetActivationHandler = (target) => {
+  //   if (target.includes("/suppliers/s")) {
+  //     setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
+  //   }
+  //   if (target.includes("/projects/p")) {
+  //     setDetailTarget(["detailProject", target.split("/").at(-1)]);
+  //   }
+  // };
 
   const componentNames = {
     tasks: TasksPage,
@@ -88,7 +89,7 @@ const StartPage = (props) => {
     library: LibraryPage,
   };
 
-  let category = currTarget;
+  let category = stateTarget;
   let DynamicComponent = componentNames[category];
 
   const componentNamesDetails = {
@@ -101,7 +102,7 @@ const StartPage = (props) => {
   let DynamicComponentDetails = componentNamesDetails[category];
 
   const reactRoutesMain = data.map(({ name, path }) => (
-    <Route key={path} path={`/${currTarget}/${path}`}>
+    <Route key={path} path={`/${stateTarget}/${path}`}>
       <DynamicComponentDetails
         name={name}
         path={path}
@@ -111,8 +112,8 @@ const StartPage = (props) => {
   ));
 
   const reactRoutesMainStarter = data.map(({ _, path }) => (
-    <Route key={path} path={`/${currTarget}`} exact>
-      {currTarget === "tasks" ? (
+    <Route key={path} path={`/${stateTarget}`} exact>
+      {stateTarget === "tasks" ? (
         <DynamicComponent data={data} createItem={newItemHandler} />
       ) : (
         <DynamicComponent createItem={newItemHandler} />
@@ -121,7 +122,7 @@ const StartPage = (props) => {
   ));
 
   const routerLinks = data.map(({ name, path }) => (
-    <Link key={path} to={`/${currTarget}/${path}`}>
+    <Link key={path} to={`/${stateTarget}/${path}`}>
       <li className={classes.item}>{name}</li>
     </Link>
   ));
@@ -131,7 +132,7 @@ const StartPage = (props) => {
   const reactRoutesSidebar = componentNamesKeys.map((key) => (
     <Route key={key} path={`/${key}`}>
       <SideMenuLinks
-        targetActivation={targetActivationHandler}
+        // targetActivation={targetActivationHandler}
         links={routerLinks}
       />
     </Route>
@@ -139,22 +140,22 @@ const StartPage = (props) => {
 
   let TargetForm;
 
-  if (currTarget === "tasks") {
+  if (stateTarget === "tasks") {
     TargetForm = (
       <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
-  if (currTarget === "projects") {
+  if (stateTarget === "projects") {
     TargetForm = (
       <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
-  if (currTarget === "suppliers") {
+  if (stateTarget === "suppliers") {
     TargetForm = (
       <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
   }
-  if (currTarget === "library") {
+  if (stateTarget === "library") {
     TargetForm = (
       <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
     );
@@ -203,22 +204,22 @@ const StartPage = (props) => {
               <Accordion
                 name="Tasks"
                 data="Tasks"
-                accordionActivation={targetActivationHandler}
+                // accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Projects"
                 data="Projects"
-                accordionActivation={targetActivationHandler}
+                // accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Suppliers"
                 data="Suppliers"
-                accordionActivation={targetActivationHandler}
+                // accordionActivation={targetActivationHandler}
               />
               <Accordion
                 name="Library"
                 data="Library"
-                accordionActivation={targetActivationHandler}
+                // accordionActivation={targetActivationHandler}
               />
             </div>
           </div>
@@ -241,5 +242,3 @@ const StartPage = (props) => {
 };
 
 export default StartPage;
-
-//taski beda generowane z statusu z databazy za pomoca mapy z arr pamietaj zeby dodawac key!!!!!

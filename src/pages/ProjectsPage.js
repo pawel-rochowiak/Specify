@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const ProjectPage = (props) => {
   const stateProjects = useSelector((state) => state.projects);
-  console.log(stateProjects);
+
   return (
     <Fragment>
       <div className={classes.tasks}>

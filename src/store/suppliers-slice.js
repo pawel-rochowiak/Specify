@@ -131,6 +131,9 @@ const suppliersSlice = createSlice({
         });
       }
     },
+    replceSuppliers(state, action) {
+      return action.payload;
+    },
   },
 });
 

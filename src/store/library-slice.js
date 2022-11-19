@@ -40,6 +40,9 @@ const librarySlice = createSlice({
         });
       }
     },
+    replceLibrary(state, action) {
+      return action.payload;
+    },
   },
 });
 

@@ -5,18 +5,15 @@ import Footer from "./components/Footer";
 import { Fragment } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { allSLiceActions } from "./store/index";
 import { fetchStateData } from "./store/all-actions";
 
 let isInitial = true;
 
-//trzeba stworzyc akcje action creatorem dla zmiany initial state z servera
-//jak sie dodaje state mitoda post nie moge dodawac calego state. tylko poszczegolne czesci state chyba bo naspisuja caly state
-//dzis 3 filmy z action creatora
-
 function App() {
   const dispatch = useDispatch();
   let store = useSelector((state) => state);
+
+  console.log(store);
 
   useEffect(() => {
     dispatch(fetchStateData());
@@ -33,19 +30,7 @@ function App() {
       }
     };
 
-    // const fetchInitialStatus = async () => {
-    //   const response = await fetch(
-    //     "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json"
-    //   );
-    //   const responseData = await response.json();
-    //   console.log(responseData);
-    //   if (!response.ok) {
-    //     throw new Error("sending cart date failed");
-    //   }
-    // };
-
     if (isInitial) {
-      // fetchInitialStatus().catch((error) => console.log(error));
       isInitial = false;
       return;
     }

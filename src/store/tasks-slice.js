@@ -86,6 +86,9 @@ const tasksSlice = createSlice({
         status: "0%",
       });
     },
+    replceTasks(state, action) {
+      return action.payload;
+    },
   },
 });
 

@@ -1,4 +1,8 @@
 import { projectActions } from "../store/projects-slice";
+import { suppliersActions } from "../store/suppliers-slice";
+import { tasksActions } from "../store/tasks-slice";
+import { libraryActions } from "../store/library-slice";
+import globalSlice, { globalActions } from "../store/global-slice";
 
 export const fetchStateData = () => {
   return async (dispatch) => {
@@ -18,6 +22,7 @@ export const fetchStateData = () => {
 
     try {
       const stateData = await fetchData();
+
       const sortedStateData = stateData.projects.map((el) => {
         return {
           name: el.name,
@@ -31,35 +36,13 @@ export const fetchStateData = () => {
         };
       });
 
-      // console.log(sortedStateData);
       dispatch(projectActions.replceProjects(sortedStateData));
+      dispatch(suppliersActions.replceSuppliers(stateData.suppliers));
+      dispatch(tasksActions.replceTasks(stateData.tasks));
+      // dispatch(libraryActions.replceLibrary(stateData.library));
+      dispatch(globalActions.replaceTarget(stateData.global));
     } catch (error) {
       console.log(error.message);
     }
   };
 };
-
-// state.push({
-//   name: action.payload.name,
-//   type: action.payload.type,
-//   scope: action.payload.scope,
-//   date: action.payload.date,
-//   team: action.payload.team,
-//   path: `p${state.length + 1}`,
-//   area: [
-//     {
-//       name: "MSC restaurant 1",
-//       deck: "5",
-//       fireZone: "1",
-//       subcontractor: "TSI",
-//     },
-//     {
-//       name: "MSC restaurant 2",
-//       deck: "9",
-//       fireZone: "2",
-//       subcontractor: "TSI",
-//     },
-//   ],
-//   projectTasks: [],
-// });
-// },
