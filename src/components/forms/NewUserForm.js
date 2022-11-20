@@ -1,7 +1,6 @@
 import React from "react";
 import Modal from "../../UI/Modal";
 import PasswordIcon from "../icons/PasswordIcon";
-import EmailCheckIcon from "../icons/EmailCheckIcon";
 import CheckIcon from "../icons/CheckIcon";
 import EmailIcon from "../icons/EmailIcon";
 import Logo from "../../Assets/specify_logo.png";
@@ -16,7 +15,17 @@ const NewUserForm = (props) => {
       <form className={classes.form}>
         <div className={classes.formGroup}>
           <EmailIcon className={classes.icon} />
-          <input required type="text" id="user"></input>
+          <input required type="text" id="name"></input>
+          <p className={classes.description}>Name</p>
+        </div>
+        <div className={classes.formGroup}>
+          <EmailIcon className={classes.icon} />
+          <input required type="text" id="surname"></input>
+          <p className={classes.description}>Surname</p>
+        </div>
+        <div className={classes.formGroup}>
+          <EmailIcon className={classes.icon} />
+          <input required type="text" id="mail"></input>
           <p className={classes.description}>E-mail (to be used as login)</p>
         </div>
         <div className={classes.formGroup}>
@@ -26,12 +35,12 @@ const NewUserForm = (props) => {
         </div>
         <div className={classes.formGroup}>
           <EmailIcon className={classes.icon} />
-          <input required type="text" id="adress"></input>
+          <input required type="text" id="confirmMail"></input>
           <p className={classes.description}>confirm e-mail</p>
         </div>
         <div className={classes.formGroup}>
           <CheckIcon className={classes.icon} />
-          <input required type="text" id="confirm"></input>
+          <input required type="text" id="confirmPassword"></input>
           <p className={classes.description}>confirm password</p>
         </div>
       </form>

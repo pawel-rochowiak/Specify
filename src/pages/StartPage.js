@@ -57,7 +57,6 @@ const StartPage = (props) => {
     if (stateTarget === "tasks") {
       setDetailTarget("");
       setData(stateTasks);
-      console.log(data, stateTarget);
     }
     if (stateTarget === "projects") {
       setDetailTarget("");
@@ -73,14 +72,14 @@ const StartPage = (props) => {
     }
   }, [stateTarget]);
 
-  // const targetActivationHandler = (target) => {
-  //   if (target.includes("/suppliers/s")) {
-  //     setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
-  //   }
-  //   if (target.includes("/projects/p")) {
-  //     setDetailTarget(["detailProject", target.split("/").at(-1)]);
-  //   }
-  // };
+  const targetActivationHandler = (target) => {
+    // if (target.includes("/suppliers/s")) {
+    //   setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
+    // }
+    // if (target.includes("/projects/p")) {
+    //   setDetailTarget(["detailProject", target.split("/").at(-1)]);
+    // }
+  };
 
   const componentNames = {
     tasks: TasksPage,
@@ -132,7 +131,7 @@ const StartPage = (props) => {
   const reactRoutesSidebar = componentNamesKeys.map((key) => (
     <Route key={key} path={`/${key}`}>
       <SideMenuLinks
-        // targetActivation={targetActivationHandler}
+        targetActivation={targetActivationHandler}
         links={routerLinks}
       />
     </Route>

@@ -19,6 +19,7 @@ const SuppliersPage = (props) => {
         <div className={classes.taskList}>
           {stateSuppliers.map((el) => (
             <SupplierItem
+              key={el.path}
               name={el.name}
               field={el.field}
               adress={el.adress}

@@ -41,8 +41,8 @@ function App() {
   return (
     <Fragment>
       <div className="App">
-        {/* <Welcome /> */}
-        <StartPage />
+        <Welcome />
+        {/* <StartPage /> */}
       </div>
       <Footer />
     </Fragment>
