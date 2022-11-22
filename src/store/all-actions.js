@@ -2,7 +2,7 @@ import { projectActions } from "../store/projects-slice";
 import { suppliersActions } from "../store/suppliers-slice";
 import { tasksActions } from "../store/tasks-slice";
 import { libraryActions } from "../store/library-slice";
-import globalSlice, { globalActions } from "../store/global-slice";
+import { globalActions } from "../store/global-slice";
 
 export const fetchStateData = () => {
   return async (dispatch) => {

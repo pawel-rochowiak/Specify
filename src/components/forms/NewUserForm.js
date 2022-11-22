@@ -7,7 +7,13 @@ import Logo from "../../Assets/specify_logo.png";
 import classes from "./NewUserForm.module.css";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 
+//STATE//
+import { usersActions } from "../../store/users-slice";
+import { useDispatch } from "react-redux";
+
 const NewUserForm = (props) => {
+  const dispatch = useDispatch();
+
   const nameInputRef = useRef();
   const surnameInputRef = useRef();
   const passwordInputRef = useRef();
@@ -38,21 +44,37 @@ const NewUserForm = (props) => {
           "Content-Type": "application/json",
         },
       }
-    ).then((res) => {
-      setIsLoading(false);
-      if (res.ok) {
-        //...
-      } else {
-        return res.json().then((data) => {
-          let errorMessage = "Autenthication failed!";
+    )
+      .then((res) => {
+        setIsLoading(false);
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            let errorMessage = "Autenthication failed!";
 
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-          alert(errorMessage);
-        });
-      }
-    });
+            if (data && data.error && data.error.message) {
+              errorMessage = data.error.message;
+            }
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .then((data) => {
+        dispatch(
+          usersActions.addUser({
+            name: enteredName,
+            surname: enteredSurname,
+            token: data.idToken,
+            email: data.email,
+            isLoggedIn: false,
+          })
+        );
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   const mainContent = (

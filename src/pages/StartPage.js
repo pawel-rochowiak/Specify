@@ -30,7 +30,6 @@ import { useSelector } from "react-redux";
 
 const StartPage = (props) => {
   const stateTarget = useSelector((state) => state.global.target);
-  // console.log(stateTarget);
 
   //State slices//
 
@@ -180,62 +179,45 @@ const StartPage = (props) => {
 
   return (
     <Fragment>
-      <Router>
-        {isFormVisible ? TargetForm : ""}
-        <div className={classes.container}>
-          <div className={classes.sidebar}>
-            <div className={classes.user}>
-              <UserIcon className={classes.icon} size="12rem" />
+      {/* cd  */}
+      {isFormVisible ? TargetForm : ""}
+      <div className={classes.container}>
+        <div className={classes.sidebar}>
+          <div className={classes.user}>
+            <UserIcon className={classes.icon} size="12rem" />
+            <Link to="/">
               <LogOutIcon size="2.5rem" />
-            </div>
-            <div className={classes.accordionContainer}>
-              <div
-                className={classes.accordionItem}
-                data-accordion={props.data}
-              >
-                <Link to={"/"}>
-                  <div className={classes.itemDescription}>
-                    <HomeIcon unit="2rem" />
-                    <span className={classes.mLeft}>Home</span>
-                  </div>
-                </Link>
-              </div>
-              <Accordion
-                name="Tasks"
-                data="Tasks"
-                // accordionActivation={targetActivationHandler}
-              />
-              <Accordion
-                name="Projects"
-                data="Projects"
-                // accordionActivation={targetActivationHandler}
-              />
-              <Accordion
-                name="Suppliers"
-                data="Suppliers"
-                // accordionActivation={targetActivationHandler}
-              />
-              <Accordion
-                name="Library"
-                data="Library"
-                // accordionActivation={targetActivationHandler}
-              />
-            </div>
+            </Link>
           </div>
-
-          <Switch>{reactRoutesSidebar}</Switch>
-
-          <div className={classes.mainContent}>
-            <Switch>
-              <Route key="home" path="/" exact>
-                <HomePage />
-              </Route>
-              {reactRoutesMainStarter}
-              {reactRoutesMain}
-            </Switch>
+          <div className={classes.accordionContainer}>
+            <div className={classes.accordionItem} data-accordion={props.data}>
+              <Link to="/home">
+                <div className={classes.itemDescription}>
+                  <HomeIcon unit="2rem" />
+                  <span className={classes.mLeft}>Home</span>
+                </div>
+              </Link>
+            </div>
+            <Accordion name="Tasks" data="Tasks" />
+            <Accordion name="Projects" data="Projects" />
+            <Accordion name="Suppliers" data="Suppliers" />
+            <Accordion name="Library" data="Library" />
           </div>
         </div>
-      </Router>
+
+        <Switch>{reactRoutesSidebar}</Switch>
+
+        <div className={classes.mainContent}>
+          <Switch>
+            <Route key="home" path="/home">
+              <HomePage />
+            </Route>
+            {reactRoutesMainStarter}
+            {reactRoutesMain}
+          </Switch>
+        </div>
+      </div>
+      {/* </Router> */}
     </Fragment>
   );
 };

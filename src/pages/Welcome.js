@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
-import Card from "../UI/Card";
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import Card from "../UI/Card";
 import PasswordIcon from "../components/icons/PasswordIcon";
 import UserIcon from "../components/icons/UserIcon";
 import Logo from "../Assets/specify_logo.png";
@@ -91,8 +92,9 @@ const Welcome = () => {
           <button type="button" onClick={addNewUserHandler}>
             New user
           </button>
+
           <button type="button" onClick={submitHandler}>
-            Login
+            <Link to="/home">Login</Link>
           </button>
         </div>
       </div>

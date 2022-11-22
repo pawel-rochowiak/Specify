@@ -1,4 +1,5 @@
 import "./App.css";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import StartPage from "./pages/StartPage";
 import Footer from "./components/Footer";
@@ -41,7 +42,13 @@ function App() {
   return (
     <Fragment>
       <div className="App">
-        <Welcome />
+        <Route path="/" exact>
+          <Welcome />
+        </Route>
+        <Route path="/home">
+          <StartPage />
+        </Route>
+
         {/* <StartPage /> */}
       </div>
       <Footer />

@@ -20,8 +20,6 @@ const Accordion = (props) => {
     const target = targetStart.toLowerCase();
 
     dispatch(globalActions.setTarget(target));
-
-    // props.accordionActivation(target);
   };
 
   const componentNames = {
