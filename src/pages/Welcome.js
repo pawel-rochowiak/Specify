@@ -7,8 +7,18 @@ import UserIcon from "../components/icons/UserIcon";
 import Logo from "../Assets/specify_logo.png";
 import classes from "./Welcome.module.css";
 import NewUserForm from "../components/forms/NewUserForm";
+import LoadingSpinner from "../UI/LoadingSpinner";
+
+//STATE//
+import { usersActions } from "../store/users-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Welcome = () => {
+  const users = useSelector((state) => state.users);
+  console.log(users);
+
+  const dispatch = useDispatch();
+
   const [isVisible, setIsVisible] = useState(false);
 
   const passwordInputRef = useRef();
@@ -56,6 +66,8 @@ const Welcome = () => {
       })
       .then((data) => {
         console.log(data);
+        localStorage.setItem("login", data.email);
+        dispatch(usersActions.login(data));
       })
       .catch((err) => {
         alert(err.message);
@@ -93,9 +105,12 @@ const Welcome = () => {
             New user
           </button>
 
-          <button type="button" onClick={submitHandler}>
-            <Link to="/home">Login</Link>
-          </button>
+          {!isLoading && (
+            <button type="button" onClick={submitHandler}>
+              <Link to="/home">Login</Link>
+            </button>
+          )}
+          {isLoading && <LoadingSpinner />}
         </div>
       </div>
     </Card>

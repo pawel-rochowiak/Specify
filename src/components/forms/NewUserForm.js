@@ -70,7 +70,6 @@ const NewUserForm = (props) => {
             isLoggedIn: false,
           })
         );
-        console.log(data);
       })
       .catch((err) => {
         alert(err.message);

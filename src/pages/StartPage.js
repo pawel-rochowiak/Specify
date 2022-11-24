@@ -26,9 +26,12 @@ import TasksPage from "./TasksPage";
 import TasksPageDetails from "./TaskPageDetails";
 import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
-import { useSelector } from "react-redux";
+import { usersActions } from "../store/users-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const StartPage = (props) => {
+  const dispatch = useDispatch();
+
   const stateTarget = useSelector((state) => state.global.target);
 
   //State slices//
@@ -177,15 +180,19 @@ const StartPage = (props) => {
     );
   }
 
+  const logoutHandler = () => {
+    const user = localStorage.getItem("login");
+    dispatch(usersActions.logout(user));
+  };
+
   return (
     <Fragment>
-      {/* cd  */}
       {isFormVisible ? TargetForm : ""}
       <div className={classes.container}>
         <div className={classes.sidebar}>
           <div className={classes.user}>
             <UserIcon className={classes.icon} size="12rem" />
-            <Link to="/">
+            <Link to="/" onClick={logoutHandler}>
               <LogOutIcon size="2.5rem" />
             </Link>
           </div>

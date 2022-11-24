@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useState } from "react";
 
-const initialState = [
-  { name: "Paweł", surname: "Rochowiak", token: "", isLoggedIn: false },
-];
+const initialState = [];
 
 const usersSlice = createSlice({
   name: "users",
   initialState: initialState,
   reducers: {
     login(state, action) {
-      if (action.payload.token) {
-        const user = state.find((el) => el.token === action.payload.token);
+      if (action.payload) {
+        const user = state.find((el) => el.email === action.payload.email);
         user.isLoggedIn = true;
       }
-    }, //action.payload.token
-    logout(state, action) {},
+    },
+    logout(state, action) {
+      if (action.payload) {
+        const user = state.find((el) => el.email === action.payload);
+        user.isLoggedIn = !user.isLoggedIn;
+      }
+    },
     addUser(state, action) {
       state.push({
         name: action.payload.name,
@@ -24,6 +27,9 @@ const usersSlice = createSlice({
         email: action.payload.email,
         isLoggedIn: action.payload.isLoggedIn,
       });
+    },
+    replceUsers(_, action) {
+      return action.payload;
     },
   },
 });

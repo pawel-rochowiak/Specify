@@ -3,6 +3,7 @@ import { suppliersActions } from "../store/suppliers-slice";
 import { tasksActions } from "../store/tasks-slice";
 import { libraryActions } from "../store/library-slice";
 import { globalActions } from "../store/global-slice";
+import { usersActions } from "../store/users-slice";
 
 export const fetchStateData = () => {
   return async (dispatch) => {
@@ -41,6 +42,7 @@ export const fetchStateData = () => {
       dispatch(tasksActions.replceTasks(stateData.tasks));
       // dispatch(libraryActions.replceLibrary(stateData.library));
       dispatch(globalActions.replaceTarget(stateData.global));
+      dispatch(usersActions.replceUsers(stateData.users));
     } catch (error) {
       console.log(error.message);
     }
