@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import classes from "./Welcome.module.css";
 import Card from "../UI/Card";
 import PasswordIcon from "../components/icons/PasswordIcon";
@@ -22,7 +22,6 @@ const Welcome = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const history = useHistory();
 
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
@@ -114,7 +113,7 @@ const Welcome = () => {
           </button>
 
           <button type="button" onClick={submitHandler}>
-            {!isLoading && <Link to="/home">Login</Link>}
+            {/* {!isLoading && <Link to="/home">Login</Link>} */}
             {isLoading && <LoadingSpinner />}
           </button>
         </div>
