@@ -188,43 +188,47 @@ const StartPage = (props) => {
   return (
     <Fragment>
       {isFormVisible ? TargetForm : ""}
-      <div className={classes.container}>
-        <div className={classes.sidebar}>
-          <div className={classes.user}>
-            <UserIcon className={classes.icon} size="12rem" />
-            <Link to="/" onClick={logoutHandler}>
-              <LogOutIcon size="2.5rem" />
-            </Link>
-          </div>
-          <div className={classes.accordionContainer}>
-            <div className={classes.accordionItem} data-accordion={props.data}>
-              <Link to="/home">
-                <div className={classes.itemDescription}>
-                  <HomeIcon unit="2rem" />
-                  <span className={classes.mLeft}>Home</span>
-                </div>
+      <Router>
+        <div className={classes.container}>
+          <div className={classes.sidebar}>
+            <div className={classes.user}>
+              <UserIcon className={classes.icon} size="12rem" />
+              <Link to="/" onClick={logoutHandler}>
+                <LogOutIcon size="2.5rem" />
               </Link>
             </div>
-            <Accordion name="Tasks" data="Tasks" />
-            <Accordion name="Projects" data="Projects" />
-            <Accordion name="Suppliers" data="Suppliers" />
-            <Accordion name="Library" data="Library" />
+            <div className={classes.accordionContainer}>
+              <div
+                className={classes.accordionItem}
+                data-accordion={props.data}
+              >
+                <Link to="/home">
+                  <div className={classes.itemDescription}>
+                    <HomeIcon unit="2rem" />
+                    <span className={classes.mLeft}>Home</span>
+                  </div>
+                </Link>
+              </div>
+              <Accordion name="Tasks" data="Tasks" />
+              <Accordion name="Projects" data="Projects" />
+              <Accordion name="Suppliers" data="Suppliers" />
+              <Accordion name="Library" data="Library" />
+            </div>
+          </div>
+
+          <Switch>{reactRoutesSidebar}</Switch>
+
+          <div className={classes.mainContent}>
+            <Switch>
+              <Route key="home" path="/home">
+                <HomePage />
+              </Route>
+              {reactRoutesMainStarter}
+              {reactRoutesMain}
+            </Switch>
           </div>
         </div>
-
-        <Switch>{reactRoutesSidebar}</Switch>
-
-        <div className={classes.mainContent}>
-          <Switch>
-            <Route key="home" path="/home">
-              <HomePage />
-            </Route>
-            {reactRoutesMainStarter}
-            {reactRoutesMain}
-          </Switch>
-        </div>
-      </div>
-      {/* </Router> */}
+      </Router>
     </Fragment>
   );
 };
