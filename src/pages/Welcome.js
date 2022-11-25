@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import classes from "./Welcome.module.css";
 import Card from "../UI/Card";
 import PasswordIcon from "../components/icons/PasswordIcon";
@@ -18,6 +18,7 @@ const Welcome = () => {
   console.log(users);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [isLogged, setIsLogged] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -67,7 +68,7 @@ const Welcome = () => {
       .then((data) => {
         console.log(data);
         setIsLogged(true);
-        // history.push("/home");
+        history.push("/home");
         localStorage.setItem("login", data.email);
         dispatch(usersActions.login(data));
       })
@@ -114,6 +115,7 @@ const Welcome = () => {
 
           <button type="button" onClick={submitHandler}>
             {/* {!isLoading && <Link to="/home">Login</Link>} */}
+            {!isLoading && "Login"}
             {isLoading && <LoadingSpinner />}
           </button>
         </div>
