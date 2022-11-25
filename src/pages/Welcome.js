@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import classes from "./Welcome.module.css";
 import Card from "../UI/Card";
 import PasswordIcon from "../components/icons/PasswordIcon";
 import UserIcon from "../components/icons/UserIcon";
 import Logo from "../Assets/specify_logo.png";
-import classes from "./Welcome.module.css";
 import NewUserForm from "../components/forms/NewUserForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
@@ -19,12 +19,13 @@ const Welcome = () => {
 
   const dispatch = useDispatch();
 
+  const [isLogged, setIsLogged] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  // const history = useHistory();
 
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -66,6 +67,8 @@ const Welcome = () => {
       })
       .then((data) => {
         console.log(data);
+        setIsLogged(true);
+        // history.push("/home");
         localStorage.setItem("login", data.email);
         dispatch(usersActions.login(data));
       })
@@ -91,12 +94,17 @@ const Welcome = () => {
         <form className={classes.form}>
           <div className={classes.formGroup}>
             <UserIcon className={classes.icon} size="3rem" />
-            <input ref={emailInputRef} type="text" id="user"></input>
+            <input required ref={emailInputRef} type="text" id="user"></input>
             <p className={classes.description}>user name</p>
           </div>
           <div className={classes.formGroup}>
             <PasswordIcon className={classes.icon} />
-            <input ref={passwordInputRef} type="text" id="password"></input>
+            <input
+              required
+              ref={passwordInputRef}
+              type="text"
+              id="password"
+            ></input>
             <p className={classes.description}>password</p>
           </div>
         </form>
@@ -105,12 +113,10 @@ const Welcome = () => {
             New user
           </button>
 
-          {!isLoading && (
-            <button type="button" onClick={submitHandler}>
-              <Link to="/home">Login</Link>
-            </button>
-          )}
-          {isLoading && <LoadingSpinner />}
+          <button type="button" onClick={submitHandler}>
+            {!isLoading && <Link to="/home">Login</Link>}
+            {isLoading && <LoadingSpinner />}
+          </button>
         </div>
       </div>
     </Card>

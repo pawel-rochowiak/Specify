@@ -65,7 +65,7 @@ const NewUserForm = (props) => {
           usersActions.addUser({
             name: enteredName,
             surname: enteredSurname,
-            token: data.idToken,
+            token: "",
             email: data.email,
             isLoggedIn: false,
           })

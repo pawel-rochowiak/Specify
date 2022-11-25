@@ -11,19 +11,21 @@ const usersSlice = createSlice({
       if (action.payload) {
         const user = state.find((el) => el.email === action.payload.email);
         user.isLoggedIn = true;
+        user.token = action.payload.idToken;
       }
     },
     logout(state, action) {
       if (action.payload) {
         const user = state.find((el) => el.email === action.payload);
+        user.token = "";
         user.isLoggedIn = !user.isLoggedIn;
+        localStorage.clear();
       }
     },
     addUser(state, action) {
       state.push({
         name: action.payload.name,
         surname: action.payload.surname,
-        token: action.payload.token,
         email: action.payload.email,
         isLoggedIn: action.payload.isLoggedIn,
       });
