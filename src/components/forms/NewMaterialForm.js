@@ -69,15 +69,19 @@ const NewMaterialForm = (props) => {
       return el;
     });
 
-    const allCollectionsOption = selectOptionsArr.map((el) => (
+    console.log(selectOptionsArr);
+
+    allCollectionsOption = selectOptionsArr.map((el) => (
       <optgroup label={el[0]} key={el[0]}>
-        {el[1].map((el) => (
+        {el[1]?.map((el) => (
           <option value={el.name} key={el.name}>
             {el.name}
           </option>
         ))}
       </optgroup>
     ));
+
+    console.log(allCollectionsOption);
   }
 
   const nameInputChangeHandler = (event) => {

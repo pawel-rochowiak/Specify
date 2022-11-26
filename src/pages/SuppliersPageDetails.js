@@ -13,12 +13,14 @@ const SuppliersPageDetails = (props) => {
 
   const correctSupplier = stateSuppliers.find(findSupplier);
 
-  const supplierCollections = correctSupplier.matCollections;
+  const supplierCollections = !correctSupplier.matCollections
+    ? []
+    : correctSupplier.matCollections;
 
   const noCollectionsInfo =
-    supplierCollections.length === 0 ? (
+    !supplierCollections || supplierCollections?.length === 0 ? (
       <div className={classes.info_message}>
-        No collection has been added. Please press{" "}
+        No collection has been added. Please press
         <span className={classes.highlight}>"Create item"</span> button to
         create new collection
       </div>
@@ -84,7 +86,7 @@ const SuppliersPageDetails = (props) => {
             <h3>material collections</h3>
             <div className={classes.collections_container}>
               {noCollectionsInfo}
-              {supplierCollections.map((el) => (
+              {supplierCollections?.map((el) => (
                 <Fragment>
                   <div className={classes.collection}>
                     <h4>{el.name}</h4>

@@ -48,8 +48,6 @@ function App() {
         <Route path="/home">
           <StartPage />
         </Route>
-
-        {/* <StartPage /> */}
       </div>
       <Footer />
     </Fragment>
