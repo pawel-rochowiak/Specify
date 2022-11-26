@@ -75,12 +75,12 @@ const StartPage = (props) => {
   }, [stateTarget]);
 
   const targetActivationHandler = (target) => {
-    // if (target.includes("/suppliers/s")) {
-    //   setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
-    // }
-    // if (target.includes("/projects/p")) {
-    //   setDetailTarget(["detailProject", target.split("/").at(-1)]);
-    // }
+    if (target.includes("/suppliers/s")) {
+      setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
+    }
+    if (target.includes("/projects/p")) {
+      setDetailTarget(["detailProject", target.split("/").at(-1)]);
+    }
   };
 
   const componentNames = {

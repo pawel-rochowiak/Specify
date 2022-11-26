@@ -45,7 +45,12 @@ const initialState = [
       email: "pavel.koziel@pepiczek.cz",
       tel: "0700-88-07-88",
     },
-    matCollections: [],
+    matCollections: [
+      {
+        name: "Col1",
+        materials: ["mat1", "mat2", "mat3"],
+      },
+    ],
     path: "s2",
   },
   {

@@ -26,7 +26,11 @@ const NewMaterialForm = (props) => {
     return arr;
   };
 
-  let ss, specificSupplier, specificSupplierOptions, allCollectionsOption2;
+  let ss,
+    specificSupplier,
+    specificSupplierOptions,
+    allCollectionsOption,
+    allCollectionsOption2;
 
   if (props.supplier) {
     //Specific supplier case
@@ -48,27 +52,33 @@ const NewMaterialForm = (props) => {
         ))}
       </optgroup>
     ));
+
+    console.log(allCollectionsOption2);
   }
 
-  //All suppliers case
-  const supplierList = suppliersState.map((el) => [el.name]);
+  if (!props.supplier) {
+    //All suppliers case
+    const supplierList = suppliersState.map((el) => [el.name]);
 
-  const allCollections = suppliersState.map((el) => el.matCollections);
+    console.log(supplierList);
 
-  const selectOptionsArr = supplierList.map((el, index) => {
-    el.push(allCollections[index]);
-    return el;
-  });
+    const allCollections = suppliersState.map((el) => el.matCollections);
 
-  const allCollectionsOption = selectOptionsArr.map((el) => (
-    <optgroup label={el[0]} key={el[0]}>
-      {el[1].map((el) => (
-        <option value={el.name} key={el.name}>
-          {el.name}
-        </option>
-      ))}
-    </optgroup>
-  ));
+    const selectOptionsArr = supplierList.map((el, index) => {
+      el.push(allCollections[index]);
+      return el;
+    });
+
+    const allCollectionsOption = selectOptionsArr.map((el) => (
+      <optgroup label={el[0]} key={el[0]}>
+        {el[1].map((el) => (
+          <option value={el.name} key={el.name}>
+            {el.name}
+          </option>
+        ))}
+      </optgroup>
+    ));
+  }
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
