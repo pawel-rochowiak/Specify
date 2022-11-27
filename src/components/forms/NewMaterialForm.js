@@ -45,22 +45,18 @@ const NewMaterialForm = (props) => {
 
     allCollectionsOption2 = specificSupplierOptions.map((el) => (
       <optgroup label={el[0]} key={el[0]}>
-        {el[1].map((el) => (
+        {el[1]?.map((el) => (
           <option value={el.name} key={el.name}>
             {el.name}
           </option>
         ))}
       </optgroup>
     ));
-
-    console.log(allCollectionsOption2);
   }
 
   if (!props.supplier) {
     //All suppliers case
     const supplierList = suppliersState.map((el) => [el.name]);
-
-    console.log(supplierList);
 
     const allCollections = suppliersState.map((el) => el.matCollections);
 
@@ -68,8 +64,6 @@ const NewMaterialForm = (props) => {
       el.push(allCollections[index]);
       return el;
     });
-
-    console.log(selectOptionsArr);
 
     allCollectionsOption = selectOptionsArr.map((el) => (
       <optgroup label={el[0]} key={el[0]}>
@@ -80,8 +74,6 @@ const NewMaterialForm = (props) => {
         ))}
       </optgroup>
     ));
-
-    console.log(allCollectionsOption);
   }
 
   const nameInputChangeHandler = (event) => {
@@ -173,6 +165,8 @@ const NewMaterialForm = (props) => {
     const materialCollection = suppliersState
       .find(findSupplier)
       .matCollections.find(findCollection);
+
+    console.log(materialCollection);
 
     if (materialCollection || !materialCollection) {
       dispatch(

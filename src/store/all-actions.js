@@ -40,7 +40,7 @@ export const fetchStateData = () => {
       dispatch(projectActions.replceProjects(sortedStateData));
       dispatch(suppliersActions.replceSuppliers(stateData.suppliers));
       dispatch(tasksActions.replceTasks(stateData.tasks));
-      // dispatch(libraryActions.replceLibrary(stateData.library));
+      dispatch(libraryActions.replceLibrary(stateData.library));
       dispatch(globalActions.replaceTarget(stateData.global));
       dispatch(usersActions.replceUsers(stateData.users));
     } catch (error) {

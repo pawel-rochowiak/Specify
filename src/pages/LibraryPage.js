@@ -7,7 +7,12 @@ import { useSelector } from "react-redux";
 const LibraryPage = (props) => {
   const stateMaterials = useSelector((state) => state.library);
 
-  const materialArray = stateMaterials.flatMap((el) => el.materials);
+  console.log(stateMaterials);
+
+  const materialArray = stateMaterials.flatMap((el) =>
+    el.materials ? el.materials : []
+  );
+  console.log(materialArray);
   return (
     <Fragment>
       <div className={classes.tasks}>
