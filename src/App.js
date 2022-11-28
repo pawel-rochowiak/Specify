@@ -42,12 +42,14 @@ function App() {
   return (
     <Fragment>
       <div className="App">
-        <Route path="/" exact>
-          <Welcome />
-        </Route>
-        <Route path="/home">
-          <StartPage />
-        </Route>
+        <Switch>
+          <Route path="/" exact>
+            <Welcome />
+          </Route>
+          <Route path="/home">
+            <StartPage />
+          </Route>
+        </Switch>
       </div>
       <Footer />
     </Fragment>

@@ -15,22 +15,28 @@ const LibraryPageDetails = (props) => {
 
   const materialArrayByCategory = stateMaterials.find(findCategory).materials;
 
+  console.log(materialArrayByCategory);
+
   return (
     <Fragment>
       <div className={classes.mainContent}>
         <div className={classes.tasks}>
           <div className={classes.name}>{props.name}</div>
-          <div className={classesLibrary.categoriesTask}>
-            <div>No.</div>
-            <div>Name</div>
-            <div>Collection</div>
-            <div>Supplier</div>
-            <div>Certificates</div>
-            <div>Description</div>
-            <div>Image</div>
-          </div>
+          {materialArrayByCategory ? (
+            <div className={classesLibrary.categoriesTask}>
+              <div>No.</div>
+              <div>Name</div>
+              <div>Collection</div>
+              <div>Supplier</div>
+              <div>Certificates</div>
+              <div>Description</div>
+              <div>Image</div>
+            </div>
+          ) : (
+            ""
+          )}
           <div className={classes.taskList}>
-            {materialArrayByCategory.map((el, index) => (
+            {materialArrayByCategory?.map((el, index) => (
               <LibraryItem
                 key={index + 1}
                 number={index + 1}
@@ -43,6 +49,15 @@ const LibraryPageDetails = (props) => {
                 link={el.link}
               />
             ))}
+            {!materialArrayByCategory ? (
+              <div className={classes.info_message}>
+                This category has no materials. Please press
+                <span className={classes.highlight}> "Create item" </span>{" "}
+                button to create new material.
+              </div>
+            ) : (
+              ""
+            )}
             <div
               className={`${classes.item} ${classes.action}`}
               onClick={props.createItem}
