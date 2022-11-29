@@ -101,7 +101,7 @@ const suppliersSlice = createSlice({
           tel: action.payload.tel,
         },
         matCollections: [],
-        path: `p${state.length + 1}`,
+        path: `s${state.length + 1}`,
       });
     },
     addCollection(state, action) {

@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchStateData());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     const fetchStatus = async () => {
