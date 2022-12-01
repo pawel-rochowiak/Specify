@@ -20,7 +20,13 @@ const ProjectPage = (props) => {
         </div>
         <div className={classes.taskList}>
           {stateProjects.map((el, index) => (
-            <DetailsItem key={index + 1} items={el} grid="5" />
+            <DetailsItem
+              key={`project${index + 1}`}
+              items={el}
+              grid="5"
+              dataset={index}
+              edit={props.createItem}
+            />
           ))}
           <div
             className={`${classes.item} ${classes.action}`}

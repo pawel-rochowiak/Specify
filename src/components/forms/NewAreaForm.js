@@ -13,6 +13,8 @@ const NewAreaForm = (props) => {
   const [enteredFz, setEnteredFz] = useState("");
   const [enteredSubcontractor, setEnteredSubcontractor] = useState("");
 
+  console.log(props);
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
@@ -50,15 +52,41 @@ const NewAreaForm = (props) => {
 
     const projectIndex = stateProjects.indexOf(selectedProject);
 
-    dispatch(
-      projectActions.addAreas({
-        name: enteredName,
-        deck: enteredDeck,
-        fz: enteredFz,
-        subcontractor: enteredSubcontractor,
-        project: projectIndex,
-      })
-    );
+    const areaIndex = props.itemToEdit;
+
+    if (props.editing === true) {
+      dispatch(
+        projectActions.editProjectArea({
+          name: enteredName,
+          deck: enteredDeck,
+          fz: enteredFz,
+          subcontractor: enteredSubcontractor,
+          project: projectIndex,
+          areaToEdit: areaIndex,
+        })
+      );
+      console.log("test");
+    } else {
+      dispatch(
+        projectActions.addAreas({
+          name: enteredName,
+          deck: enteredDeck,
+          fz: enteredFz,
+          subcontractor: enteredSubcontractor,
+          project: projectIndex,
+        })
+      );
+    }
+
+    // dispatch(
+    //   projectActions.addAreas({
+    //     name: enteredName,
+    //     deck: enteredDeck,
+    //     fz: enteredFz,
+    //     subcontractor: enteredSubcontractor,
+    //     project: projectIndex,
+    //   })
+    // );
 
     setEnteredName("");
     setEnteredDeck("");

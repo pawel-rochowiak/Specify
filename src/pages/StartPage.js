@@ -35,17 +35,20 @@ const StartPage = (props) => {
   const stateTarget = useSelector((state) => state.global.target);
 
   //State slices//
-
   const stateTasks = useSelector((state) => state.tasks);
   const stateProjects = useSelector((state) => state.projects);
   const stateSuppliers = useSelector((state) => state.suppliers);
   const stateLibrary = useSelector((state) => state.library);
   ////////////////
   const [data, setData] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
 
-  const newItemHandler = () => {
+  const newItemHandler = (edit = false, index = "") => {
+    setIsEditing(edit);
+    setEditIndex(index);
     setIsFormVisible(true);
   };
   const addNewTaskHandler = () => {
@@ -148,7 +151,12 @@ const StartPage = (props) => {
   }
   if (stateTarget === "projects") {
     TargetForm = (
-      <NewProjectForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+      <NewProjectForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
+      />
     );
   }
   if (stateTarget === "suppliers") {
@@ -176,6 +184,8 @@ const StartPage = (props) => {
         onClick={addNewTaskHandler}
         onExit={closeNewTaskForm}
         project={detailTarget[1]}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
       />
     );
   }

@@ -24,6 +24,7 @@ const ProjectPageDetails = (props) => {
                 <DetailItem
                   key={index + 1}
                   dataset={index}
+                  section="projects"
                   items={el}
                   grid="4"
                   edit={props.createItem}

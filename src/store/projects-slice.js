@@ -155,6 +155,18 @@ const projectSlice = createSlice({
         subcontractor: action.payload.subcontractor,
       });
     },
+    editProjectArea(state, action) {
+      const editedArea = {
+        name: action.payload.name,
+        deck: action.payload.deck,
+        fz: action.payload.fz,
+        subcontractor: action.payload.subcontractor,
+      };
+
+      state[action.payload.project].area[
+        action.payload.areaToEdit
+      ] = editedArea;
+    },
     replceProjects(state, action) {
       return action.payload;
     },
