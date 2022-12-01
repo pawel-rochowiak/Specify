@@ -10,6 +10,8 @@ const NewProjectForm = (props) => {
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredTeam, setEnteredTeam] = useState("");
 
+  console.log(props);
+
   const enteredType = useRef();
   const enteredScope = useRef();
 
@@ -37,15 +39,70 @@ const NewProjectForm = (props) => {
       return;
     }
 
-    dispatch(
-      projectActions.addProjects({
-        name: enteredName,
-        type: enteredType.current.value,
-        scope: enteredScope.current.value,
-        date: enteredDate,
-        team: enteredTeam,
-      })
-    );
+    const projectIndex = props.itemToEdit;
+
+    if (props.editing === true) {
+      dispatch(
+        projectActions.editProject({
+          name: enteredName,
+          type: enteredType.current.value,
+          scope: enteredScope.current.value,
+          date: enteredDate,
+          team: enteredTeam,
+          projectIndex,
+        })
+      );
+    } else {
+      dispatch(
+        projectActions.addProjects({
+          name: enteredName,
+          type: enteredType.current.value,
+          scope: enteredScope.current.value,
+          date: enteredDate,
+          team: enteredTeam,
+        })
+      );
+    }
+
+    // state[action.payload.projectIndex].name = action.payload.name;
+    // state[action.payload.projectIndex].type = action.payload.type;
+    // state[action.payload.projectIndex].scope = action.payload.scope;
+    // state[action.payload.projectIndex].date = action.payload.date;
+    // state[action.payload.projectIndex].team = action.payload.team;
+    //  ///Logic for getting project name and adding areas
+
+    //  const selectedProject = stateProjects.find(
+    //   (el) => el.path === props.project
+    // );
+
+    // const projectIndex = stateProjects.indexOf(selectedProject);
+
+    // const areaIndex = props.itemToEdit;
+
+    // ///Logic for editing areas
+
+    // if (props.editing === true) {
+    //   dispatch(
+    //     projectActions.editProjectArea({
+    //       name: enteredName,
+    //       deck: enteredDeck,
+    //       fz: enteredFz,
+    //       subcontractor: enteredSubcontractor,
+    //       project: projectIndex,
+    //       areaToEdit: areaIndex,
+    //     })
+    //   );
+    // } else {
+    //   dispatch(
+    //     projectActions.addAreas({
+    //       name: enteredName,
+    //       deck: enteredDeck,
+    //       fz: enteredFz,
+    //       subcontractor: enteredSubcontractor,
+    //       project: projectIndex,
+    //     })
+    //   );
+    // }
 
     setEnteredName("");
     setEnteredDate("");

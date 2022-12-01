@@ -147,6 +147,13 @@ const projectSlice = createSlice({
         projectTasks: [],
       });
     },
+    editProject(state, action) {
+      state[action.payload.projectIndex].name = action.payload.name;
+      state[action.payload.projectIndex].type = action.payload.type;
+      state[action.payload.projectIndex].scope = action.payload.scope;
+      state[action.payload.projectIndex].date = action.payload.date;
+      state[action.payload.projectIndex].team = action.payload.team;
+    },
     addAreas(state, action) {
       state[action.payload.project].area.push({
         name: action.payload.name,

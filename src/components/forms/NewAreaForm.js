@@ -13,8 +13,6 @@ const NewAreaForm = (props) => {
   const [enteredFz, setEnteredFz] = useState("");
   const [enteredSubcontractor, setEnteredSubcontractor] = useState("");
 
-  console.log(props);
-
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
@@ -54,6 +52,8 @@ const NewAreaForm = (props) => {
 
     const areaIndex = props.itemToEdit;
 
+    ///Logic for editing areas
+
     if (props.editing === true) {
       dispatch(
         projectActions.editProjectArea({
@@ -65,7 +65,6 @@ const NewAreaForm = (props) => {
           areaToEdit: areaIndex,
         })
       );
-      console.log("test");
     } else {
       dispatch(
         projectActions.addAreas({
@@ -77,16 +76,6 @@ const NewAreaForm = (props) => {
         })
       );
     }
-
-    // dispatch(
-    //   projectActions.addAreas({
-    //     name: enteredName,
-    //     deck: enteredDeck,
-    //     fz: enteredFz,
-    //     subcontractor: enteredSubcontractor,
-    //     project: projectIndex,
-    //   })
-    // );
 
     setEnteredName("");
     setEnteredDeck("");
@@ -136,12 +125,10 @@ const NewAreaForm = (props) => {
           ></input>
           <p className={classes.description}>Subcontractor</p>
         </div>
-
         <button type="submit">submit</button>
       </form>
     </div>
   );
-
   return (
     <Modal onClose={props.onClick} onExit={props.onExit}>
       {mainContent}

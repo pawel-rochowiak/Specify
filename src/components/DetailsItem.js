@@ -60,7 +60,7 @@ const DetailsItem = (props) => {
       //jak nie ma props.section to edytujemy projekt
       // const mainSectionItem = state[item][targetStart];
 
-      props.edit(true);
+      props.edit(true, targetStart);
     }
   };
 
