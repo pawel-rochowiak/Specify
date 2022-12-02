@@ -2,18 +2,14 @@ import classes from "./DetailsItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
 import CheckIcon from "../components/icons/CheckIcon";
-import projectSlice, { projectActions } from "../store/projects-slice";
+import { projectActions } from "../store/projects-slice";
 import { useSelector, useDispatch } from "react-redux";
-// import { useState } from "react";
 
 const DetailsItem = (props) => {
-  let gridClass, editClass;
+  let gridClass;
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  // const [isEditing, setIsEditing] = useState(false);
-  // const [toDelete, setToDeleted] = useState(false);
 
   const itemsArr = Object.entries(props.items).slice(0, 5);
 
@@ -40,27 +36,37 @@ const DetailsItem = (props) => {
 
   const targetEditHandler = (ev) => {
     ev.preventDefault();
-    const item = window.location.href.split("/").at(-1);
 
     const targetStart = ev.target.closest("div[class*='DetailsItem_item']")
       .dataset.order;
 
-    console.log(targetStart);
+    props.edit(true, targetStart);
+  };
+
+  const targetDeleteHandler = (ev) => {
+    ev.preventDefault();
+    ///rember to chenge the path & key when deleting!!!
+
+    const targetStart = ev.target.closest("div[class*='DetailsItem_item']")
+      .dataset.order;
 
     if (props.section) {
-      //jak jest props.section wiadomo ze edytujemy strefe
-      // const mainSectionItem = state[props.section].find(
-      //   (el) => el.path === item
-      // );
-      // const sectionSubItem = mainSectionItem.area[targetStart];
-      props.edit(true, targetStart);
+      const item = window.location.href.split("/").at(-1);
+
+      const currentMainSectionItem = state[props.section].findIndex(
+        (el) => el.path === item
+      );
+
+      dispatch(
+        projectActions.deleteProjectArea({
+          sectionMainItemIndex: +currentMainSectionItem,
+          index: +targetStart,
+        })
+      );
     }
 
     if (!props.section) {
-      //jak nie ma props.section to edytujemy projekt
-      // const mainSectionItem = state[item][targetStart];
-
-      props.edit(true, targetStart);
+      dispatch(projectActions.deleteProject({ index: targetStart }));
     }
   };
 
@@ -72,7 +78,7 @@ const DetailsItem = (props) => {
 
       {elArray}
 
-      <div className={classes.delete}>
+      <div className={classes.delete} onClick={targetDeleteHandler}>
         <CloseIcon />
       </div>
     </div>

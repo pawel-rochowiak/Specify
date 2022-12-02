@@ -19,7 +19,7 @@ const ProjectPage = (props) => {
           <div>Team</div>
         </div>
         <div className={classes.taskList}>
-          {stateProjects.map((el, index) => (
+          {stateProjects?.map((el, index) => (
             <DetailsItem
               key={`project${index + 1}`}
               items={el}

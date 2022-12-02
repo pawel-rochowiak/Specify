@@ -75,7 +75,7 @@ const StartPage = (props) => {
       setDetailTarget("");
       setData(stateLibrary);
     }
-  }, [stateTarget]);
+  }, [stateTarget, stateTasks, stateProjects, stateSuppliers, stateLibrary]);
 
   const targetActivationHandler = (target) => {
     if (target.includes("/suppliers/s")) {
@@ -105,6 +105,8 @@ const StartPage = (props) => {
 
   let DynamicComponentDetails = componentNamesDetails[category];
 
+  //Creating Routes for main information display.Right part of the container (mainContent).
+
   const reactRoutesMain = data.map(({ name, path }) => (
     <Route key={path} path={`/${stateTarget}/${path}`}>
       <DynamicComponentDetails
@@ -125,11 +127,15 @@ const StartPage = (props) => {
     </Route>
   ));
 
+  //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
+
   const routerLinks = data.map(({ name, path }) => (
     <Link key={path} to={`/${stateTarget}/${path}`}>
       <li className={classes.item}>{name}</li>
     </Link>
   ));
+
+  //Creating Routes for sidebar
 
   const componentNamesKeys = Object.keys(componentNames);
 
@@ -143,6 +149,8 @@ const StartPage = (props) => {
   ));
 
   let TargetForm;
+
+  //Logic for displaying proper form for creating new items
 
   if (stateTarget === "tasks") {
     TargetForm = (

@@ -147,6 +147,9 @@ const projectSlice = createSlice({
         projectTasks: [],
       });
     },
+    deleteProject(state, action) {
+      state.splice(action.payload.index, 1);
+    },
     editProject(state, action) {
       state[action.payload.projectIndex].name = action.payload.name;
       state[action.payload.projectIndex].type = action.payload.type;
@@ -162,6 +165,12 @@ const projectSlice = createSlice({
         subcontractor: action.payload.subcontractor,
       });
     },
+    deleteProjectArea(state, action) {
+      state[action.payload.sectionMainItemIndex].area.splice(
+        +action.payload.index,
+        1
+      );
+    },
     editProjectArea(state, action) {
       const editedArea = {
         name: action.payload.name,
@@ -174,6 +183,7 @@ const projectSlice = createSlice({
         action.payload.areaToEdit
       ] = editedArea;
     },
+
     replceProjects(state, action) {
       return action.payload;
     },
