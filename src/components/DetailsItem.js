@@ -6,12 +6,22 @@ import { projectActions } from "../store/projects-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 const DetailsItem = (props) => {
-  let gridClass;
+  let gridClass, itemsArr;
 
   const state = useSelector((state) => state);
+
   const dispatch = useDispatch();
 
-  const itemsArr = Object.entries(props.items).slice(0, 5);
+  if (props.type === "projectsState") {
+    itemsArr = Object.entries(props.items).slice(0, 5);
+  }
+  if (props.type === "libraryState") {
+    itemsArr = Object.entries(props).slice(0, 8);
+  }
+  if (props.type === "tasksState") {
+  }
+  if (props.type === "suppliersState") {
+  }
 
   const elArray = itemsArr.map((el, index) => {
     return (
@@ -32,6 +42,9 @@ const DetailsItem = (props) => {
   }
   if (props.grid === "7") {
     gridClass = `DetailsItem_col_${props.grid}__nuq8J`;
+  }
+  if (props.grid === "8") {
+    gridClass = `DetailsItem_col_${props.grid}__JQtaJ`;
   }
 
   const targetEditHandler = (ev) => {

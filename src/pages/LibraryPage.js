@@ -1,6 +1,7 @@
 import classes from "./LibraryPage.module.css";
 import { Fragment } from "react";
 import LibraryItem from "../components/LibraryItem";
+import DetailsItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
 
@@ -27,7 +28,7 @@ const LibraryPage = (props) => {
           <div>Image</div>
         </div>
         <div className={classes.taskList}>
-          {materialArray.map((el, index) => (
+          {/* {materialArray.map((el, index) => (
             <LibraryItem
               key={index + 1}
               number={index + 1}
@@ -38,6 +39,23 @@ const LibraryPage = (props) => {
               info={el.info}
               imageUrl={el.imageUrl}
               link={el.link}
+            />
+          ))} */}
+          {materialArray?.map((el, index) => (
+            <DetailsItem
+              key={`project${index + 1}`}
+              number={index + 1}
+              name={el.name}
+              collection={el.collection}
+              supplier={el.supplier}
+              certificate={el.certificates}
+              info={el.info}
+              url={el.imageUrl}
+              link={el.link}
+              dataset={index}
+              grid="8"
+              edit={props.createItem}
+              type="libraryState"
             />
           ))}
           <div

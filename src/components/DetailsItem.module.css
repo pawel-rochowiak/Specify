@@ -45,6 +45,10 @@
   grid-template-columns: 1fr repeat(2, 2fr) 1fr 3fr repeat(2, 1fr);
 }
 
+.col_8 {
+  grid-template-columns: 1fr 2fr repeat(2, 1fr) 1fr 3fr repeat(2, 1fr);
+}
+
 .item > div:not(:first-child) {
   border-left: 1px solid #c7e7fc;
 }

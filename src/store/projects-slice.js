@@ -149,6 +149,7 @@ const projectSlice = createSlice({
     },
     deleteProject(state, action) {
       state.splice(action.payload.index, 1);
+      state.map((el, index) => (el.path = `p${index}`));
     },
     editProject(state, action) {
       state[action.payload.projectIndex].name = action.payload.name;

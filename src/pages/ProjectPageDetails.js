@@ -28,6 +28,7 @@ const ProjectPageDetails = (props) => {
                   items={el}
                   grid="4"
                   edit={props.createItem}
+                  type="projectsState"
                 />
               ))
           ) : (

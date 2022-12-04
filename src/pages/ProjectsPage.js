@@ -26,6 +26,7 @@ const ProjectPage = (props) => {
               grid="5"
               dataset={index}
               edit={props.createItem}
+              type="projectsState"
             />
           ))}
           <div
