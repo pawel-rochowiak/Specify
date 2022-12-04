@@ -33,6 +33,10 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
+.col_4_bis {
+  grid-template-columns: repeat(2, 10rem) repeat(2, 1fr);
+}
+
 .col_5 {
   grid-template-columns: repeat(5, 1fr);
 }

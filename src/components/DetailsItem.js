@@ -6,7 +6,7 @@ import { projectActions } from "../store/projects-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 const DetailsItem = (props) => {
-  let gridClass, itemsArr;
+  let gridClass, itemsArr, elArray;
 
   const state = useSelector((state) => state);
 
@@ -23,7 +23,7 @@ const DetailsItem = (props) => {
   if (props.type === "suppliersState") {
   }
 
-  const elArray = itemsArr.map((el, index) => {
+  elArray = itemsArr.map((el, index) => {
     return (
       <div key={index + 1} className={classes.itemLabel}>
         {el[1]}
@@ -34,6 +34,11 @@ const DetailsItem = (props) => {
   if (props.grid === "4") {
     gridClass = `DetailsItem_col_${props.grid}__qscj9`;
   }
+
+  if (props.grid === "4bis") {
+    gridClass = `DetailsItem_col_${props.grid}_bis__J14wb`;
+  }
+
   if (props.grid === "5") {
     gridClass = `DetailsItem_col_${props.grid}__B1dQP`;
   }

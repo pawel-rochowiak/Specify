@@ -1,5 +1,6 @@
 import classes from "./SuppliersPage.module.css";
 import SupplierItem from "../components/SupplierItem";
+import DetailsItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
@@ -26,6 +27,18 @@ const SuppliersPage = (props) => {
               contact={el.contactPerson}
             />
           ))}
+          {/* {stateSuppliers.map((el) => (
+            <DetailsItem
+              key={el.path}
+              name={el.name}
+              field={el.field}
+              adress={el.adress}
+              contact={el.contactPerson}
+              grid="4bis"
+              edit={props.createItem}
+              type="suppliersState"
+            />
+          ))} */}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={props.createItem}
