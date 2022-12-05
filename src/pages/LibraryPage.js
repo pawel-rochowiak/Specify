@@ -28,7 +28,7 @@ const LibraryPage = (props) => {
           <div>Image</div>
         </div>
         <div className={classes.taskList}>
-          {/* {materialArray.map((el, index) => (
+          {materialArray.map((el, index) => (
             <LibraryItem
               key={index + 1}
               number={index + 1}
@@ -40,8 +40,8 @@ const LibraryPage = (props) => {
               imageUrl={el.imageUrl}
               link={el.link}
             />
-          ))} */}
-          {materialArray?.map((el, index) => (
+          ))}
+          {/* {materialArray?.map((el, index) => (
             <DetailsItem
               key={`project${index + 1}`}
               number={index + 1}
@@ -57,7 +57,7 @@ const LibraryPage = (props) => {
               edit={props.createItem}
               type="libraryState"
             />
-          ))}
+          ))} */}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={props.createItem}

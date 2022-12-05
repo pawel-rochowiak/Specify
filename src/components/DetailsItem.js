@@ -15,13 +15,6 @@ const DetailsItem = (props) => {
   if (props.type === "projectsState") {
     itemsArr = Object.entries(props.items).slice(0, 5);
   }
-  if (props.type === "libraryState") {
-    itemsArr = Object.entries(props).slice(0, 8);
-  }
-  if (props.type === "tasksState") {
-  }
-  if (props.type === "suppliersState") {
-  }
 
   elArray = itemsArr.map((el, index) => {
     return (
