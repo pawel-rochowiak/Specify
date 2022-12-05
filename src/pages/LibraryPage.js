@@ -8,12 +8,10 @@ import { useSelector } from "react-redux";
 const LibraryPage = (props) => {
   const stateMaterials = useSelector((state) => state.library);
 
-  console.log(stateMaterials);
-
   const materialArray = stateMaterials.flatMap((el) =>
     el.materials ? el.materials : []
   );
-  console.log(materialArray);
+
   return (
     <Fragment>
       <div className={classes.tasks}>
@@ -39,25 +37,10 @@ const LibraryPage = (props) => {
               info={el.info}
               imageUrl={el.imageUrl}
               link={el.link}
+              dataset={index}
+              edit={props.createItem}
             />
           ))}
-          {/* {materialArray?.map((el, index) => (
-            <DetailsItem
-              key={`project${index + 1}`}
-              number={index + 1}
-              name={el.name}
-              collection={el.collection}
-              supplier={el.supplier}
-              certificate={el.certificates}
-              info={el.info}
-              url={el.imageUrl}
-              link={el.link}
-              dataset={index}
-              grid="8"
-              edit={props.createItem}
-              type="libraryState"
-            />
-          ))} */}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={props.createItem}

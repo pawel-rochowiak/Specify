@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 const SuppliersPage = (props) => {
   const stateSuppliers = useSelector((state) => state.suppliers);
+  console.log(stateSuppliers);
   return (
     <Fragment>
       <div className={classes.tasks}>
@@ -30,18 +31,6 @@ const SuppliersPage = (props) => {
               // section="suppliers"
             />
           ))}
-          {/* {stateSuppliers.map((el) => (
-            <DetailsItem
-              key={el.path}
-              name={el.name}
-              field={el.field}
-              adress={el.adress}
-              contact={el.contactPerson}
-              grid="4bis"
-              edit={props.createItem}
-              type="suppliersState"
-            />
-          ))} */}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={props.createItem}

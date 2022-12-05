@@ -40,6 +40,16 @@ const librarySlice = createSlice({
         });
       }
     },
+    deleteMaterial(state, action) {
+      // console.log(action.payload.index);
+      // const materials = state
+      //   .map((el) => (el.materials ? el.materials : []))
+      //   .flat();
+      // console.log(materials);
+      // return materials.splice(action.payload.index, 1);
+      // state.splice(action.payload.index, 1);
+      // state.map((el, index) => (el.path = `cat${index}`));
+    },
     replceLibrary(state, action) {
       return action.payload;
     },
