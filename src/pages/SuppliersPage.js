@@ -18,13 +18,16 @@ const SuppliersPage = (props) => {
           <div>Contact</div>
         </div>
         <div className={classes.taskList}>
-          {stateSuppliers.map((el) => (
+          {stateSuppliers.map((el, index) => (
             <SupplierItem
               key={el.path}
               name={el.name}
               field={el.field}
               adress={el.adress}
               contact={el.contactPerson}
+              dataset={index}
+              edit={props.createItem}
+              // section="suppliers"
             />
           ))}
           {/* {stateSuppliers.map((el) => (

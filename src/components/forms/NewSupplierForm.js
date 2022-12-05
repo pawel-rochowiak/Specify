@@ -4,7 +4,7 @@ import classes from "./NewTaskForm.module.css";
 import { suppliersActions } from "../../store/suppliers-slice";
 import { useDispatch } from "react-redux";
 
-const NewProjectForm = (props) => {
+const NewSupplierForm = (props) => {
   const dispatch = useDispatch();
   const [enteredName, setEnteredName] = useState("");
   const [enteredField, setEnteredField] = useState("");
@@ -62,19 +62,41 @@ const NewProjectForm = (props) => {
       return;
     }
 
-    dispatch(
-      suppliersActions.addSuppliers({
-        name: enteredName,
-        field: enteredField,
-        country: enteredCountry,
-        city: enteredCity,
-        street: enteredStreet,
-        number: enteredNumber,
-        fullName: enteredFullName,
-        email: enteredEmail,
-        tel: enteredTelephoneNumber,
-      })
-    );
+    const supplierIndex = props.itemToEdit;
+
+    console.log(supplierIndex);
+    console.log(props.editing);
+
+    if (props.editing === true) {
+      dispatch(
+        suppliersActions.editSupplier({
+          name: enteredName,
+          field: enteredField,
+          country: enteredCountry,
+          city: enteredCity,
+          street: enteredStreet,
+          number: enteredNumber,
+          fullName: enteredFullName,
+          email: enteredEmail,
+          tel: enteredTelephoneNumber,
+          supplierIndex,
+        })
+      );
+    } else {
+      dispatch(
+        suppliersActions.addSuppliers({
+          name: enteredName,
+          field: enteredField,
+          country: enteredCountry,
+          city: enteredCity,
+          street: enteredStreet,
+          number: enteredNumber,
+          fullName: enteredFullName,
+          email: enteredEmail,
+          tel: enteredTelephoneNumber,
+        })
+      );
+    }
 
     setEnteredName("");
     setEnteredField("");
@@ -187,4 +209,4 @@ const NewProjectForm = (props) => {
   );
 };
 
-export default NewProjectForm;
+export default NewSupplierForm;

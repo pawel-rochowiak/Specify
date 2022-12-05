@@ -46,7 +46,7 @@ const StartPage = (props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
 
-  const newItemHandler = (edit = false, index = "") => {
+  const newItemHandler = (edit, index = "") => {
     setIsEditing(edit);
     setEditIndex(index);
     setIsFormVisible(true);
@@ -169,7 +169,12 @@ const StartPage = (props) => {
   }
   if (stateTarget === "suppliers") {
     TargetForm = (
-      <NewSupplierForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+      <NewSupplierForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
+      />
     );
   }
   if (stateTarget === "library") {

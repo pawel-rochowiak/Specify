@@ -104,6 +104,30 @@ const suppliersSlice = createSlice({
         path: `s${state.length + 1}`,
       });
     },
+    deleteSupplier(state, action) {
+      state.splice(action.payload.index, 1);
+      state.map((el, index) => (el.path = `s${index}`));
+    },
+    editSupplier(state, action) {
+      state[action.payload.supplierIndex].name =
+        action.payload.name || state[action.payload.supplierIndex].name;
+      state[action.payload.supplierIndex].field =
+        action.payload.field || state[action.payload.supplierIndex].field;
+      state[action.payload.supplierIndex].country =
+        action.payload.country || state[action.payload.supplierIndex].country;
+      state[action.payload.supplierIndex].city =
+        action.payload.city || state[action.payload.supplierIndex].city;
+      state[action.payload.supplierIndex].street =
+        action.payload.street || state[action.payload.supplierIndex].street;
+      state[action.payload.supplierIndex].number =
+        action.payload.number || state[action.payload.supplierIndex].number;
+      state[action.payload.supplierIndex].fullName =
+        action.payload.fullName || state[action.payload.supplierIndex].fullName;
+      state[action.payload.supplierIndex].email =
+        action.payload.email || state[action.payload.supplierIndex].email;
+      state[action.payload.supplierIndex].tel =
+        action.payload.tel || state[action.payload.supplierIndex].tel;
+    },
     addCollection(state, action) {
       const newMaterialObjMarkup = {
         name: action.payload.name,
