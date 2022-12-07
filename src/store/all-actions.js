@@ -37,37 +37,16 @@ export const fetchStateData = () => {
         };
       });
 
-      const sortedStateDataLibrary = stateData.library.map((el) => {
-        el.materials?.map((el) => {
-          return {
-            name: el.name,
-            collection: el.collection,
-            supplier: el.supplier,
-            certificate: el.certificate,
-            info: el.info,
-            imageUrl: el.image,
-            link: el.link,
-          };
-        });
+      const newDataLibrary = stateData.library.map((el) => {
+        return el.materials ? el.materials : (el.materials = []);
       });
 
-      //   <div className={classes.item}>
-      //   <div className={classes.materialNumber}>{props.number}</div>
-      //   <div className={classes.materialName}>{props.name}</div>
-      //   <div className={classes.materialName}>{props.collection}</div>
-      //   <div className={classes.materialSupplier}>{props.supplier}</div>
-      //   <div className={classes.materialCertificate}>{props.certificate}</div>
-      //   <div className={classes.materialInfo}>{props.info}</div>
-      //   <img className={classes.materialImage} src={props.imageUrl} />
-      //   <a className={classes.materialLink} href={props.link} target="_blank">
-      //     Link
-      //   </a>
-      // </div>
+      console.log(newDataLibrary);
 
       dispatch(projectActions.replceProjects(sortedStateData));
       dispatch(suppliersActions.replceSuppliers(stateData.suppliers));
       dispatch(tasksActions.replceTasks(stateData.tasks));
-      dispatch(libraryActions.replceLibrary(stateData.library));
+      dispatch(libraryActions.replceLibrary(stateData.newDataLibrary));
       dispatch(globalActions.replaceTarget(stateData.global));
       dispatch(usersActions.replceUsers(stateData.users));
     } catch (error) {

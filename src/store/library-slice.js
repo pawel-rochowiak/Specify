@@ -12,15 +12,15 @@ const librarySlice = createSlice({
   initialState: initialState,
   reducers: {
     addMaterials(state, action) {
+      const pushInto = (el, arr) => {
+        arr.push(el);
+        return arr;
+      };
       const newMaterialObjMarkup = {
         name: action.payload.name,
         supplier: action.payload.supplier,
-        collection: action.payload.collection
-          ? action.payload.collection
-          : action.payload.existingCollection,
-        category: action.payload.category
-          ? action.payload.category
-          : action.payload.existingCategory,
+        collection: action.payload.collection,
+        category: action.payload.category,
         certificates: action.payload.certificates,
         info: action.payload.info,
         image: action.payload.image,
@@ -28,15 +28,15 @@ const librarySlice = createSlice({
         path: `cat${state.length + 1}`,
       };
 
-      if (state.find(action.payload.findCategory)) {
+      if (state.find((el) => el.name === action.payload.category)) {
         state
-          .find(action.payload.findCategory)
-          .materials.push(newMaterialObjMarkup);
-      } else if (!state.find(action.payload.findCategory)) {
+          .find((el) => el.name === action.payload.category)
+          .materials?.push(newMaterialObjMarkup);
+      } else if (state.find((el) => el.name !== action.payload.category)) {
         state.push({
           name: action.payload.category,
           path: `cat${state.length + 1}`,
-          materials: action.payload.pushInto(newMaterialObjMarkup, []),
+          materials: pushInto(newMaterialObjMarkup, []),
         });
       }
     },

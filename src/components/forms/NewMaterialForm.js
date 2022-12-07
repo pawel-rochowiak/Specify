@@ -142,51 +142,52 @@ const NewMaterialForm = (props) => {
     }
 
     ///////////////////////
-
-    if (materialState.find(findCategory) || !materialState.find(findCategory)) {
-      dispatch(
-        libraryActions.addMaterials({
-          name: enteredName,
-          supplier: pickedSupplier.current.value,
-          collection: enteredCollection,
-          existingCollection: enteredExistingCollection.current.value,
-          category: enteredCategory,
-          existingCategory: enteredCat.current.value,
-          certificates: enteredCertificates,
-          info: enteredDescription,
-          image: enteredImage,
-          link: enteredLink,
-          findCategory: findCategory,
-          pushInto: pushInto,
-        })
-      );
-    }
-
     const materialCollection = suppliersState
       .find(findSupplier)
       .matCollections.find(findCollection);
 
     console.log(materialCollection);
 
-    if (materialCollection || !materialCollection) {
-      dispatch(
-        suppliersActions.addCollection({
-          name: enteredName,
-          supplier: pickedSupplier.current.value,
-          collection: enteredCollection,
-          existingCollection: enteredExistingCollection.current.value,
-          category: enteredCategory,
-          existingCategory: enteredCat.current.value,
-          certificates: enteredCertificates,
-          info: enteredDescription,
-          image: enteredImage,
-          link: enteredLink,
-          findSupplier: findSupplier,
-          findCollection: findCollection,
-          pushInto: pushInto,
-        })
-      );
-    }
+    // if (materialState.find(findCategory) || !materialState.find(findCategory)) {
+    dispatch(
+      libraryActions.addMaterials({
+        name: enteredName,
+        supplier: pickedSupplier.current.value,
+        collection: materialCollection
+          ? enteredExistingCollection.current.value
+          : enteredCollection,
+        category: materialState.find(findCategory)
+          ? enteredCat.current.value
+          : enteredCategory,
+        certificates: enteredCertificates,
+        info: enteredDescription,
+        image: enteredImage,
+        link: enteredLink,
+      })
+    );
+    //}
+
+    // if (materialCollection || !materialCollection) {
+    dispatch(
+      suppliersActions.addCollection({
+        name: enteredName,
+        supplier: pickedSupplier.current.value,
+        collection: materialCollection
+          ? enteredExistingCollection.current.value
+          : enteredCollection,
+        category: materialState.find(findCategory)
+          ? enteredCat.current.value
+          : enteredCategory,
+        certificates: enteredCertificates,
+        info: enteredDescription,
+        image: enteredImage,
+        link: enteredLink,
+        findSupplier: findSupplier,
+        findCollection: findCollection,
+        pushInto: pushInto,
+      })
+    );
+    //}
 
     ///Setting all input walues back to empty string///
 

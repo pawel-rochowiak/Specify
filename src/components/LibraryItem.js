@@ -5,10 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { libraryActions } from "../store/library-slice";
 
 const LibraryItem = (props) => {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  console.log(props);
   const targetEditHandler = (ev) => {
     ev.preventDefault();
 

@@ -33,7 +33,6 @@ const StartPage = (props) => {
   const dispatch = useDispatch();
 
   const stateTarget = useSelector((state) => state.global.target);
-
   //State slices//
   const stateTasks = useSelector((state) => state.tasks);
   const stateProjects = useSelector((state) => state.projects);
