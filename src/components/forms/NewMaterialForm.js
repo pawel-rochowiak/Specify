@@ -9,6 +9,7 @@ const NewMaterialForm = (props) => {
   const suppliersState = useSelector((state) => state.suppliers);
   const dispatch = useDispatch();
   const materialState = useSelector((state) => state.library);
+  const [selectedSupplier, setSelectedSupplier] = useState("");
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredCollection, setEnteredCollection] = useState("");
@@ -76,6 +77,34 @@ const NewMaterialForm = (props) => {
     ));
   }
 
+  if (selectedSupplier && !props.supplier) {
+    //Specific supplier case
+
+    const specificSupplierCollections = suppliersState.find(
+      (el) => el.name === selectedSupplier
+    ).matCollections;
+
+    specificSupplier = pushInto(selectedSupplier, []);
+
+    const specificSupplierOptions = [
+      pushInto(specificSupplierCollections, specificSupplier),
+    ];
+
+    console.log(specificSupplierOptions);
+
+    allCollectionsOption2 = specificSupplierOptions.map((el) => (
+      <optgroup label={el[0]} key={el[0]}>
+        {el[1]?.map((el) => (
+          <option value={el.name} key={el.name}>
+            {el.name}
+          </option>
+        ))}
+      </optgroup>
+    ));
+
+    console.log(allCollectionsOption2);
+  }
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
@@ -97,6 +126,10 @@ const NewMaterialForm = (props) => {
   };
   const linkInputChangeHandler = (event) => {
     setEnteredLink(event.target.value);
+  };
+
+  const supplierSelectionHandler = (event) => {
+    setSelectedSupplier(event.target.value);
   };
 
   const formSubmissionHandler = (event) => {
@@ -217,8 +250,31 @@ const NewMaterialForm = (props) => {
           </div>
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
+              <select
+                ref={pickedSupplier}
+                onChange={supplierSelectionHandler}
+                current={selectedSupplier}
+              >
+                {!props.supplier ? (
+                  suppliersState.map((el) => {
+                    return <option key={el.name}>{el.name}</option>;
+                  })
+                ) : (
+                  <option key={specificSupplier[0]}>
+                    {specificSupplier[0]}
+                  </option>
+                )}
+              </select>
+              <p className={classes.description}>Pick existing supplier</p>
+            </div>
+            <p>Supplier</p>
+          </div>
+          <div className={classes.typeGroup}>
+            <div className={`${classes.custom_select}`}>
               <select ref={enteredExistingCollection}>
-                {props.supplier ? allCollectionsOption2 : allCollectionsOption}
+                {props.supplier || selectedSupplier
+                  ? allCollectionsOption2
+                  : allCollectionsOption}
               </select>
               <p className={classes.description}>Pick</p>
             </div>
@@ -254,23 +310,6 @@ const NewMaterialForm = (props) => {
               <p className={classes.description}>or type new</p>
             </div>
             <p>Category</p>
-          </div>
-          <div className={classes.typeGroup}>
-            <div className={`${classes.custom_select}`}>
-              <select ref={pickedSupplier}>
-                {!props.supplier ? (
-                  suppliersState.map((el) => {
-                    return <option key={el.name}>{el.name}</option>;
-                  })
-                ) : (
-                  <option key={specificSupplier[0]}>
-                    {specificSupplier[0]}
-                  </option>
-                )}
-              </select>
-              <p className={classes.description}>Pick existing supplier</p>
-            </div>
-            <p>Supplier</p>
           </div>
         </div>
         <div className={classes.flex}>

@@ -38,15 +38,37 @@ export const fetchStateData = () => {
       });
 
       const newDataLibrary = stateData.library.map((el) => {
-        return el.materials ? el.materials : (el.materials = []);
+        return {
+          name: el.name,
+          path: el.path,
+          materials: el.materials ? el.materials : [],
+        };
       });
 
-      console.log(newDataLibrary);
+      const newDataSupplier = stateData.suppliers.map((el) => {
+        return {
+          name: el.name,
+          field: el.field,
+          adress: {
+            country: el.country,
+            city: el.city,
+            street: el.street,
+            number: el.number,
+          },
+          contactPerson: {
+            fullName: el.fullName,
+            email: el.email,
+            tel: el.tel,
+          },
+          matCollections: el.matCollections ? el.matCollections : [],
+          path: el.path,
+        };
+      });
 
       dispatch(projectActions.replceProjects(sortedStateData));
-      dispatch(suppliersActions.replceSuppliers(stateData.suppliers));
+      dispatch(suppliersActions.replceSuppliers(newDataSupplier));
       dispatch(tasksActions.replceTasks(stateData.tasks));
-      dispatch(libraryActions.replceLibrary(stateData.newDataLibrary));
+      dispatch(libraryActions.replceLibrary(newDataLibrary));
       dispatch(globalActions.replaceTarget(stateData.global));
       dispatch(usersActions.replceUsers(stateData.users));
     } catch (error) {
