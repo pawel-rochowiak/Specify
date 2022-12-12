@@ -40,6 +40,20 @@ const librarySlice = createSlice({
         });
       }
     },
+    editMaterial(state, action) {
+      state.find((el) => el.name === action.payload.category).materials[
+        action.payload.materialIndex
+      ] = {
+        name: action.payload.name,
+        supplier: action.payload.supplier,
+        collection: action.payload.collection,
+        category: action.payload.category,
+        certificates: action.payload.certificates,
+        info: action.payload.info,
+        image: action.payload.image,
+        link: action.payload.link,
+      };
+    },
     deleteMaterial(state, action) {
       state
         .find((el) => el.name === action.payload.category)

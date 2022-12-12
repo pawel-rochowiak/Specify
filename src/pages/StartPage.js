@@ -178,7 +178,12 @@ const StartPage = (props) => {
   }
   if (stateTarget === "library") {
     TargetForm = (
-      <NewMaterialForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+      <NewMaterialForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
+      />
     );
   }
   if (detailTarget[0] === "detailSupplier") {

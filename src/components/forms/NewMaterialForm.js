@@ -27,6 +27,8 @@ const NewMaterialForm = (props) => {
     return arr;
   };
 
+  console.log(props);
+
   let ss,
     specificSupplier,
     specificSupplierOptions,
@@ -179,28 +181,43 @@ const NewMaterialForm = (props) => {
       .find(findSupplier)
       .matCollections.find(findCollection);
 
-    console.log(materialCollection);
+    if (props.editing === true) {
+      dispatch(
+        libraryActions.editMaterial({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          collection: materialCollection
+            ? enteredExistingCollection.current.value
+            : enteredCollection,
+          category: materialState.find(findCategory)
+            ? enteredCat.current.value
+            : enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          materialIndex: props.itemToEdit,
+        })
+      );
+    } else {
+      dispatch(
+        libraryActions.addMaterials({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          collection: materialCollection
+            ? enteredExistingCollection.current.value
+            : enteredCollection,
+          category: materialState.find(findCategory)
+            ? enteredCat.current.value
+            : enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+        })
+      );
+    }
 
-    // if (materialState.find(findCategory) || !materialState.find(findCategory)) {
-    dispatch(
-      libraryActions.addMaterials({
-        name: enteredName,
-        supplier: pickedSupplier.current.value,
-        collection: materialCollection
-          ? enteredExistingCollection.current.value
-          : enteredCollection,
-        category: materialState.find(findCategory)
-          ? enteredCat.current.value
-          : enteredCategory,
-        certificates: enteredCertificates,
-        info: enteredDescription,
-        image: enteredImage,
-        link: enteredLink,
-      })
-    );
-    //}
-
-    // if (materialCollection || !materialCollection) {
     dispatch(
       suppliersActions.addCollection({
         name: enteredName,

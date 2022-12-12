@@ -16,9 +16,9 @@ const LibraryPage = (props) => {
     <Fragment>
       <div className={classes.tasks}>
         <div className={classes.name}>Material Library</div>
-        <p>
-          Please note: Materials can be edited or deleted from within a specific
-          category.
+        <p className={classes.info}>
+          <span>Please note:</span> Materials can be edited or deleted from
+          within a specific category.
         </p>
         <div className={classes.categoriesTask}>
           <div>No.</div>
