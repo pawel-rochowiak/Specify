@@ -16,6 +16,10 @@ const LibraryPage = (props) => {
     <Fragment>
       <div className={classes.tasks}>
         <div className={classes.name}>Material Library</div>
+        <p>
+          Please note: Materials can be edited or deleted from within a specific
+          category.
+        </p>
         <div className={classes.categoriesTask}>
           <div>No.</div>
           <div>Name</div>
@@ -39,6 +43,7 @@ const LibraryPage = (props) => {
               link={el.link}
               dataset={index}
               edit={props.createItem}
+              disabled={true}
             />
           ))}
           <div

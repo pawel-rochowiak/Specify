@@ -18,18 +18,28 @@ const LibraryItem = (props) => {
 
   const targetDeleteHandler = (ev) => {
     ev.preventDefault();
-    ///rember to chenge the path & key when deleting!!!
 
     const targetStart = ev.target.closest("div[class*='LibraryItem_item']")
       .dataset.order;
 
-    dispatch(libraryActions.deleteMaterial({ index: targetStart }));
+    dispatch(
+      libraryActions.deleteMaterial({
+        index: targetStart,
+        supplier: props.supplier,
+        collection: props.collection,
+        category: props.category,
+      })
+    );
   };
   return (
     <div className={classes.item} data-order={props.dataset}>
-      <div className={classes.edit} onClick={targetEditHandler}>
-        <EditIcon className={classes.edit} />
-      </div>
+      {!props.disabled ? (
+        <div className={classes.edit} onClick={targetEditHandler}>
+          <EditIcon className={classes.edit} />
+        </div>
+      ) : (
+        ""
+      )}
       <div className={classes.materialNumber}>{props.number}</div>
       <div className={classes.materialName}>{props.name}</div>
       <div className={classes.materialName}>{props.collection}</div>
@@ -40,9 +50,13 @@ const LibraryItem = (props) => {
       <a className={classes.materialLink} href={props.link} target="_blank">
         Link
       </a>
-      <div className={classes.delete} onClick={targetDeleteHandler}>
-        <CloseIcon />
-      </div>
+      {!props.disabled ? (
+        <div className={classes.delete} onClick={targetDeleteHandler}>
+          <CloseIcon />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

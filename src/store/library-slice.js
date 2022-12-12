@@ -25,7 +25,7 @@ const librarySlice = createSlice({
         info: action.payload.info,
         image: action.payload.image,
         link: action.payload.link,
-        path: `cat${state.length + 1}`,
+        // path: `cat${state.length + 1}`,
       };
 
       if (state.find((el) => el.name === action.payload.category)) {
@@ -41,14 +41,9 @@ const librarySlice = createSlice({
       }
     },
     deleteMaterial(state, action) {
-      // console.log(action.payload.index);
-      // const materials = state
-      //   .map((el) => (el.materials ? el.materials : []))
-      //   .flat();
-      // console.log(materials);
-      // return materials.splice(action.payload.index, 1);
-      // state.splice(action.payload.index, 1);
-      // state.map((el, index) => (el.path = `cat${index}`));
+      state
+        .find((el) => el.name === action.payload.category)
+        .materials.splice(action.payload.index, 1);
     },
     replceLibrary(state, action) {
       return action.payload;

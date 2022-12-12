@@ -38,15 +38,18 @@ const LibraryPageDetails = (props) => {
           <div className={classes.taskList}>
             {materialArrayByCategory?.map((el, index) => (
               <LibraryItem
-                key={index + 1}
+                key={index}
                 number={index + 1}
                 name={el.name}
                 collection={el.collection}
                 supplier={el.supplier}
                 certificate={el.certificates}
+                category={el.category}
                 info={el.info}
                 imageUrl={el.imageUrl}
                 link={el.link}
+                dataset={index}
+                edit={props.createItem}
               />
             ))}
             {!materialArrayByCategory ? (

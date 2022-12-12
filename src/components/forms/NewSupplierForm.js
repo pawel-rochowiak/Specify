@@ -64,9 +64,6 @@ const NewSupplierForm = (props) => {
 
     const supplierIndex = props.itemToEdit;
 
-    // console.log(supplierIndex);
-    // console.log(props.editing);
-
     if (props.editing === true) {
       dispatch(
         suppliersActions.editSupplier({
