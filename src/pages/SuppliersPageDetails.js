@@ -102,6 +102,9 @@ const SuppliersPageDetails = (props) => {
                       info={el.info}
                       imageUrl={el.imageUrl}
                       link={el.link}
+                      dataset={index}
+                      edit={props.createItem}
+                      supEdit={true}
                     />
                   ))}
                 </Fragment>

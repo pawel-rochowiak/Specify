@@ -1,8 +1,9 @@
 import classes from "./LibraryItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { libraryActions } from "../store/library-slice";
+import { suppliersActions } from "../store/suppliers-slice";
 
 const LibraryItem = (props) => {
   const dispatch = useDispatch();
@@ -22,14 +23,26 @@ const LibraryItem = (props) => {
     const targetStart = ev.target.closest("div[class*='LibraryItem_item']")
       .dataset.order;
 
-    dispatch(
-      libraryActions.deleteMaterial({
-        index: targetStart,
-        supplier: props.supplier,
-        collection: props.collection,
-        category: props.category,
-      })
-    );
+    console.log(props);
+
+    if (props.supEdit) {
+      dispatch(
+        suppliersActions.deleteMaterial({
+          index: targetStart,
+          supplier: props.supplier,
+          collection: props.collection,
+        })
+      );
+    } else {
+      dispatch(
+        libraryActions.deleteMaterial({
+          index: targetStart,
+          supplier: props.supplier,
+          collection: props.collection,
+          category: props.category,
+        })
+      );
+    }
   };
   return (
     <div className={classes.item} data-order={props.dataset}>

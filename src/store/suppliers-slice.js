@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
 
 const initialState = [
   {
@@ -122,6 +123,20 @@ const suppliersSlice = createSlice({
         action.payload.email;
       state[action.payload.supplierIndex].contactPerson.tel =
         action.payload.tel;
+    },
+    deleteMaterial(state, action) {
+      console.log(action.payload);
+      const supplierIndex = state.findIndex(
+        (el) => el.name === action.payload.supplier
+      );
+      const collectionIndex = state[supplierIndex].matCollections.findIndex(
+        (el) => el.name === action.payload.collection
+      );
+
+      state[supplierIndex].matCollections[collectionIndex].materials.splice(
+        action.payload.index,
+        1
+      );
     },
     addCollection(state, action) {
       const newMaterialObjMarkup = {
