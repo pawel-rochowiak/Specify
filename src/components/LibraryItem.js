@@ -25,24 +25,32 @@ const LibraryItem = (props) => {
 
     console.log(props);
 
-    if (props.supEdit) {
-      dispatch(
-        suppliersActions.deleteMaterial({
-          index: targetStart,
-          supplier: props.supplier,
-          collection: props.collection,
-        })
-      );
-    } else {
-      dispatch(
-        libraryActions.deleteMaterial({
-          index: targetStart,
-          supplier: props.supplier,
-          collection: props.collection,
-          category: props.category,
-        })
-      );
-    }
+    // if (props.supEdit) {
+    //   dispatch(
+    //     suppliersActions.deleteMaterial({
+    //       index: targetStart,
+    //       supplier: props.supplier,
+    //       collection: props.collection,
+    //     })
+    //   );
+    // } else {
+    dispatch(
+      libraryActions.deleteMaterial({
+        index: targetStart,
+        supplier: props.supplier,
+        collection: props.collection,
+        category: props.category,
+      })
+    );
+
+    dispatch(
+      suppliersActions.deleteMaterial({
+        index: targetStart,
+        supplier: props.supplier,
+        collection: props.collection,
+      })
+    );
+    //}
   };
   return (
     <div className={classes.item} data-order={props.dataset}>

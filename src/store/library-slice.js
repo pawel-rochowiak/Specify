@@ -55,6 +55,7 @@ const librarySlice = createSlice({
       };
     },
     deleteMaterial(state, action) {
+      console.log(action.payload);
       state
         .find((el) => el.name === action.payload.category)
         .materials.splice(action.payload.index, 1);

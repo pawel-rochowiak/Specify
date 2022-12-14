@@ -99,12 +99,13 @@ const SuppliersPageDetails = (props) => {
                       collection={el.collection}
                       supplier={el.supplier}
                       certificate={el.certificates}
+                      category={el.category}
                       info={el.info}
                       imageUrl={el.imageUrl}
                       link={el.link}
                       dataset={index}
                       edit={props.createItem}
-                      supEdit={true}
+                      // supEdit={true}
                     />
                   ))}
                 </Fragment>
