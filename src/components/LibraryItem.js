@@ -36,8 +36,9 @@ const LibraryItem = (props) => {
     // } else {
     dispatch(
       libraryActions.deleteMaterial({
-        index: targetStart,
+        index: !props.supEdit ? targetStart : "",
         supplier: props.supplier,
+        name: props.name,
         collection: props.collection,
         category: props.category,
       })
@@ -45,7 +46,8 @@ const LibraryItem = (props) => {
 
     dispatch(
       suppliersActions.deleteMaterial({
-        index: targetStart,
+        index: props.supEdit ? targetStart : "",
+        name: props.name,
         supplier: props.supplier,
         collection: props.collection,
       })

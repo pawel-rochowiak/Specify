@@ -1,7 +1,7 @@
 import classes from "./StartPage.module.css";
 import Task from "../components/Task";
 import { useSelector } from "react-redux";
-import Message from "../components/Message";
+// import Message from "../components/Message";
 import { Fragment } from "react";
 
 const HomePage = () => {
@@ -33,7 +33,7 @@ const HomePage = () => {
           })}
         </div>
       </div>
-      <div className={classes.messages}>
+      {/* <div className={classes.messages}>
         <div className={classes.name}>Notes</div>
         <div className={classes.categoriesMessage}>
           <div>Date</div>
@@ -55,7 +55,7 @@ const HomePage = () => {
             message="Signage specification needed. Please contact our subcontractor and request NCS code chart."
           />
         </div>
-      </div>
+      </div> */}
     </Fragment>
   );
 };

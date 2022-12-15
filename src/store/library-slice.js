@@ -56,9 +56,19 @@ const librarySlice = createSlice({
     },
     deleteMaterial(state, action) {
       console.log(action.payload);
-      state
-        .find((el) => el.name === action.payload.category)
-        .materials.splice(action.payload.index, 1);
+      if (action.payload.index === "") {
+        const materialIndex = state
+          .find((el) => el.name === action.payload.category)
+          .materials.findIndex((el) => el.name === action.payload.name);
+
+        state
+          .find((el) => el.name === action.payload.category)
+          .materials.splice(materialIndex, 1);
+      } else {
+        state
+          .find((el) => el.name === action.payload.category)
+          .materials.splice(action.payload.index, 1);
+      }
     },
     replceLibrary(state, action) {
       return action.payload;

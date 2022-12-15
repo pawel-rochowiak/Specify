@@ -132,10 +132,21 @@ const suppliersSlice = createSlice({
         (el) => el.name === action.payload.collection
       );
 
-      state[supplierIndex].matCollections[collectionIndex].materials.splice(
-        action.payload.index,
-        1
-      );
+      if (action.payload.index === "") {
+        const materialIndex = state[supplierIndex].matCollections[
+          collectionIndex
+        ].materials.findIndex((el) => el.name === action.payload.name);
+
+        state[supplierIndex].matCollections[collectionIndex].materials.splice(
+          materialIndex,
+          1
+        );
+      } else {
+        state[supplierIndex].matCollections[collectionIndex].materials.splice(
+          action.payload.index,
+          1
+        );
+      }
 
       if (
         state[supplierIndex].matCollections[collectionIndex].materials

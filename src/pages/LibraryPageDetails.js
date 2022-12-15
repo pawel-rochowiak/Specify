@@ -2,7 +2,7 @@ import classes from "./ProjectPageDetails.module.css";
 import classesLibrary from "./LibraryPage.module.css";
 import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
-import Note from "../components/Note";
+// import Note from "../components/Note";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
@@ -70,7 +70,7 @@ const LibraryPageDetails = (props) => {
             </div>
           </div>
         </div>
-        <div className={classes.tasks}>
+        {/* <div className={classes.tasks}>
           <div className={classes.name}>Notes</div>
           <div className={classes.categoriesNotes}>
             <div>Date</div>
@@ -90,7 +90,7 @@ const LibraryPageDetails = (props) => {
               <PlusIcon size="1.6rem" />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </Fragment>
   );
