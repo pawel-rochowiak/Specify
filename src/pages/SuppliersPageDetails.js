@@ -91,7 +91,7 @@ const SuppliersPageDetails = (props) => {
                   <div className={classes.collection}>
                     <h4>{el.name}</h4>
                   </div>
-                  {el.materials.map((el, index) => (
+                  {el.materials?.map((el, index) => (
                     <LibraryItem
                       key={index + 1}
                       number={index + 1}

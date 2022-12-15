@@ -136,6 +136,13 @@ const suppliersSlice = createSlice({
         action.payload.index,
         1
       );
+
+      if (
+        state[supplierIndex].matCollections[collectionIndex].materials
+          .length === 0
+      ) {
+        state[supplierIndex].matCollections.splice(collectionIndex, 1);
+      }
     },
     addCollection(state, action) {
       const newMaterialObjMarkup = {
