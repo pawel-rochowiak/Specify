@@ -87,6 +87,14 @@ input:focus {
   margin-bottom: 2rem;
 }
 
+.note_info {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: tomato;
+  display: inline-block;
+}
+
 button {
   color: #fff;
   border: none;

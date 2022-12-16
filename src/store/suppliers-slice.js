@@ -18,15 +18,51 @@ const initialState = [
     matCollections: [
       {
         name: "Col1",
-        materials: ["mat1", "mat2", "mat3"],
+        materials: [
+          {
+            category: "Wood",
+            certificates: "IMO",
+            collection: "Col1",
+            image: "",
+            info: "nice material",
+            link: "link",
+            name: "Wooden pannels",
+            path: "cat1",
+            supplier: "Preciosa",
+          },
+        ],
       },
       {
         name: "Col2",
-        materials: ["mat4", "mat5", "ma6"],
+        materials: [
+          {
+            category: "Wood",
+            certificates: "IMO",
+            collection: "Col1",
+            image: "",
+            info: "nice material",
+            link: "link",
+            name: "Wooden lamellas",
+            path: "cat1",
+            supplier: "Preciosa",
+          },
+        ],
       },
       {
         name: "Col3",
-        materials: ["mat7", "mat8", "mat9"],
+        materials: [
+          {
+            category: "Wood",
+            certificates: "IMO",
+            collection: "Col1",
+            image: "",
+            info: "nice material",
+            link: "link",
+            name: "Wooden fornir",
+            path: "cat1",
+            supplier: "Preciosa",
+          },
+        ],
       },
     ],
     path: "s1",
@@ -48,7 +84,19 @@ const initialState = [
     matCollections: [
       {
         name: "Col1",
-        materials: ["mat1", "mat2", "mat3"],
+        materials: [
+          {
+            category: "Wood",
+            certificates: "IMO",
+            collection: "Col1",
+            image: "",
+            info: "nice material",
+            link: "link",
+            name: "Wooden tiles",
+            path: "cat1",
+            supplier: "Preciosa",
+          },
+        ],
       },
     ],
     path: "s2",
@@ -70,12 +118,20 @@ const initialState = [
     },
     matCollections: [
       {
-        name: "Col44",
-        materials: ["mat1", "mat2", "mat3"],
-      },
-      {
-        name: "Col55",
-        materials: ["mat1", "mat2", "mat3"],
+        name: "Col1",
+        materials: [
+          {
+            category: "Wood",
+            certificates: "IMO",
+            collection: "Col1",
+            image: "",
+            info: "nice material",
+            link: "link",
+            name: "Wooden laminate",
+            path: "cat1",
+            supplier: "Preciosa",
+          },
+        ],
       },
     ],
   },
@@ -122,6 +178,22 @@ const suppliersSlice = createSlice({
         action.payload.email;
       state[action.payload.supplierIndex].contactPerson.tel =
         action.payload.tel;
+    },
+    editMaterial(state, action) {
+      state
+        .find((el) => el.name === action.payload.materialToEdit.supplier)
+        .matCollections.find(
+          (el) => el.name === action.payload.materialToEdit.collection
+        ).materials[action.payload.materialIndex] = {
+        name: action.payload.name,
+        supplier: action.payload.supplier,
+        // collection: action.payload.collection,
+        // category: action.payload.category,
+        certificates: action.payload.certificates,
+        info: action.payload.info,
+        image: action.payload.image,
+        link: action.payload.link,
+      };
     },
     deleteMaterial(state, action) {
       console.log(action.payload);

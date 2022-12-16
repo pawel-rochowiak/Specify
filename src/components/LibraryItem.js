@@ -14,7 +14,7 @@ const LibraryItem = (props) => {
     const targetStart = ev.target.closest("div[class*='LibraryItem_item']")
       .dataset.order;
 
-    props.edit(true, targetStart);
+    props.edit(true, targetStart, props);
   };
 
   const targetDeleteHandler = (ev) => {
@@ -23,17 +23,6 @@ const LibraryItem = (props) => {
     const targetStart = ev.target.closest("div[class*='LibraryItem_item']")
       .dataset.order;
 
-    console.log(props);
-
-    // if (props.supEdit) {
-    //   dispatch(
-    //     suppliersActions.deleteMaterial({
-    //       index: targetStart,
-    //       supplier: props.supplier,
-    //       collection: props.collection,
-    //     })
-    //   );
-    // } else {
     dispatch(
       libraryActions.deleteMaterial({
         index: !props.supEdit ? targetStart : "",

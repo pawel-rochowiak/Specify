@@ -42,13 +42,15 @@ const StartPage = (props) => {
   const [data, setData] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState("");
+  const [editItem, setEditItem] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
 
-  const newItemHandler = (edit, index = "") => {
+  const newItemHandler = (edit, index = "", itemProps) => {
     setIsEditing(edit);
     setEditIndex(index);
     setIsFormVisible(true);
+    setEditItem(itemProps);
   };
   const addNewTaskHandler = () => {
     setIsFormVisible(true);
@@ -183,6 +185,7 @@ const StartPage = (props) => {
         onExit={closeNewTaskForm}
         editing={isEditing === true ? isEditing : false}
         itemToEdit={isEditing === true ? editIndex : ""}
+        item={isEditing === true ? editItem : ""}
       />
     );
   }
@@ -192,6 +195,9 @@ const StartPage = (props) => {
         onClick={addNewTaskHandler}
         onExit={closeNewTaskForm}
         supplier={detailTarget[1]}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
+        item={isEditing === true ? editItem : ""}
       />
     );
   }

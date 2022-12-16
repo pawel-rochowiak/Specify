@@ -92,8 +92,6 @@ const NewMaterialForm = (props) => {
       pushInto(specificSupplierCollections, specificSupplier),
     ];
 
-    console.log(specificSupplierOptions);
-
     allCollectionsOption2 = specificSupplierOptions.map((el) => (
       <optgroup label={el[0]} key={el[0]}>
         {el[1]?.map((el) => (
@@ -186,17 +184,36 @@ const NewMaterialForm = (props) => {
         libraryActions.editMaterial({
           name: enteredName,
           supplier: pickedSupplier.current.value,
-          collection: materialCollection
-            ? enteredExistingCollection.current.value
-            : enteredCollection,
-          category: materialState.find(findCategory)
-            ? enteredCat.current.value
-            : enteredCategory,
+          // collection: materialCollection
+          //   ? enteredExistingCollection.current.value
+          //   : enteredCollection,
+          // category: materialState.find(findCategory)
+          //   ? enteredCat.current.value
+          //   : enteredCategory,
           certificates: enteredCertificates,
           info: enteredDescription,
           image: enteredImage,
           link: enteredLink,
           materialIndex: props.itemToEdit,
+        })
+      );
+
+      dispatch(
+        suppliersActions.editMaterial({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          // collection: materialCollection
+          //   ? enteredExistingCollection.current.value
+          //   : enteredCollection,
+          // category: materialState.find(findCategory)
+          //   ? enteredCat.current.value
+          //   : enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          materialIndex: props.itemToEdit,
+          materialToEdit: props.item,
         })
       );
     } else {
@@ -216,27 +233,28 @@ const NewMaterialForm = (props) => {
           link: enteredLink,
         })
       );
+
+      dispatch(
+        suppliersActions.addCollection({
+          name: enteredName,
+          supplier: pickedSupplier.current.value,
+          collection: materialCollection
+            ? enteredExistingCollection.current.value
+            : enteredCollection,
+          category: materialState.find(findCategory)
+            ? enteredCat.current.value
+            : enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          findSupplier: findSupplier,
+          findCollection: findCollection,
+          pushInto: pushInto,
+        })
+      );
     }
 
-    dispatch(
-      suppliersActions.addCollection({
-        name: enteredName,
-        supplier: pickedSupplier.current.value,
-        collection: materialCollection
-          ? enteredExistingCollection.current.value
-          : enteredCollection,
-        category: materialState.find(findCategory)
-          ? enteredCat.current.value
-          : enteredCategory,
-        certificates: enteredCertificates,
-        info: enteredDescription,
-        image: enteredImage,
-        link: enteredLink,
-        findSupplier: findSupplier,
-        findCollection: findCollection,
-        pushInto: pushInto,
-      })
-    );
     //}
 
     ///Setting all input walues back to empty string///
@@ -251,9 +269,14 @@ const NewMaterialForm = (props) => {
     props.onExit();
   };
 
+  // const disabled = props.editing ? "disabled" : "";
+  // console.log(disabled);
+
   const mainContent = (
     <div className={classes.container}>
-      <p className={classes.header}>New material</p>
+      <p className={classes.header}>
+        {props.editing ? "Editing material" : "New material"}
+      </p>
       <form className={classes.form} onSubmit={formSubmissionHandler}>
         <div className={classes.flex}>
           <div className={classes.formGroup}>
@@ -271,6 +294,7 @@ const NewMaterialForm = (props) => {
                 ref={pickedSupplier}
                 onChange={supplierSelectionHandler}
                 current={selectedSupplier}
+                disabled={props.editing}
               >
                 {!props.supplier ? (
                   suppliersState.map((el) => {
@@ -284,11 +308,20 @@ const NewMaterialForm = (props) => {
               </select>
               <p className={classes.description}>Pick existing supplier</p>
             </div>
-            <p>Supplier</p>
+            <p>
+              Supplier{" "}
+              {props.editing ? (
+                <span className={classes.note_info}>
+                  Note: To edit please delete this material and create new one.
+                </span>
+              ) : (
+                ""
+              )}
+            </p>
           </div>
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
-              <select ref={enteredExistingCollection}>
+              <select ref={enteredExistingCollection} disabled={props.editing}>
                 {props.supplier || selectedSupplier
                   ? allCollectionsOption2
                   : allCollectionsOption}
@@ -302,14 +335,24 @@ const NewMaterialForm = (props) => {
                 id="collection"
                 onChange={collectionInputChangeHandler}
                 value={enteredCollection}
+                disabled={props.editing}
               ></input>
               <p className={classes.description}>type new</p>
             </div>
-            <p>Collection</p>
+            <p>
+              Collection{" "}
+              {props.editing ? (
+                <span className={classes.note_info}>
+                  Note: To edit please delete this material and create new one.
+                </span>
+              ) : (
+                ""
+              )}
+            </p>
           </div>
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
-              <select ref={enteredCat}>
+              <select ref={enteredCat} disabled={props.editing}>
                 {materialState.map((el) => {
                   return <option key={el.name}>{el.name}</option>;
                 })}
@@ -323,10 +366,20 @@ const NewMaterialForm = (props) => {
                 id="category"
                 onChange={categoryInputChangeHandler}
                 value={enteredCategory}
+                disabled={props.editing}
               ></input>
               <p className={classes.description}>or type new</p>
             </div>
-            <p>Category</p>
+            <p>
+              Category{" "}
+              {props.editing ? (
+                <span className={classes.note_info}>
+                  Note: To edit please delete this material and create new one.
+                </span>
+              ) : (
+                ""
+              )}
+            </p>
           </div>
         </div>
         <div className={classes.flex}>
