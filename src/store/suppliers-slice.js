@@ -187,8 +187,8 @@ const suppliersSlice = createSlice({
         ).materials[action.payload.materialIndex] = {
         name: action.payload.name,
         supplier: action.payload.supplier,
-        // collection: action.payload.collection,
-        // category: action.payload.category,
+        collection: action.payload.collection,
+        category: action.payload.category,
         certificates: action.payload.certificates,
         info: action.payload.info,
         image: action.payload.image,

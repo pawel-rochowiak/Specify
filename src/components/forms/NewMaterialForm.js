@@ -183,13 +183,9 @@ const NewMaterialForm = (props) => {
       dispatch(
         libraryActions.editMaterial({
           name: enteredName,
-          supplier: pickedSupplier.current.value,
-          // collection: materialCollection
-          //   ? enteredExistingCollection.current.value
-          //   : enteredCollection,
-          // category: materialState.find(findCategory)
-          //   ? enteredCat.current.value
-          //   : enteredCategory,
+          supplier: props.item.supplier,
+          collection: props.item.collection,
+          category: props.item.category,
           certificates: enteredCertificates,
           info: enteredDescription,
           image: enteredImage,
@@ -201,13 +197,9 @@ const NewMaterialForm = (props) => {
       dispatch(
         suppliersActions.editMaterial({
           name: enteredName,
-          supplier: pickedSupplier.current.value,
-          // collection: materialCollection
-          //   ? enteredExistingCollection.current.value
-          //   : enteredCollection,
-          // category: materialState.find(findCategory)
-          //   ? enteredCat.current.value
-          //   : enteredCategory,
+          supplier: props.item.supplier,
+          collection: props.item.collection,
+          category: props.item.category,
           certificates: enteredCertificates,
           info: enteredDescription,
           image: enteredImage,
@@ -269,9 +261,6 @@ const NewMaterialForm = (props) => {
     props.onExit();
   };
 
-  // const disabled = props.editing ? "disabled" : "";
-  // console.log(disabled);
-
   const mainContent = (
     <div className={classes.container}>
       <p className={classes.header}>
@@ -312,7 +301,8 @@ const NewMaterialForm = (props) => {
               Supplier{" "}
               {props.editing ? (
                 <span className={classes.note_info}>
-                  Note: To edit please delete this material and create new one.
+                  Note: Please delete material and create a new one, in order to
+                  edit supplier, collection, and category.
                 </span>
               ) : (
                 ""
@@ -339,16 +329,7 @@ const NewMaterialForm = (props) => {
               ></input>
               <p className={classes.description}>type new</p>
             </div>
-            <p>
-              Collection{" "}
-              {props.editing ? (
-                <span className={classes.note_info}>
-                  Note: To edit please delete this material and create new one.
-                </span>
-              ) : (
-                ""
-              )}
-            </p>
+            <p>Collection</p>
           </div>
           <div className={classes.typeGroup}>
             <div className={`${classes.custom_select}`}>
@@ -370,16 +351,7 @@ const NewMaterialForm = (props) => {
               ></input>
               <p className={classes.description}>or type new</p>
             </div>
-            <p>
-              Category{" "}
-              {props.editing ? (
-                <span className={classes.note_info}>
-                  Note: To edit please delete this material and create new one.
-                </span>
-              ) : (
-                ""
-              )}
-            </p>
+            <p>Category</p>
           </div>
         </div>
         <div className={classes.flex}>
