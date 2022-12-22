@@ -15,6 +15,8 @@ const NewTaskForm = (props) => {
   const [enteredTeam, setEnteredTeam] = useState("");
   const [enteredTaskName, setEnteredTaskName] = useState("");
 
+  console.log(props);
+
   // const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   // const [enteredNumberIsValid, setEnteredNumberIsValid] = useState(false);
   // const [enteredDateIsValid, setEnteredDateIsValid] = useState(false);
@@ -53,26 +55,28 @@ const NewTaskForm = (props) => {
       return;
     }
 
-    // SLICE.tasks.push({
-    //   name: `${enteredTaskName} - ${enteredName}`,
-    //   path: `t${SLICE.tasks.length + 1}`,
-    //   dk: "5", //deck should be taken from the AREA info
-    //   fireZone: "1", //FZ should be taken from the AREA info
-    //   project: enteredName,
-    //   specification: "Carpet", //to be choosen from dropdown
-    //   team: enteredTeam,
-    //   date: enteredDate,
-    //   status: "0%", //initial as 0%
-    // });
+    const taskIndex = props.itemToEdit;
 
-    dispatch(
-      tasksActions.addTasks({
-        task: enteredTaskName,
-        name: enteredName,
-        date: enteredDate,
-        team: enteredTeam,
-      })
-    );
+    if (props.editing === true) {
+      dispatch(
+        tasksActions.editTask({
+          task: enteredTaskName,
+          name: enteredName,
+          date: enteredDate,
+          team: enteredTeam,
+          taskIndex,
+        })
+      );
+    } else {
+      dispatch(
+        tasksActions.addTasks({
+          task: enteredTaskName,
+          name: enteredName,
+          date: enteredDate,
+          team: enteredTeam,
+        })
+      );
+    }
 
     setEnteredName("");
     setEnteredNumber("");

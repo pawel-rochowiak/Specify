@@ -46,7 +46,7 @@ const StartPage = (props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
 
-  const newItemHandler = (edit, index = "", itemProps) => {
+  const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
     setEditIndex(index);
     setIsFormVisible(true);
@@ -155,7 +155,12 @@ const StartPage = (props) => {
 
   if (stateTarget === "tasks") {
     TargetForm = (
-      <NewTaskForm onClick={addNewTaskHandler} onExit={closeNewTaskForm} />
+      <NewTaskForm
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        editing={isEditing === true ? isEditing : false}
+        itemToEdit={isEditing === true ? editIndex : ""}
+      />
     );
   }
   if (stateTarget === "projects") {
@@ -253,7 +258,7 @@ const StartPage = (props) => {
 
           <div className={classes.mainContent}>
             <Switch>
-              <Route key="home" path="/home">
+              <Route key="home" path="/home" exact>
                 <HomePage />
               </Route>
               {reactRoutesMainStarter}

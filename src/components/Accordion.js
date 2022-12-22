@@ -7,7 +7,7 @@ import SuppliersIcon from "./icons/SuppliersIcon";
 import LibraryIcon from "./icons/LibraryIcon";
 
 import { globalActions } from "../store/global-slice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Accordion = (props) => {
   const dispatch = useDispatch();

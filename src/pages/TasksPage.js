@@ -20,7 +20,7 @@ const TasksPage = (props) => {
           <div>Status</div>
         </div>
         <div className={classes.taskList}>
-          {stateTasks.map((el) => (
+          {stateTasks.map((el, index) => (
             <Task
               key={el.path}
               name={el.project}
@@ -28,6 +28,8 @@ const TasksPage = (props) => {
               task={el.specification}
               date={el.date}
               status={el.status}
+              dataset={index}
+              edit={props.createItem}
             />
           ))}
           <div

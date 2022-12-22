@@ -86,6 +86,15 @@ const tasksSlice = createSlice({
         status: "0%",
       });
     },
+    editTask(state, action) {
+      state[action.payload.taskIndex].name = action.payload.task;
+      state[action.payload.taskIndex].project = action.payload.name;
+      state[action.payload.taskIndex].date = action.payload.date;
+      state[action.payload.taskIndex].team = action.payload.team;
+    },
+    deleteTask(state, action) {
+      state.splice(action.payload, 1);
+    },
     replceTasks(state, action) {
       return action.payload;
     },

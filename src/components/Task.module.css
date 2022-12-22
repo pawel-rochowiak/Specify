@@ -7,6 +7,7 @@
   grid-template-columns: repeat(5, 1fr);
   font-size: 1.2rem;
   text-transform: uppercase;
+  position: relative;
 }
 
 .task :not(div:first-of-type) {
@@ -29,7 +30,69 @@
   align-items: center;
 }
 
+.task :not(div:first-of-type) {
+  border-left: 1px solid #c7e7fc;
+}
+
 .overdue {
   border: 2px solid rgb(255, 62, 62) !important;
   font-weight: 700;
+}
+
+.task:hover .edit {
+  opacity: 1;
+  transition: all 0.5s;
+  animation: slide-right 300ms ease-out forwards;
+}
+
+.task:hover .delete {
+  opacity: 1;
+  transition: all 0.5s;
+  animation: slide-left 300ms ease-out forwards;
+}
+
+.edit,
+.delete {
+  margin: 2px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  height: fit-content;
+  width: auto;
+  border-radius: 5px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.edit {
+  padding: 5px;
+  background-color: #44b3fd;
+}
+
+.delete {
+  padding: 3px;
+  right: 0;
+  background-color: rgb(255, 62, 62);
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
