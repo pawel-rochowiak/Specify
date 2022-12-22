@@ -108,15 +108,21 @@ const StartPage = (props) => {
 
   //Creating Routes for main information display.Right part of the container (mainContent).
 
-  const reactRoutesMain = data.map(({ name, path }) => (
-    <Route key={path} path={`/${stateTarget}/${path}`}>
-      <DynamicComponentDetails
-        name={name}
-        path={path}
-        createItem={newItemHandler}
-      />
-    </Route>
-  ));
+  const reactRoutesMain = data.map(
+    ({ name, path, fireZone, dk, date, project }) => (
+      <Route key={path} path={`/${stateTarget}/${path}`}>
+        <DynamicComponentDetails
+          name={name}
+          path={path}
+          fz={fireZone}
+          dk={dk}
+          date={date}
+          project={project}
+          createItem={newItemHandler}
+        />
+      </Route>
+    )
+  );
 
   const reactRoutesMainStarter = data.map(({ _, path }) => (
     <Route key={path} path={`/${stateTarget}`} exact>

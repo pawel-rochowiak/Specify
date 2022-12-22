@@ -2,9 +2,23 @@ import classes from "./ProjectPageDetails.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment, useState } from "react";
+import { saveAs } from "file-saver";
+import { Document, ImageRun, Packer, Paragraph } from "docx";
 
 const TaskPageDetails = (props) => {
-  const propsArrLength = Object.entries(props).slice(0, -1);
+  const specificationType = props.name;
+  const projectName = props.project;
+  const deck = props.dk;
+  const fireZone = props.fz;
+
+  console.log(props);
+
+  const propsArrLength1 = [
+    ["name", specificationType],
+    ["project", projectName],
+    ["dk", deck],
+    ["fz", fireZone],
+  ];
 
   const [index, setIndex] = useState(1);
 
@@ -22,12 +36,16 @@ const TaskPageDetails = (props) => {
     setMaterialArr(materialsArr.slice(0, -1));
   };
 
+  const generateDOC = () => {
+    console.log("doc will be generated");
+  };
+
   return (
     <Fragment>
-      <div className={classes.mainContent}>
+      <div className={classes.mainContent} id="exportContent">
         <div className={classes.tasks}>
           <div className={classes.tasks_labels}>
-            {propsArrLength.map((el, index) => {
+            {propsArrLength1.map((el, index) => {
               return (
                 <div
                   key={index + 1}
@@ -74,7 +92,7 @@ const TaskPageDetails = (props) => {
                 <th>Material specification</th>
                 <tr className={classes.header_labels}>
                   <td>Venue:{props.name}</td>
-                  <td>Deck:{props.deck}</td>
+                  <td>Deck:{deck}</td>
                   <td>Fz:{props.fz}</td>
                 </tr>
               </thead>
@@ -94,23 +112,25 @@ const TaskPageDetails = (props) => {
                 })}
               </tbody>
             </table>
-            <div
-              className={`${classes.item} ${classes.action}`}
-              onClick={addNewMaterialHandler}
-            >
-              Add material
-              <PlusIcon size="1.6rem" />
-            </div>
-            <div
-              className={`${classes.item} ${classes.action}`}
-              onClick={deleteMaterialHandler}
-            >
-              Delete material
-              <PlusIcon size="1.6rem" />
-            </div>
           </div>
         </div>
       </div>
+      <div
+        className={`${classes.item} ${classes.action}`}
+        onClick={addNewMaterialHandler}
+      >
+        Add material
+        <PlusIcon size="1.6rem" />
+      </div>
+      <div
+        className={`${classes.item} ${classes.action}`}
+        onClick={deleteMaterialHandler}
+      >
+        Delete material
+        <PlusIcon size="1.6rem" />
+      </div>
+
+      <button onClick={generateDOC}>Export to WORD</button>
     </Fragment>
   );
 };
