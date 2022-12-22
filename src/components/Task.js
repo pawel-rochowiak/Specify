@@ -41,9 +41,13 @@ const Task = (props) => {
 
   return (
     <div className={classes.task} data-order={props.dataset}>
-      <div className={classes.edit} onClick={targetEditHandler}>
-        <EditIcon className={classes.edit} />
-      </div>
+      {!props.disabled ? (
+        <div className={classes.edit} onClick={targetEditHandler}>
+          <EditIcon className={classes.edit} />
+        </div>
+      ) : (
+        ""
+      )}
       <div className={classes.projectName}>{props.name}</div>
       <div className={classes.projectTask}>{props.task}</div>
       <div className={classes.projectTeam}>{props.team}</div>
@@ -58,9 +62,13 @@ const Task = (props) => {
         )}
       </div>
       <div className={classes.projectStatus}>{props.status}</div>
-      <div className={classes.delete} onClick={targetDeleteHandler}>
-        <CloseIcon />
-      </div>
+      {!props.disabled ? (
+        <div className={classes.delete} onClick={targetDeleteHandler}>
+          <CloseIcon />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

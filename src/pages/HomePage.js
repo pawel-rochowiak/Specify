@@ -28,34 +28,12 @@ const HomePage = () => {
                 task={el.name}
                 date={el.date}
                 status={el.status}
+                disabled={true}
               />
             );
           })}
         </div>
       </div>
-      {/* <div className={classes.messages}>
-        <div className={classes.name}>Notes</div>
-        <div className={classes.categoriesMessage}>
-          <div>Date</div>
-          <div>Project</div>
-          <div>Sender</div>
-          <div>Message</div>
-        </div>
-        <div className={classes.taskList}>
-          <Message
-            date="09/09/2022"
-            name="Princess"
-            sender="Rafał"
-            message="trololololo"
-          />
-          <Message
-            date="19/09/2022"
-            name="Disney"
-            sender="Carl"
-            message="Signage specification needed. Please contact our subcontractor and request NCS code chart."
-          />
-        </div>
-      </div> */}
     </Fragment>
   );
 };
