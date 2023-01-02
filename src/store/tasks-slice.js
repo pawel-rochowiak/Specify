@@ -76,6 +76,7 @@ const tasksSlice = createSlice({
     addTasks(state, action) {
       state.push({
         name: `${action.payload.task} - ${action.payload.name}`,
+        area: `${action.payload.area}`,
         path: `t${state.length + 1}`,
         dk: "5",
         fireZone: "1",
@@ -89,6 +90,7 @@ const tasksSlice = createSlice({
     editTask(state, action) {
       state[action.payload.taskIndex].name = action.payload.task;
       state[action.payload.taskIndex].project = action.payload.name;
+      state[action.payload.taskIndex].area = action.payload.area;
       state[action.payload.taskIndex].date = action.payload.date;
       state[action.payload.taskIndex].team = action.payload.team;
     },

@@ -109,10 +109,11 @@ const StartPage = (props) => {
   //Creating Routes for main information display.Right part of the container (mainContent).
 
   const reactRoutesMain = data.map(
-    ({ name, path, fireZone, dk, date, project }) => (
+    ({ name, path, fireZone, dk, date, project, area }) => (
       <Route key={path} path={`/${stateTarget}/${path}`}>
         <DynamicComponentDetails
           name={name}
+          area={area}
           path={path}
           fz={fireZone}
           dk={dk}

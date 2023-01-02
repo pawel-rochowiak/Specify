@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
-import { allSLiceActions } from "../../store/index";
-import SLICE from "../../store/DUMMY_STATE_SLICE";
 import { tasksActions } from "../../store/tasks-slice";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +8,7 @@ const NewTaskForm = (props) => {
   const dispatch = useDispatch();
 
   const [enteredName, setEnteredName] = useState("");
+  const [enteredAreaName, setEnteredAreaName] = useState("");
   const [enteredNumber, setEnteredNumber] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredTeam, setEnteredTeam] = useState("");
@@ -24,6 +23,10 @@ const NewTaskForm = (props) => {
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+  };
+
+  const areaInputChangeHandler = (event) => {
+    setEnteredAreaName(event.target.value);
   };
 
   const numberInputChangeHandler = (event) => {
@@ -49,7 +52,8 @@ const NewTaskForm = (props) => {
       enteredName.trim() === "" ||
       enteredNumber.trim() === "" ||
       enteredDate.trim() === "" ||
-      enteredTeam.trim() === ""
+      enteredTeam.trim() === "" ||
+      enteredAreaName.trim() === ""
     ) {
       console.log("empty");
       return;
@@ -62,6 +66,7 @@ const NewTaskForm = (props) => {
         tasksActions.editTask({
           task: enteredTaskName,
           name: enteredName,
+          area: enteredAreaName,
           date: enteredDate,
           team: enteredTeam,
           taskIndex,
@@ -72,6 +77,7 @@ const NewTaskForm = (props) => {
         tasksActions.addTasks({
           task: enteredTaskName,
           name: enteredName,
+          area: enteredAreaName,
           date: enteredDate,
           team: enteredTeam,
         })
@@ -79,6 +85,7 @@ const NewTaskForm = (props) => {
     }
 
     setEnteredName("");
+    setEnteredAreaName("");
     setEnteredNumber("");
     setEnteredDate("");
     setEnteredTeam("");
@@ -107,6 +114,15 @@ const NewTaskForm = (props) => {
             value={enteredName}
           ></input>
           <p className={classes.description}>Project name</p>
+        </div>
+        <div className={classes.formGroup}>
+          <input
+            type="text"
+            id="area"
+            onChange={areaInputChangeHandler}
+            value={enteredAreaName}
+          ></input>
+          <p className={classes.description}>Venue name</p>
         </div>
         <div className={classes.formGroup}>
           <input

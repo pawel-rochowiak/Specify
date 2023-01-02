@@ -3,18 +3,29 @@ import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment, useState } from "react";
 import { saveAs } from "file-saver";
-import { Document, ImageRun, Packer, Paragraph } from "docx";
+import {
+  Document,
+  ImageRun,
+  Packer,
+  Paragraph,
+  AlignmentType,
+  HeadingLevel,
+  TabStopPosition,
+  TabStopType,
+  TextRun,
+} from "docx";
 
 const TaskPageDetails = (props) => {
   const specificationType = props.name;
   const projectName = props.project;
   const deck = props.dk;
   const fireZone = props.fz;
+  const areaName = props.area;
 
   console.log(props);
 
   const propsArrLength1 = [
-    ["name", specificationType],
+    // ["name", specificationType],
     ["project", projectName],
     ["dk", deck],
     ["fz", fireZone],
@@ -37,7 +48,93 @@ const TaskPageDetails = (props) => {
   };
 
   const generateDOC = () => {
-    console.log("doc will be generated");
+    const document = new Document({
+      styles: {
+        paragraphStyles: [
+          {
+            id: "main",
+            name: "Main",
+
+            run: {
+              color: "#808080",
+            },
+          },
+          {
+            id: "second",
+            name: "Second",
+
+            run: {
+              color: "#000000",
+            },
+          },
+        ],
+      },
+      sections: [
+        {
+          children: [
+            new Paragraph({
+              style: "main",
+              // heading: HeadingLevel.TITLE,
+              children: [
+                new TextRun({
+                  text: `PROJECT: `,
+                  font: "Lato",
+                  size: 28,
+                  allCaps: true,
+                }),
+                new TextRun({
+                  text: `${projectName}`,
+                  font: "Lato",
+                  size: 28,
+                  allCaps: true,
+                }),
+              ],
+            }),
+            new Paragraph({
+              style: "second",
+              alignment: AlignmentType.CENTER,
+              children: [
+                new TextRun({
+                  text: `Yard Proj.#	6310	TD Proj.#	1136-1	Issue Date:	2020-11-27	By: 	DT		Rev. Date:	2021-02-05	By:		 Rev:	A`,
+                  font: "Lato",
+                  size: 18,
+                  allCaps: true,
+                }),
+                new TextRun({
+                  text: "Address: 58 Elm Avenue, Kent ME4 6ER, UK",
+                  font: "Lato",
+                  size: 18,
+                  allCaps: true,
+                }),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `MATERIAL SPECIFICATION`,
+                  font: "Lato",
+                  size: 28,
+                  allCaps: true,
+                }),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `DK 0${deck} FZ 0${fireZone} EMBARKATION LOUNGE`,
+                }),
+              ],
+            }),
+          ],
+        },
+      ],
+    });
+
+    Packer.toBlob(document).then((blob) => {
+      console.log(blob);
+      saveAs(blob, "example.docx");
+      console.log("Document created successfully");
+    });
   };
 
   return (
@@ -91,7 +188,7 @@ const TaskPageDetails = (props) => {
                 </tr>
                 <th>Material specification</th>
                 <tr className={classes.header_labels}>
-                  <td>Venue:{props.name}</td>
+                  <td>Venue:{props.area}</td>
                   <td>Deck:{deck}</td>
                   <td>Fz:{props.fz}</td>
                 </tr>
