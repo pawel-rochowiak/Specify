@@ -1,6 +1,9 @@
 import classes from "./ProjectPageDetails.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
+import MinusIcon from "../components/icons/MinusIcon";
+import WordIcon from "../components/icons/WordIcon";
+import ArrowDown from "../components/icons/DownArrow";
 import { Fragment, useState } from "react";
 import { saveAs } from "file-saver";
 import {
@@ -9,9 +12,6 @@ import {
   Packer,
   Paragraph,
   AlignmentType,
-  HeadingLevel,
-  TabStopPosition,
-  TabStopType,
   TextRun,
   Table,
   TableRow,
@@ -26,6 +26,7 @@ const TaskPageDetails = (props) => {
   const deck = props.dk;
   const fireZone = props.fz;
   const areaName = props.area.toUpperCase();
+  const specType = props.name.split("-")[0];
 
   console.log(props);
 
@@ -49,6 +50,7 @@ const TaskPageDetails = (props) => {
 
   const addNewMaterialHandler = () => {
     setMaterialArr((prevState) => {
+      console.log(materialsArr);
       return [...prevState, <NewMaterial key={index} />];
     });
     setIndex(index + 1);
@@ -228,23 +230,32 @@ const TaskPageDetails = (props) => {
                         },
                       },
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [new Paragraph("100")],
                     }),
                     new TableCell({
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [new Paragraph("BOLIDT")],
                     }),
                     new TableCell({
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [
+                        new Paragraph({
+                          alignment: AlignmentType.CENTER,
+                          children: [
+                            new TextRun({
+                              text: "Nice material fo be used on floor deck",
+                            }),
+                          ],
+                        }),
+                      ],
                     }),
                     new TableCell({
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [new Paragraph("www.bolidt.com")],
                     }),
                     new TableCell({
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [new Paragraph("2021-02-05")],
                     }),
                     new TableCell({
                       borders: {
@@ -255,7 +266,7 @@ const TaskPageDetails = (props) => {
                         },
                       },
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("hello")],
+                      children: [new Paragraph("IMAGE")],
                     }),
                   ],
                 }),
@@ -268,7 +279,7 @@ const TaskPageDetails = (props) => {
 
     Packer.toBlob(document).then((blob) => {
       console.log(blob);
-      saveAs(blob, "example.docx");
+      saveAs(blob, `${areaName}-${specType}.docx`);
       console.log("Document created successfully");
     });
   };
@@ -348,22 +359,31 @@ const TaskPageDetails = (props) => {
           </div>
         </div>
       </div>
-      <div
-        className={`${classes.item} ${classes.action}`}
-        onClick={addNewMaterialHandler}
-      >
-        Add material
-        <PlusIcon size="1.6rem" />
+      <div className={classes.btnContainer}>
+        <div className={classes.btnMaterials}>
+          <div
+            className={`${classes.item} ${classes.action}`}
+            onClick={addNewMaterialHandler}
+          >
+            Add material
+            <PlusIcon size="1.6rem" />
+          </div>
+          <div
+            className={`${classes.item} ${classes.action}`}
+            onClick={deleteMaterialHandler}
+          >
+            Delete material
+            <MinusIcon size="1.6rem" />
+          </div>
+        </div>
+        <div
+          className={`${classes.item} ${classes.action}`}
+          onClick={generateDOC}
+        >
+          <ArrowDown size="1.6rem"></ArrowDown>
+          <WordIcon size="1.6rem" />
+        </div>
       </div>
-      <div
-        className={`${classes.item} ${classes.action}`}
-        onClick={deleteMaterialHandler}
-      >
-        Delete material
-        <PlusIcon size="1.6rem" />
-      </div>
-
-      <button onClick={generateDOC}>Export to WORD</button>
     </Fragment>
   );
 };

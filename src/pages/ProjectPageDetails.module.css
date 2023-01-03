@@ -91,6 +91,16 @@ input:focus {
   border: none;
 }
 
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.btnMaterials {
+  display: flex;
+  gap: 2rem;
+}
+
 .code {
   width: calc(100% / 10);
 }
