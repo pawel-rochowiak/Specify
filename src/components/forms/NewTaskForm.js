@@ -69,6 +69,7 @@ const NewTaskForm = (props) => {
           area: enteredAreaName,
           date: enteredDate,
           team: enteredTeam,
+          number: enteredNumber,
           taskIndex,
         })
       );
@@ -80,6 +81,7 @@ const NewTaskForm = (props) => {
           area: enteredAreaName,
           date: enteredDate,
           team: enteredTeam,
+          number: enteredNumber,
         })
       );
     }

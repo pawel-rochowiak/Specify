@@ -25,6 +25,7 @@ const TasksPage = (props) => {
               key={el.path}
               name={el.project}
               area={el.area}
+              number={el.number}
               team={el.team}
               task={el.specification}
               date={el.date}

@@ -81,6 +81,7 @@ const tasksSlice = createSlice({
         dk: "5",
         fireZone: "1",
         project: action.payload.name,
+        number: action.payload.number,
         specification: "Carpet",
         team: action.payload.team,
         date: action.payload.date,
@@ -90,6 +91,7 @@ const tasksSlice = createSlice({
     editTask(state, action) {
       state[action.payload.taskIndex].name = action.payload.task;
       state[action.payload.taskIndex].project = action.payload.name;
+      state[action.payload.taskIndex].number = action.payload.number;
       state[action.payload.taskIndex].area = action.payload.area;
       state[action.payload.taskIndex].date = action.payload.date;
       state[action.payload.taskIndex].team = action.payload.team;

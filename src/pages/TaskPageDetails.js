@@ -13,14 +13,19 @@ import {
   TabStopPosition,
   TabStopType,
   TextRun,
+  Table,
+  TableRow,
+  TableCell,
+  WidthType,
+  BorderStyle,
 } from "docx";
 
 const TaskPageDetails = (props) => {
-  const specificationType = props.name;
+  const projectNumber = props.number;
   const projectName = props.project;
   const deck = props.dk;
   const fireZone = props.fz;
-  const areaName = props.area;
+  const areaName = props.area.toUpperCase();
 
   console.log(props);
 
@@ -29,6 +34,13 @@ const TaskPageDetails = (props) => {
     ["project", projectName],
     ["dk", deck],
     ["fz", fireZone],
+  ];
+
+  const date = new Date();
+  const [day, month, year] = [
+    date.getDay(),
+    date.getMonth(),
+    date.getFullYear(),
   ];
 
   const [index, setIndex] = useState(1);
@@ -73,55 +85,179 @@ const TaskPageDetails = (props) => {
         {
           children: [
             new Paragraph({
-              style: "main",
-              // heading: HeadingLevel.TITLE,
               children: [
                 new TextRun({
                   text: `PROJECT: `,
-                  font: "Lato",
+                  font: "Encode Sans",
                   size: 28,
                   allCaps: true,
+                  bold: true,
+                  color: "#808080",
                 }),
                 new TextRun({
                   text: `${projectName}`,
-                  font: "Lato",
+                  font: "Encode Sans",
                   size: 28,
                   allCaps: true,
+                  color: "#000000",
+                }),
+              ],
+            }),
+            new Paragraph({
+              text: "",
+            }),
+            new Paragraph({
+              style: "second",
+              alignment: AlignmentType.LEFT,
+              thematicBreak: true,
+              keepLines: true,
+              children: [
+                new TextRun({
+                  text: `Yard Proj.# 6310	TD Proj.#${projectNumber}	Issue Date:${year}-${month}-${day}	By: DT   Rev. Date:	 By:	 Rev:`,
+                  font: "Encode Sans",
+                  size: 18,
+                  allCaps: true,
+                  break: 0,
+                }),
+              ],
+            }),
+            new Paragraph({
+              style: "main",
+              children: [
+                new TextRun({
+                  text: `MATERIAL SPECIFICATION`,
+                  font: "Encode Sans",
+                  size: 28,
+                  allCaps: true,
+                  bold: true,
+                  thematicBreak: true,
                 }),
               ],
             }),
             new Paragraph({
               style: "second",
-              alignment: AlignmentType.CENTER,
               children: [
                 new TextRun({
-                  text: `Yard Proj.#	6310	TD Proj.#	1136-1	Issue Date:	2020-11-27	By: 	DT		Rev. Date:	2021-02-05	By:		 Rev:	A`,
-                  font: "Lato",
-                  size: 18,
-                  allCaps: true,
-                }),
-                new TextRun({
-                  text: "Address: 58 Elm Avenue, Kent ME4 6ER, UK",
-                  font: "Lato",
-                  size: 18,
+                  text: `DK 0${deck} FZ 0${fireZone} ${areaName}`,
+                  font: "Encode Sans",
+                  size: 24,
                   allCaps: true,
                 }),
               ],
             }),
             new Paragraph({
-              children: [
-                new TextRun({
-                  text: `MATERIAL SPECIFICATION`,
-                  font: "Lato",
-                  size: 28,
-                  allCaps: true,
-                }),
-              ],
+              text: "",
             }),
             new Paragraph({
-              children: [
-                new TextRun({
-                  text: `DK 0${deck} FZ 0${fireZone} EMBARKATION LOUNGE`,
+              text: "",
+            }),
+            new Table({
+              width: {
+                size: 100,
+                type: WidthType.PERCENTAGE,
+              },
+              rows: [
+                new TableRow({
+                  children: [
+                    ...[
+                      "CODE",
+                      "ITEM",
+                      "DESCRIPTION",
+                      "SUPPLIER",
+                      "DATE",
+                      "PICTURE",
+                    ].map((el) => {
+                      return new TableCell({
+                        borders: {
+                          top: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
+                          bottom: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
+                          left: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
+                          right: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
+                        },
+                        width: { size: 100 / 6, type: WidthType.AUTO },
+                        children: [
+                          new Paragraph({
+                            alignment: AlignmentType.CENTER,
+                            children: [
+                              new TextRun({
+                                text: `${el}`,
+                                font: "Encode Sans",
+                                size: 14,
+                                allCaps: true,
+                                bold: true,
+                              }),
+                            ],
+                          }),
+                          new Paragraph({
+                            text: "",
+                          }),
+                        ],
+                      });
+                    }),
+                  ],
+                }),
+                new TableRow({
+                  children: [
+                    new TableCell({
+                      borders: {
+                        left: {
+                          style: BorderStyle.NONE,
+                          size: 0,
+                          color: "FFFFFF",
+                        },
+                        right: {
+                          style: BorderStyle.NONE,
+                          size: 0,
+                          color: "FFFFFF",
+                        },
+                      },
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                    new TableCell({
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                    new TableCell({
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                    new TableCell({
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                    new TableCell({
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                    new TableCell({
+                      borders: {
+                        right: {
+                          style: BorderStyle.NONE,
+                          size: 0,
+                          color: "FFFFFF",
+                        },
+                      },
+                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                      children: [new Paragraph("hello")],
+                    }),
+                  ],
                 }),
               ],
             }),
