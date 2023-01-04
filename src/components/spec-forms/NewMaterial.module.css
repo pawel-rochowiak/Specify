@@ -1,7 +1,12 @@
-tbody td {
-  border-left: none;
-  /* width: calc(100% / 6); */
-  padding: 1rem;
+.info_materials {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1fr 2fr;
+  padding-top: 1rem;
+}
+
+.info_materials input {
+  height: 100%;
 }
 
 input {
@@ -18,26 +23,31 @@ input:focus {
   box-shadow: none;
 }
 
+.form {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: fit-content;
+  gap: 3rem;
+}
+
 .label_row {
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1fr 2fr;
   font-size: 1rem;
   text-align: left;
   color: #888;
   text-transform: uppercase;
 }
 
-.label_row th {
-  padding-left: 1rem;
-}
-
-.header_labels td {
+/* .header_labels td {
   width: 100%;
   font-size: 1.2rem;
   font-weight: 500;
   text-align: left;
   color: #888;
   border: none;
-}
+} */
 
 span {
   display: block;
@@ -46,7 +56,7 @@ span {
 .border_bt {
   border-bottom: 1px solid #888;
 }
-
+/* 
 .code {
   width: calc(100% / 10);
 }
@@ -58,4 +68,4 @@ span {
 }
 .picture {
   width: calc(100% / 5);
-}
+} */

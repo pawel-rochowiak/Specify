@@ -4,7 +4,7 @@ import PlusIcon from "../components/icons/PlusIcon";
 import MinusIcon from "../components/icons/MinusIcon";
 import WordIcon from "../components/icons/WordIcon";
 import ArrowDown from "../components/icons/DownArrow";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import { saveAs } from "file-saver";
 import {
   Document,
@@ -31,8 +31,8 @@ const TaskPageDetails = (props) => {
   console.log(props);
 
   const propsArrLength1 = [
-    // ["name", specificationType],
     ["project", projectName],
+    ["venue", areaName],
     ["dk", deck],
     ["fz", fireZone],
   ];
@@ -45,13 +45,31 @@ const TaskPageDetails = (props) => {
   ];
 
   const [index, setIndex] = useState(1);
+  const [specMatArr, setSpecMatArr] = useState([]);
 
-  const [materialsArr, setMaterialArr] = useState([<NewMaterial key="0" />]);
+  const getDataHanlder = (data) => {
+    setSpecMatArr((prevState) => {
+      //console.log(specMatArr);
+      console.log(data);
+      console.log(prevState);
+      // return [...prevState, data];
+    });
+  };
+
+  const [materialsArr, setMaterialArr] = useState([
+    <NewMaterial key="0" getData={getDataHanlder} />,
+  ]);
+
+  //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
   const addNewMaterialHandler = () => {
     setMaterialArr((prevState) => {
       console.log(materialsArr);
-      return [...prevState, <NewMaterial key={index} />];
+      console.log(prevState);
+      return [
+        ...prevState,
+        <NewMaterial key={index} getData={getDataHanlder} />,
+      ];
     });
     setIndex(index + 1);
   };
@@ -300,62 +318,62 @@ const TaskPageDetails = (props) => {
           </div>
 
           <div className={classes.taskList}>
-            <table className={classes.table}>
-              <thead>
-                <th>Project Name: {props.project}</th>
-                <tr className={classes.info_row}>
-                  <td>
+            <form className={classes.table}>
+              <div>
+                <p className={classes.heading}>Project Name: {props.project}</p>
+                <div className={classes.info_row}>
+                  <div>
                     <span>Yard. Proj:</span>
                     <input type="number" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>TD Proj:</span>
                     <input type="number" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>Issue date:</span>
                     <input type="date" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>By:</span>
                     <input type="text" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>Date:</span>
                     <input type="date" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>By:</span>
                     <input type="text" />
-                  </td>
-                  <td>
+                  </div>
+                  <div>
                     <span>Rev:</span>
                     <input type="text" />
-                  </td>
-                </tr>
-                <th>Material specification</th>
-                <tr className={classes.header_labels}>
-                  <td>Venue:{props.area}</td>
-                  <td>Deck:{deck}</td>
-                  <td>Fz:{props.fz}</td>
-                </tr>
-              </thead>
-            </table>
-            <table>
-              <tbody>
-                <tr className={classes.label_row}>
-                  <th>code</th>
-                  <th>item</th>
-                  <th>desctiption</th>
-                  <th>supplier</th>
-                  <th>date</th>
-                  <th>picture</th>
-                </tr>
+                  </div>
+                </div>
+                <p className={classes.heading}>Material specification</p>
+                <div className={classes.header_labels}>
+                  <div>Venue:{props.area}</div>
+                  <div>Deck:{deck}</div>
+                  <div>Fz:{props.fz}</div>
+                </div>
+              </div>
+            </form>
+            <form>
+              <div>
+                <div className={classes.label_row__material}>
+                  <div>code</div>
+                  <div>item</div>
+                  <div>desctiption</div>
+                  <div>supplier</div>
+                  <div>date</div>
+                  <div>picture</div>
+                </div>
                 {materialsArr.map((el) => {
                   return el;
                 })}
-              </tbody>
-            </table>
+              </div>
+            </form>
           </div>
         </div>
       </div>
