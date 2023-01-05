@@ -49,10 +49,7 @@ const TaskPageDetails = (props) => {
 
   const getDataHanlder = (data) => {
     setSpecMatArr((prevState) => {
-      //console.log(specMatArr);
-      console.log(data);
-      console.log(prevState);
-      // return [...prevState, data];
+      return [...prevState, data];
     });
   };
 
@@ -64,8 +61,7 @@ const TaskPageDetails = (props) => {
 
   const addNewMaterialHandler = () => {
     setMaterialArr((prevState) => {
-      console.log(materialsArr);
-      console.log(prevState);
+      console.log(specMatArr);
       return [
         ...prevState,
         <NewMaterial key={index} getData={getDataHanlder} />,
@@ -318,7 +314,7 @@ const TaskPageDetails = (props) => {
           </div>
 
           <div className={classes.taskList}>
-            <form className={classes.table}>
+            <div className={classes.table}>
               <div>
                 <p className={classes.heading}>Project Name: {props.project}</p>
                 <div className={classes.info_row}>
@@ -358,10 +354,11 @@ const TaskPageDetails = (props) => {
                   <div>Fz:{props.fz}</div>
                 </div>
               </div>
-            </form>
-            <form>
+            </div>
+            <div>
               <div>
                 <div className={classes.label_row__material}>
+                  <div></div>
                   <div>code</div>
                   <div>item</div>
                   <div>desctiption</div>
@@ -373,7 +370,7 @@ const TaskPageDetails = (props) => {
                   return el;
                 })}
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

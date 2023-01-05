@@ -1,4 +1,6 @@
 import classes from "./NewMaterial.module.css";
+import CheckIcon from "../icons/SingleCheckIcon";
+import EditIcon from "../icons/EditIcon";
 import { useRef, useState } from "react";
 
 const NewMaterial = (props) => {
@@ -15,6 +17,7 @@ const NewMaterial = (props) => {
   const [enteredSupplier, setEnteredSupplier] = useState("");
   const [enteredTaskDate, setEnteredTaskDate] = useState("");
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
+  const [checked, setChecked] = useState(false);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -49,25 +52,56 @@ const NewMaterial = (props) => {
     picture: enteredTaskPicture,
   };
 
-  //props.getData(data);
-  console.log(data);
+  const formSubmissionHandler = (event) => {
+    event.preventDefault();
+    props.getData(data);
+    setChecked(!checked);
+  };
+
+  const formClasses = !checked
+    ? `${classes.info_materials}`
+    : `${classes.info_materials} ${classes.checked}`;
 
   return (
-    <div className={classes.info_materials}>
+    <form className={formClasses} onSubmit={formSubmissionHandler}>
+      <button className={classes.button}>
+        {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
+      </button>
+
       <div className={classes.code}>
-        <input type="number" onChange={codeInputChangeHandler} />
+        <input
+          type="number"
+          disabled={!checked ? false : true}
+          onChange={codeInputChangeHandler}
+        />
       </div>
       <div className={classes.item}>
-        <input type="text" onChange={itemInputChangeHandler} />
+        <input
+          type="text"
+          disabled={!checked ? false : true}
+          onChange={itemInputChangeHandler}
+        />
       </div>
       <div className={classes.description}>
-        <input type="text" onChange={descriptionInputChangeHandler} />
+        <input
+          type="text"
+          disabled={!checked ? false : true}
+          onChange={descriptionInputChangeHandler}
+        />
       </div>
       <div className={classes.supplier}>
-        <input type="text" onChange={supplierInputChangeHandler} />
+        <input
+          type="text"
+          disabled={!checked ? false : true}
+          onChange={supplierInputChangeHandler}
+        />
       </div>
       <div className={classes.date}>
-        <input type="date" onChange={dateInputChangeHandler} />
+        <input
+          type="date"
+          disabled={!checked ? false : true}
+          onChange={dateInputChangeHandler}
+        />
       </div>
       <div className={classes.picture}>
         <input
@@ -78,7 +112,7 @@ const NewMaterial = (props) => {
           onChange={pictureInputChangeHandler}
         />
       </div>
-    </div>
+    </form>
   );
 };
 

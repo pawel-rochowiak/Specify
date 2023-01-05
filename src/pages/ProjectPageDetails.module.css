@@ -35,9 +35,10 @@ input:focus {
 
 .label_row__material {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 2fr 1fr 2fr;
+  grid-template-columns: 4rem 1fr 1fr 2fr 2fr 1fr 2fr;
+  gap: 2rem;
+  align-content: space-between;
   font-size: 1rem;
-  text-align: center;
   color: #888;
   text-transform: uppercase;
 }
