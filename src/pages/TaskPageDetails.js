@@ -46,9 +46,22 @@ const TaskPageDetails = (props) => {
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState();
 
-  const getDataHanlder = (data, arrIndex) => {
+  const getDataHanlder = (data) => {
     setSpecMatArr((prevState) => {
+      console.log(prevState);
       return [...prevState, data];
+      // if (arrIndex) {
+      //   specMatArr[arrIndex] = data;
+      //   return prevState;
+      // }
+    });
+  };
+
+  const replaceDataHandler = (data, arrIndex) => {
+    setSpecMatArr((prevState) => {
+      console.log(prevState);
+      prevState[arrIndex] = data;
+      return [...prevState];
     });
   };
 
@@ -61,6 +74,7 @@ const TaskPageDetails = (props) => {
     <NewMaterial
       key="0"
       getData={getDataHanlder}
+      replaceData={replaceDataHandler}
       data="0"
       // getChecked={getCheckedHandler}
     />,
@@ -76,6 +90,7 @@ const TaskPageDetails = (props) => {
           key={index}
           data={materialsArr.length}
           getData={getDataHanlder}
+          replaceData={replaceDataHandler}
           // getChecked={getCheckedHandler}
         />,
       ];

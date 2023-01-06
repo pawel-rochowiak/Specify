@@ -37,21 +37,22 @@ const NewMaterial = (props) => {
     setEnteredTaskPicture(event.target.value);
   };
 
-  const data = {
-    number: enteredCode,
-    item: enteredItem,
-    description: enteredDescription,
-    supplier: enteredSupplier,
-    date: enteredTaskDate,
-    picture: enteredTaskPicture,
-  };
-
   const formSubmissionHandler = (event) => {
     event.preventDefault();
+
+    const data = {
+      number: enteredCode,
+      item: enteredItem,
+      description: enteredDescription,
+      supplier: enteredSupplier,
+      date: enteredTaskDate,
+      picture: enteredTaskPicture,
+    };
 
     const arrIndex = event.target.dataset.order;
 
     if (currentIndex !== arrIndex) props.getData(data);
+    if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
     setCurrentIndex(arrIndex);
 
