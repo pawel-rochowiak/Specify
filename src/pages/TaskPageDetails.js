@@ -28,8 +28,6 @@ const TaskPageDetails = (props) => {
   const areaName = props.area.toUpperCase();
   const specType = props.name.split("-")[0];
 
-  console.log(props);
-
   const propsArrLength1 = [
     ["project", projectName],
     ["venue", areaName],
@@ -46,33 +44,53 @@ const TaskPageDetails = (props) => {
 
   const [index, setIndex] = useState(1);
   const [specMatArr, setSpecMatArr] = useState([]);
+  const [formChecked, setFormChecked] = useState();
 
-  const getDataHanlder = (data) => {
+  const getDataHanlder = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
       return [...prevState, data];
     });
   };
 
+  // const getCheckedHandler = (checked) => {
+  //   setFormChecked(!checked);
+  //   console.log(checked);
+  // };
+
   const [materialsArr, setMaterialArr] = useState([
-    <NewMaterial key="0" getData={getDataHanlder} />,
+    <NewMaterial
+      key="0"
+      getData={getDataHanlder}
+      data="0"
+      // getChecked={getCheckedHandler}
+    />,
   ]);
 
   //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
   const addNewMaterialHandler = () => {
     setMaterialArr((prevState) => {
-      console.log(specMatArr);
       return [
         ...prevState,
-        <NewMaterial key={index} getData={getDataHanlder} />,
+        <NewMaterial
+          key={index}
+          data={materialsArr.length}
+          getData={getDataHanlder}
+          // getChecked={getCheckedHandler}
+        />,
       ];
     });
+    console.log(specMatArr);
+    localStorage.setItem("materials", JSON.stringify(specMatArr));
     setIndex(index + 1);
   };
 
   const deleteMaterialHandler = () => {
     if (materialsArr.length === 1) return;
     setMaterialArr(materialsArr.slice(0, -1));
+
+    const data = localStorage.getItem("materials");
+    console.log(data);
   };
 
   const generateDOC = () => {
@@ -376,20 +394,22 @@ const TaskPageDetails = (props) => {
       </div>
       <div className={classes.btnContainer}>
         <div className={classes.btnMaterials}>
-          <div
+          <button
+            type="button"
             className={`${classes.item} ${classes.action}`}
             onClick={addNewMaterialHandler}
+            disabled={!formChecked ? false : true}
           >
             Add material
             <PlusIcon size="1.6rem" />
-          </div>
-          <div
+          </button>
+          <button
             className={`${classes.item} ${classes.action}`}
             onClick={deleteMaterialHandler}
           >
             Delete material
             <MinusIcon size="1.6rem" />
-          </div>
+          </button>
         </div>
         <div
           className={`${classes.item} ${classes.action}`}

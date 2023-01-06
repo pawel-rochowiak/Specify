@@ -1,16 +1,9 @@
 import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import EditIcon from "../icons/EditIcon";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const NewMaterial = (props) => {
-  // const enteredNumber = useRef();
-  // const enteredItem = useRef();
-  // const enteredDescription = useRef();
-  // const enteredSupplier = useRef();
-  // const enteredDate = useRef();
-  // const enteredPicure = useRef();
-
   const [enteredCode, setEnteredCode] = useState("");
   const [enteredItem, setEnteredItem] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
@@ -18,6 +11,7 @@ const NewMaterial = (props) => {
   const [enteredTaskDate, setEnteredTaskDate] = useState("");
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState();
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -54,8 +48,16 @@ const NewMaterial = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-    props.getData(data);
+
+    const arrIndex = event.target.dataset.order;
+
+    if (currentIndex !== arrIndex) props.getData(data);
+
+    setCurrentIndex(arrIndex);
+
     setChecked(!checked);
+
+    // props.getChecked(checked);
   };
 
   const formClasses = !checked
@@ -63,7 +65,11 @@ const NewMaterial = (props) => {
     : `${classes.info_materials} ${classes.checked}`;
 
   return (
-    <form className={formClasses} onSubmit={formSubmissionHandler}>
+    <form
+      className={formClasses}
+      onSubmit={formSubmissionHandler}
+      data-order={props.data}
+    >
       <button className={classes.button}>
         {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
       </button>
