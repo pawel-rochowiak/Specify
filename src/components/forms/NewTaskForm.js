@@ -137,7 +137,7 @@ const NewTaskForm = (props) => {
         </div>
         <div className={classes.formGroup}>
           <input
-            type="text"
+            type="date"
             id="date"
             onChange={dateInputChangeHandler}
             value={enteredDate}

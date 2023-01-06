@@ -7,11 +7,13 @@ import { useDispatch } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 
 const Task = (props) => {
+  console.log(props);
   const [isFinished, setIsFinished] = useState(false);
   const dispatch = useDispatch();
   //Current Date
   const date = new Date().getTime();
   const projectDate = new Date(props.date).getTime();
+  console.log(projectDate);
 
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);
