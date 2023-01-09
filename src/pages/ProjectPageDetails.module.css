@@ -181,6 +181,21 @@ span {
   background-color: #44b3fd;
 }
 
+.disabled {
+  background-color: #7b8e9b;
+}
+
+.disabled:hover {
+  background-color: #7b8e9b;
+  transform: translateY(0px);
+}
+
+.enabled:hover {
+  background-color: #85caf9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px #6ca3c7;
+}
+
 .label {
   position: absolute;
   padding: 1rem;
@@ -249,12 +264,13 @@ span {
 
 .info_message {
   margin: 2rem 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .highlight {
   color: #0671b8;
   font-weight: 500;
+  margin: 0 5px;
   display: inline-block;
 }
 

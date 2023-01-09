@@ -54,9 +54,14 @@ const NewMaterial = (props) => {
     if (currentIndex !== arrIndex) props.getData(data);
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
+    // if (currentIndex !== arrIndex) console.log(`new material`);
+    // if (currentIndex === arrIndex) console.log(` editing`);
+
     setCurrentIndex(arrIndex);
 
     setChecked(!checked);
+    props.getChecked(!checked);
+    console.log(`index fro target:${arrIndex} | index set:${currentIndex}`);
   };
 
   const formClasses = !checked

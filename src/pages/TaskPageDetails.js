@@ -44,30 +44,26 @@ const TaskPageDetails = (props) => {
 
   const [index, setIndex] = useState(1);
   const [specMatArr, setSpecMatArr] = useState([]);
-  const [formChecked, setFormChecked] = useState();
+  const [formChecked, setFormChecked] = useState(false);
 
   const getDataHanlder = (data) => {
     setSpecMatArr((prevState) => {
-      // console.log(prevState);
       return [...prevState, data];
-      // if (arrIndex) {
-      //   specMatArr[arrIndex] = data;
-      //   return prevState;
-      // }
     });
   };
 
   const replaceDataHandler = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
       prevState[arrIndex] = data;
+
       return [...prevState];
     });
   };
 
-  // const getCheckedHandler = (checked) => {
-  //   setFormChecked(!checked);
-  //   console.log(checked);
-  // };
+  const getCheckedHandler = (checked) => {
+    console.log(checked);
+    setFormChecked(!checked);
+  };
 
   // const [materialsArr, setMaterialArr] = useState([
   //   <NewMaterial
@@ -85,6 +81,7 @@ const TaskPageDetails = (props) => {
 
   const addNewMaterialHandler = () => {
     setMaterialArr((prevState) => {
+      setFormChecked(true);
       return [
         ...prevState,
         <NewMaterial
@@ -92,7 +89,7 @@ const TaskPageDetails = (props) => {
           data={materialsArr.length + 1}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
-          // getChecked={getCheckedHandler}
+          getChecked={getCheckedHandler}
         />,
       ];
     });
@@ -113,6 +110,10 @@ const TaskPageDetails = (props) => {
     const data = localStorage.getItem("materials");
     console.log(data);
   };
+
+  const btnClass = !formChecked
+    ? `${classes.item} ${classes.action} ${classes.enabled}`
+    : `${classes.item} ${classes.action} ${classes.disabled}`;
 
   const generateDOC = () => {
     const document = new Document({
@@ -398,7 +399,7 @@ const TaskPageDetails = (props) => {
               <div>
                 {materialsArr.length === 0 ? (
                   <div className={classes.info_message}>
-                    This category has no materials. Please press{" "}
+                    This specification has no materials. Please press{" "}
                     <span className={classes.highlight}> "Add material" </span>
                     button to create new material.
                   </div>
@@ -426,9 +427,9 @@ const TaskPageDetails = (props) => {
         <div className={classes.btnMaterials}>
           <button
             type="button"
-            className={`${classes.item} ${classes.action}`}
+            className={btnClass}
             onClick={addNewMaterialHandler}
-            disabled={!formChecked ? false : true}
+            disabled={formChecked}
           >
             Add material
             <PlusIcon size="1.6rem" />

@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 
 const Task = (props) => {
-  console.log(props);
   const [isFinished, setIsFinished] = useState(false);
   const dispatch = useDispatch();
   //Current Date
