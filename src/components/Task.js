@@ -13,7 +13,6 @@ const Task = (props) => {
   //Current Date
   const date = new Date().getTime();
   const projectDate = new Date(props.date).getTime();
-  console.log(projectDate);
 
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);

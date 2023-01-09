@@ -57,8 +57,6 @@ const NewMaterial = (props) => {
     setCurrentIndex(arrIndex);
 
     setChecked(!checked);
-
-    // props.getChecked(checked);
   };
 
   const formClasses = !checked

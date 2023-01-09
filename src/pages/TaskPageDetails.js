@@ -48,7 +48,7 @@ const TaskPageDetails = (props) => {
 
   const getDataHanlder = (data) => {
     setSpecMatArr((prevState) => {
-      console.log(prevState);
+      // console.log(prevState);
       return [...prevState, data];
       // if (arrIndex) {
       //   specMatArr[arrIndex] = data;
@@ -59,7 +59,6 @@ const TaskPageDetails = (props) => {
 
   const replaceDataHandler = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
-      console.log(prevState);
       prevState[arrIndex] = data;
       return [...prevState];
     });
@@ -70,15 +69,17 @@ const TaskPageDetails = (props) => {
   //   console.log(checked);
   // };
 
-  const [materialsArr, setMaterialArr] = useState([
-    <NewMaterial
-      key="0"
-      getData={getDataHanlder}
-      replaceData={replaceDataHandler}
-      data="0"
-      // getChecked={getCheckedHandler}
-    />,
-  ]);
+  // const [materialsArr, setMaterialArr] = useState([
+  //   <NewMaterial
+  //     key="0"
+  //     getData={getDataHanlder}
+  //     replaceData={replaceDataHandler}
+  //     data="0"
+  //     // getChecked={getCheckedHandler}
+  //   />,
+  // ]);
+
+  const [materialsArr, setMaterialArr] = useState([]);
 
   //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
@@ -88,7 +89,7 @@ const TaskPageDetails = (props) => {
         ...prevState,
         <NewMaterial
           key={index}
-          data={materialsArr.length}
+          data={materialsArr.length + 1}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
           // getChecked={getCheckedHandler}
@@ -101,7 +102,12 @@ const TaskPageDetails = (props) => {
   };
 
   const deleteMaterialHandler = () => {
-    if (materialsArr.length === 1) return;
+    if (materialsArr.length === 0) return;
+
+    if (specMatArr[materialsArr.length - 1]) {
+      setMaterialArr(specMatArr.slice(0, -1));
+    }
+
     setMaterialArr(materialsArr.slice(0, -1));
 
     const data = localStorage.getItem("materials");
@@ -390,15 +396,24 @@ const TaskPageDetails = (props) => {
             </div>
             <div>
               <div>
-                <div className={classes.label_row__material}>
-                  <div></div>
-                  <div>code</div>
-                  <div>item</div>
-                  <div>desctiption</div>
-                  <div>supplier</div>
-                  <div>date</div>
-                  <div>picture</div>
-                </div>
+                {materialsArr.length === 0 ? (
+                  <div className={classes.info_message}>
+                    This category has no materials. Please press{" "}
+                    <span className={classes.highlight}> "Add material" </span>
+                    button to create new material.
+                  </div>
+                ) : (
+                  <div className={classes.label_row__material}>
+                    <div></div>
+                    <div>code</div>
+                    <div>item</div>
+                    <div>desctiption</div>
+                    <div>supplier</div>
+                    <div>date</div>
+                    <div>picture</div>
+                  </div>
+                )}
+
                 {materialsArr.map((el) => {
                   return el;
                 })}
