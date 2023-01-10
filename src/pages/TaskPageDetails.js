@@ -42,7 +42,7 @@ const TaskPageDetails = (props) => {
     date.getFullYear(),
   ];
 
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(0);
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState(false);
 
@@ -54,6 +54,7 @@ const TaskPageDetails = (props) => {
 
   const replaceDataHandler = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
+      console.log(arrIndex);
       prevState[arrIndex] = data;
 
       return [...prevState];
@@ -82,7 +83,7 @@ const TaskPageDetails = (props) => {
         ...prevState,
         <NewMaterial
           key={index}
-          data={materialsArr.length + 1}
+          data={index}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
           getChecked={getCheckedHandler}

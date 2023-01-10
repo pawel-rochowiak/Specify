@@ -12,7 +12,6 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
-  const [checkedTest, setCheckedTest] = useState(props.checked);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -56,9 +55,6 @@ const NewMaterial = (props) => {
 
     if (currentIndex !== arrIndex) props.getData(data);
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
-
-    // if (currentIndex !== arrIndex) console.log(`new material`);
-    // if (currentIndex === arrIndex) console.log(` editing`);
 
     setCurrentIndex(arrIndex);
 
