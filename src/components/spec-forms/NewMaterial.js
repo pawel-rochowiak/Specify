@@ -12,6 +12,7 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
+  const [checkedTest, setCheckedTest] = useState(props.checked);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -50,6 +51,8 @@ const NewMaterial = (props) => {
     };
 
     const arrIndex = event.target.dataset.order;
+    const checkedMat = event.target.dataset.checked === "true" ? false : true;
+    props.getMatChecked(checkedMat);
 
     if (currentIndex !== arrIndex) props.getData(data);
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
@@ -73,6 +76,7 @@ const NewMaterial = (props) => {
       className={formClasses}
       onSubmit={formSubmissionHandler}
       data-order={props.data}
+      data-checked={checked}
     >
       <button className={classes.button}>
         {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}

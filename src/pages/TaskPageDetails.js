@@ -4,7 +4,7 @@ import PlusIcon from "../components/icons/PlusIcon";
 import MinusIcon from "../components/icons/MinusIcon";
 import WordIcon from "../components/icons/WordIcon";
 import ArrowDown from "../components/icons/DownArrow";
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState } from "react";
 import { saveAs } from "file-saver";
 import {
   Document,
@@ -60,20 +60,16 @@ const TaskPageDetails = (props) => {
     });
   };
 
-  const getCheckedHandler = (checked) => {
+  const getMatCheckedHandler = (checked) => {
     console.log(checked);
-    setFormChecked(!checked);
   };
 
-  // const [materialsArr, setMaterialArr] = useState([
-  //   <NewMaterial
-  //     key="0"
-  //     getData={getDataHanlder}
-  //     replaceData={replaceDataHandler}
-  //     data="0"
-  //     // getChecked={getCheckedHandler}
-  //   />,
-  // ]);
+  const getCheckedHandler = (checked) => {
+    // console.log(checked);
+    setFormChecked(!checked);
+  };
+  // const formcont = document.getElementById("formContainer").children[1].dataset;
+  // console.log(formcont);
 
   const [materialsArr, setMaterialArr] = useState([]);
 
@@ -90,10 +86,12 @@ const TaskPageDetails = (props) => {
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
           getChecked={getCheckedHandler}
+          getMatChecked={getMatCheckedHandler}
         />,
       ];
     });
     console.log(specMatArr);
+    console.log(materialsArr);
     localStorage.setItem("materials", JSON.stringify(specMatArr));
     setIndex(index + 1);
   };
@@ -396,7 +394,7 @@ const TaskPageDetails = (props) => {
               </div>
             </div>
             <div>
-              <div>
+              <div id="formContainer">
                 {materialsArr.length === 0 ? (
                   <div className={classes.info_message}>
                     This specification has no materials. Please press{" "}

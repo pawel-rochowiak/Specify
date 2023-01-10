@@ -66,7 +66,7 @@ const Welcome = () => {
         }
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setIsLogged(true);
         history.push("/home");
         localStorage.setItem("login", data.email);
