@@ -169,9 +169,6 @@ span {
   cursor: pointer;
 }
 
-.formContainer {
-}
-
 .item:hover {
   background-color: #74b2db;
 }
@@ -203,6 +200,10 @@ span {
   position: absolute;
   padding: 1rem;
   background-color: #44b3fd;
+}
+
+.test {
+  font-size: 5rem;
 }
 
 .arrowClose {

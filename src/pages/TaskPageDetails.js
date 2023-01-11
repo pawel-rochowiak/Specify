@@ -61,16 +61,22 @@ const TaskPageDetails = (props) => {
     });
   };
 
-  const getMatCheckedHandler = (checked) => {
-    console.log(checked);
+  const getMatCheckedHandler = (checked, arrIndex) => {
+    const btnArr = document.querySelectorAll("button[class*='button']");
+
+    if (checked === true) {
+      Array.from(btnArr).map((el) => (el.disabled = false));
+    } else if (checked !== true) {
+      Array.from(btnArr).map((el, index) => {
+        el.disabled = true;
+        if (index === arrIndex) el.disabled = false;
+      });
+    }
   };
 
   const getCheckedHandler = (checked) => {
-    // console.log(checked);
     setFormChecked(!checked);
   };
-  // const formcont = document.getElementById("formContainer").children[1].dataset;
-  // console.log(formcont);
 
   const [materialsArr, setMaterialArr] = useState([]);
 

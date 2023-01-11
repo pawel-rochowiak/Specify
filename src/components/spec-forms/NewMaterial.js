@@ -49,9 +49,10 @@ const NewMaterial = (props) => {
       picture: enteredTaskPicture,
     };
 
-    const arrIndex = event.target.dataset.order;
+    const arrIndex = +event.target.dataset.order;
+    console.log(typeof arrIndex);
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
-    props.getMatChecked(checkedMat);
+    props.getMatChecked(checkedMat, arrIndex);
 
     if (currentIndex !== arrIndex) props.getData(data);
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
