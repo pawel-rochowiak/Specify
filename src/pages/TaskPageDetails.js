@@ -104,6 +104,7 @@ const TaskPageDetails = (props) => {
   };
 
   const deleteMaterialHandler = () => {
+    if (materialsArr.length === 1) setFormChecked(false);
     if (materialsArr.length === 0) return;
 
     if (specMatArr[materialsArr.length - 1]) {
