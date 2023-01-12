@@ -107,11 +107,12 @@ const TaskPageDetails = (props) => {
     if (materialsArr.length === 1) setFormChecked(false);
     if (materialsArr.length === 0) return;
 
-    if (specMatArr[materialsArr.length - 1]) {
-      setMaterialArr(specMatArr.slice(0, -1));
-    }
+    // if (specMatArr[materialsArr.length - 1]) {
+    //   setMaterialArr(specMatArr.slice(0, -1));
+    // }
 
     setMaterialArr(materialsArr.slice(0, -1));
+    setSpecMatArr(specMatArr.slice(0, -1));
 
     const data = localStorage.getItem("materials");
     console.log(data);
