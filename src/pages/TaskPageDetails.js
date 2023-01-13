@@ -19,6 +19,8 @@ import {
   WidthType,
   BorderStyle,
   HeightRule,
+  Header,
+  Footer,
 } from "docx";
 
 const TaskPageDetails = (props) => {
@@ -148,74 +150,101 @@ const TaskPageDetails = (props) => {
       },
       sections: [
         {
-          children: [
-            new Paragraph({
+          headers: {
+            default: new Header({
               children: [
-                new TextRun({
-                  text: `PROJECT: `,
-                  font: "Encode Sans",
-                  size: 28,
-                  allCaps: true,
-                  bold: true,
-                  color: "#808080",
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `PROJECT: `,
+                      font: "Encode Sans",
+                      size: 28,
+                      allCaps: true,
+                      bold: true,
+                      color: "#808080",
+                    }),
+                    new TextRun({
+                      text: `${projectName}`,
+                      font: "Encode Sans",
+                      size: 28,
+                      allCaps: true,
+                      color: "#000000",
+                    }),
+                  ],
                 }),
-                new TextRun({
-                  text: `${projectName}`,
-                  font: "Encode Sans",
-                  size: 28,
-                  allCaps: true,
-                  color: "#000000",
+                new Paragraph({
+                  text: "",
                 }),
-              ],
-            }),
-            new Paragraph({
-              text: "",
-            }),
-            new Paragraph({
-              style: "second",
-              alignment: AlignmentType.LEFT,
-              thematicBreak: true,
-              keepLines: true,
-              children: [
-                new TextRun({
-                  text: `Yard Proj.# 6310	TD Proj.#${projectNumber}	Issue Date:${year}-${month}-${day}	By: DT   Rev. Date:	 By:	 Rev:`,
-                  font: "Encode Sans",
-                  size: 18,
-                  allCaps: true,
-                  break: 0,
-                }),
-              ],
-            }),
-            new Paragraph({
-              style: "main",
-              children: [
-                new TextRun({
-                  text: `MATERIAL SPECIFICATION`,
-                  font: "Encode Sans",
-                  size: 28,
-                  allCaps: true,
-                  bold: true,
+                new Paragraph({
+                  style: "second",
+                  alignment: AlignmentType.LEFT,
                   thematicBreak: true,
+                  keepLines: true,
+                  children: [
+                    new TextRun({
+                      text: `Yard Proj.# 6310	TD Proj.#${projectNumber}	Issue Date:${year}-${month}-${day}	By: DT   Rev. Date:	 By:	 Rev:`,
+                      font: "Encode Sans",
+                      size: 18,
+                      allCaps: true,
+                      break: 0,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  style: "main",
+                  children: [
+                    new TextRun({
+                      text: `MATERIAL SPECIFICATION`,
+                      font: "Encode Sans",
+                      size: 28,
+                      allCaps: true,
+                      bold: true,
+                      thematicBreak: true,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  style: "second",
+                  children: [
+                    new TextRun({
+                      text: `DK 0${deck} FZ 0${fireZone} ${areaName}`,
+                      font: "Encode Sans",
+                      size: 24,
+                      allCaps: true,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  text: "",
+                }),
+                new Paragraph({
+                  text: "",
                 }),
               ],
             }),
-            new Paragraph({
-              style: "second",
+          },
+          footers: {
+            default: new Footer({
               children: [
-                new TextRun({
-                  text: `DK 0${deck} FZ 0${fireZone} ${areaName}`,
-                  font: "Encode Sans",
-                  size: 24,
-                  allCaps: true,
+                new Paragraph({
+                  style: "main",
+                  alignment: AlignmentType.JUSTIFIED,
+                  thematicBreak: true,
+                  keepLines: true,
+                  children: [
+                    new TextRun({
+                      text:
+                        "GENERAL REGULATIONS AND REQUIREMENTS: Manufacturer to provide Interior Designer with finish samples for review prior to production. Manufacturer to provide Interior Designer with shop drawings for review prior to production. Items must be suitable for contract quality and commercial use in the location that it will be used in. Fixed material must meet all IMO standards and regulations in accordance with classification societies. Final quantity calculation is on Manufacturers/Owners responsibility. Manufacturers guarantee will be maintained as per contract with the Owner. TD has provided the Yard with a specification of the products and designs, which the Manufacturer is obligated to follow and execute. The Manufacturer assumes product liability for such product.",
+                      font: "Encode Sans",
+                      size: 13,
+                      break: 0,
+                    }),
+                  ],
                 }),
               ],
             }),
-            new Paragraph({
-              text: "",
-            }),
-            new Paragraph({
-              text: "",
-            }),
+          },
+          children: [
             new Table({
               width: {
                 size: 100,
@@ -281,7 +310,7 @@ const TaskPageDetails = (props) => {
                 //
                 ...data.map((el) => {
                   return new TableRow({
-                    height: { value: 2000, rule: HeightRule.EXACT },
+                    height: { value: 1900, rule: HeightRule.EXACT },
                     children: [
                       new TableCell({
                         borders: {
