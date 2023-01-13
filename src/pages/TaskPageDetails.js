@@ -18,6 +18,7 @@ import {
   TableCell,
   WidthType,
   BorderStyle,
+  HeightRule,
 } from "docx";
 
 const TaskPageDetails = (props) => {
@@ -107,14 +108,14 @@ const TaskPageDetails = (props) => {
     if (materialsArr.length === 1) setFormChecked(false);
     if (materialsArr.length === 0) return;
 
-    // if (specMatArr[materialsArr.length - 1]) {
-    //   setMaterialArr(specMatArr.slice(0, -1));
-    // }
-
     setMaterialArr(materialsArr.slice(0, -1));
     setSpecMatArr(specMatArr.slice(0, -1));
 
-    const data = localStorage.getItem("materials");
+    console.log(specMatArr);
+
+    localStorage.setItem("materials", JSON.stringify(specMatArr));
+
+    const data = JSON.parse(localStorage.getItem("materials"));
     console.log(data);
   };
 
@@ -123,6 +124,7 @@ const TaskPageDetails = (props) => {
     : `${classes.item} ${classes.action} ${classes.disabled}`;
 
   const generateDOC = () => {
+    const data = JSON.parse(localStorage.getItem("materials"));
     const document = new Document({
       styles: {
         paragraphStyles: [
@@ -253,6 +255,7 @@ const TaskPageDetails = (props) => {
                             color: "FFFFFF",
                           },
                         },
+
                         width: { size: 100 / 6, type: WidthType.AUTO },
                         children: [
                           new Paragraph({
@@ -275,62 +278,67 @@ const TaskPageDetails = (props) => {
                     }),
                   ],
                 }),
-                new TableRow({
-                  children: [
-                    new TableCell({
-                      borders: {
-                        left: {
-                          style: BorderStyle.NONE,
-                          size: 0,
-                          color: "FFFFFF",
+                //
+                ...data.map((el) => {
+                  return new TableRow({
+                    height: { value: 2000, rule: HeightRule.EXACT },
+                    children: [
+                      new TableCell({
+                        borders: {
+                          left: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
+                          right: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
                         },
-                        right: {
-                          style: BorderStyle.NONE,
-                          size: 0,
-                          color: "FFFFFF",
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [new Paragraph(`${el.number}`)],
+                      }),
+                      new TableCell({
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [new Paragraph(`${el.item}`)],
+                      }),
+                      new TableCell({
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [
+                          new Paragraph({
+                            alignment: AlignmentType.CENTER,
+                            children: [
+                              new TextRun({
+                                text: `${el.description}`,
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                      new TableCell({
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [new Paragraph(`${el.supplier}`)],
+                      }),
+                      new TableCell({
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [new Paragraph(`${el.data}`)],
+                      }),
+                      new TableCell({
+                        borders: {
+                          right: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "FFFFFF",
+                          },
                         },
-                      },
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("100")],
-                    }),
-                    new TableCell({
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("BOLIDT")],
-                    }),
-                    new TableCell({
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [
-                        new Paragraph({
-                          alignment: AlignmentType.CENTER,
-                          children: [
-                            new TextRun({
-                              text: "Nice material fo be used on floor deck",
-                            }),
-                          ],
-                        }),
-                      ],
-                    }),
-                    new TableCell({
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("www.bolidt.com")],
-                    }),
-                    new TableCell({
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("2021-02-05")],
-                    }),
-                    new TableCell({
-                      borders: {
-                        right: {
-                          style: BorderStyle.NONE,
-                          size: 0,
-                          color: "FFFFFF",
-                        },
-                      },
-                      width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("IMAGE")],
-                    }),
-                  ],
+                        width: { size: 100 / 6, type: WidthType.PERCENTAGE },
+                        children: [new Paragraph("IMAGE")],
+                      }),
+                    ],
+                  });
                 }),
+                //
               ],
             }),
           ],
