@@ -21,6 +21,10 @@ import {
   HeightRule,
   Header,
   Footer,
+  ExternalHyperlink,
+  PageBreak,
+  NumberFormat,
+  PageNumber,
 } from "docx";
 
 const TaskPageDetails = (props) => {
@@ -127,6 +131,7 @@ const TaskPageDetails = (props) => {
 
   const generateDOC = () => {
     const data = JSON.parse(localStorage.getItem("materials"));
+
     const document = new Document({
       styles: {
         paragraphStyles: [
@@ -150,6 +155,14 @@ const TaskPageDetails = (props) => {
       },
       sections: [
         {
+          properties: {
+            page: {
+              pageNumbers: {
+                start: 1,
+                formatType: NumberFormat.DECIMAL,
+              },
+            },
+          },
           headers: {
             default: new Header({
               children: [
@@ -235,6 +248,43 @@ const TaskPageDetails = (props) => {
                     new TextRun({
                       text:
                         "GENERAL REGULATIONS AND REQUIREMENTS: Manufacturer to provide Interior Designer with finish samples for review prior to production. Manufacturer to provide Interior Designer with shop drawings for review prior to production. Items must be suitable for contract quality and commercial use in the location that it will be used in. Fixed material must meet all IMO standards and regulations in accordance with classification societies. Final quantity calculation is on Manufacturers/Owners responsibility. Manufacturers guarantee will be maintained as per contract with the Owner. TD has provided the Yard with a specification of the products and designs, which the Manufacturer is obligated to follow and execute. The Manufacturer assumes product liability for such product.",
+                      font: "Encode Sans",
+                      size: 13,
+                      break: 0,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  style: "second",
+                  alignment: AlignmentType.LEFT,
+
+                  children: [
+                    new TextRun({
+                      text: `TILLBERG DESIGN   •   Småbåtshamnen 24   •   263 39 Höganäs   •   SWEDEN   •   +46 42 23 80 90   •   td@tillbergdesign.com   •   `,
+                      font: "Encode Sans",
+                      size: 13,
+                      break: 0,
+                    }),
+                    new ExternalHyperlink({
+                      children: [
+                        new TextRun({
+                          text: "tillbergdesign.com",
+                          style: "Hyperlink",
+                          font: "Encode Sans",
+                          size: 13,
+                          break: 0,
+                        }),
+                      ],
+                      link: "https://tillbergdesign.com/",
+                    }),
+                    new TextRun({
+                      children: ["  Page: ", PageNumber.CURRENT],
+                      font: "Encode Sans",
+                      size: 13,
+                      break: 0,
+                    }),
+                    new TextRun({
+                      children: ["/", PageNumber.TOTAL_PAGES],
                       font: "Encode Sans",
                       size: 13,
                       break: 0,
@@ -369,6 +419,9 @@ const TaskPageDetails = (props) => {
                 }),
                 //
               ],
+            }),
+            new Paragraph({
+              children: [new TextRun("sda"), new PageBreak()],
             }),
           ],
         },
