@@ -98,9 +98,14 @@ const tasksSlice = createSlice({
     },
     deleteTask(state, action) {
       state.splice(action.payload, 1);
+      state.map((el, index) => (el.path = `t${index}`));
     },
     replceTasks(state, action) {
       return action.payload;
+    },
+    addMaterials(state, action) {
+      console.log("clicked");
+      state[action.payload.index].materials = action.payload.materials;
     },
   },
 });

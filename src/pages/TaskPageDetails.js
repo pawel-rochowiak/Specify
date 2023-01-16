@@ -3,8 +3,11 @@ import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
 import MinusIcon from "../components/icons/MinusIcon";
 import WordIcon from "../components/icons/WordIcon";
+import SaveIcon from "../components/icons/SaveIcon";
 import ArrowDown from "../components/icons/DownArrow";
 import { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { tasksActions } from "../store/tasks-slice.js";
 import { saveAs } from "file-saver";
 import {
   Document,
@@ -28,6 +31,9 @@ import {
 } from "docx";
 
 const TaskPageDetails = (props) => {
+  console.log(props);
+  const dispatch = useDispatch();
+  const taskIndex = props.path.split("")[1];
   const projectNumber = props.number;
   const projectName = props.project;
   const deck = props.dk;
@@ -106,7 +112,10 @@ const TaskPageDetails = (props) => {
     });
     console.log(specMatArr);
     console.log(materialsArr);
-    localStorage.setItem("materials", JSON.stringify(specMatArr));
+    localStorage.setItem(
+      `${projectName}-${areaName}`,
+      JSON.stringify(specMatArr)
+    );
     setIndex(index + 1);
   };
 
@@ -117,12 +126,27 @@ const TaskPageDetails = (props) => {
     setMaterialArr(materialsArr.slice(0, -1));
     setSpecMatArr(specMatArr.slice(0, -1));
 
-    console.log(specMatArr);
+    localStorage.setItem(
+      `${projectName}-${areaName}`,
+      JSON.stringify(specMatArr)
+    );
 
-    localStorage.setItem("materials", JSON.stringify(specMatArr));
+    // to be deleted
 
-    const data = JSON.parse(localStorage.getItem("materials"));
+    const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
     console.log(data);
+  };
+
+  const sendSpecificationDataHandler = () => {
+    const materials = JSON.parse(
+      localStorage.getItem(`${projectName}-${areaName}`)
+    );
+    dispatch(
+      tasksActions.addMaterials({
+        index: taskIndex,
+        materials,
+      })
+    );
   };
 
   const btnClass = !formChecked
@@ -130,7 +154,7 @@ const TaskPageDetails = (props) => {
     : `${classes.item} ${classes.action} ${classes.disabled}`;
 
   const generateDOC = () => {
-    const data = JSON.parse(localStorage.getItem("materials"));
+    const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
 
     const document = new Document({
       styles: {
@@ -539,12 +563,20 @@ const TaskPageDetails = (props) => {
             <MinusIcon size="1.6rem" />
           </button>
         </div>
-        <div
-          className={`${classes.item} ${classes.action}`}
-          onClick={generateDOC}
-        >
-          <ArrowDown size="1.6rem"></ArrowDown>
-          <WordIcon size="1.6rem" />
+        <div className={classes.btnMaterials}>
+          <div
+            className={`${classes.item} ${classes.action}`}
+            onClick={sendSpecificationDataHandler}
+          >
+            <SaveIcon />
+          </div>
+          <div
+            className={`${classes.item} ${classes.action}`}
+            onClick={generateDOC}
+          >
+            <ArrowDown size="1.6rem"></ArrowDown>
+            <WordIcon size="1.6rem" />
+          </div>
         </div>
       </div>
     </Fragment>

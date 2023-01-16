@@ -45,6 +45,13 @@ export const fetchStateData = () => {
         };
       });
 
+      const newDataTasks = stateData.tasks.map((el) => {
+        return {
+          ...el,
+          materials: el.materials ? el.materials : [],
+        };
+      });
+
       const newDataSupplier = stateData.suppliers.map((el) => {
         return {
           name: el.name,
@@ -67,7 +74,7 @@ export const fetchStateData = () => {
 
       dispatch(projectActions.replceProjects(sortedStateData));
       dispatch(suppliersActions.replceSuppliers(newDataSupplier));
-      dispatch(tasksActions.replceTasks(stateData.tasks));
+      dispatch(tasksActions.replceTasks(newDataTasks));
       dispatch(libraryActions.replceLibrary(newDataLibrary));
       dispatch(globalActions.replaceTarget(stateData.global));
       dispatch(usersActions.replceUsers(stateData.users));
