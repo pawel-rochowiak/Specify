@@ -33,7 +33,26 @@ input:focus {
   text-transform: uppercase;
 }
 
+.materialLabel_container {
+  display: flex;
+  gap: 2rem;
+  align-content: space-between;
+  flex-wrap: nowrap;
+}
+
 .label_row__material {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 6rem 1fr 1fr 2fr 2fr;
+  gap: 2rem;
+  font-size: 1rem;
+  align-content: space-around;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* .label_row__material {
   display: grid;
   grid-template-columns: 4rem 1fr 1fr 2fr 2fr 1fr 2fr;
   gap: 2rem;
@@ -41,7 +60,7 @@ input:focus {
   font-size: 1rem;
   color: #888;
   text-transform: uppercase;
-}
+} */
 
 .info_row {
   border-bottom: 1px solid #888;

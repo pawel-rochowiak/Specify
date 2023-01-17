@@ -1,7 +1,8 @@
 import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
+import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 const NewMaterial = (props) => {
   const [enteredCode, setEnteredCode] = useState("");
@@ -12,6 +13,7 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
+  const [materialInputType, setMaterialInputType] = useState(false);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -37,6 +39,11 @@ const NewMaterial = (props) => {
     setEnteredTaskPicture(event.target.value);
   };
 
+  const materialTypeHandler = (event) => {
+    event.preventDefault();
+    setMaterialInputType(true);
+  };
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
@@ -50,7 +57,6 @@ const NewMaterial = (props) => {
     };
 
     const arrIndex = +event.target.dataset.order;
-    console.log(typeof arrIndex);
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
     props.getMatChecked(checkedMat, arrIndex);
 
@@ -61,68 +67,93 @@ const NewMaterial = (props) => {
 
     setChecked(!checked);
     props.getChecked(!checked);
-    console.log(`index fro target:${arrIndex} | index set:${currentIndex}`);
   };
+
+  const formInputClasses = !setMaterialInputType
+    ? `${classes.info_materials}`
+    : `${classes.info_materials__type}`;
 
   const formClasses = !checked
     ? `${classes.info_materials}`
     : `${classes.info_materials} ${classes.checked}`;
 
+  const inputFormMarkup = (
+    <Fragment>
+      <button className={classes.button}>
+        {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
+      </button>
+      <div className={classes.info_materials__detail}>
+        <div className={classes.code}>
+          <input
+            type="number"
+            disabled={!checked ? false : true}
+            onChange={codeInputChangeHandler}
+          />
+        </div>
+        <div className={classes.item}>
+          <input
+            type="text"
+            disabled={!checked ? false : true}
+            onChange={itemInputChangeHandler}
+          />
+        </div>
+        <div className={classes.description}>
+          <input
+            type="text"
+            disabled={!checked ? false : true}
+            onChange={descriptionInputChangeHandler}
+          />
+        </div>
+        <div className={classes.supplier}>
+          <input
+            type="text"
+            disabled={!checked ? false : true}
+            onChange={supplierInputChangeHandler}
+          />
+        </div>
+        <div className={classes.date}>
+          <input
+            type="date"
+            disabled={!checked ? false : true}
+            onChange={dateInputChangeHandler}
+          />
+        </div>
+        <div className={classes.picture}>
+          <input
+            type="file"
+            id="img"
+            name="img"
+            accept="image/*"
+            onChange={pictureInputChangeHandler}
+          />
+        </div>
+      </div>
+    </Fragment>
+  );
+
+  const inputTypeCheckMarkup = (
+    <div className={classes.materialInput_choose}>
+      <span>Do You want to add material from the library?</span>
+      <div className={classes.materialInput_choose__btns}>
+        <button className={classes.button} onClick={materialTypeHandler}>
+          <CheckIcon size="2.5rem" />
+        </button>
+        <button className={classes.button} onClick={materialTypeHandler}>
+          <CloseIcon />
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <form
-      className={formClasses}
+      className={!materialInputType ? formInputClasses : formClasses}
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
     >
-      <button className={classes.button}>
-        {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
-      </button>
-
-      <div className={classes.code}>
-        <input
-          type="number"
-          disabled={!checked ? false : true}
-          onChange={codeInputChangeHandler}
-        />
-      </div>
-      <div className={classes.item}>
-        <input
-          type="text"
-          disabled={!checked ? false : true}
-          onChange={itemInputChangeHandler}
-        />
-      </div>
-      <div className={classes.description}>
-        <input
-          type="text"
-          disabled={!checked ? false : true}
-          onChange={descriptionInputChangeHandler}
-        />
-      </div>
-      <div className={classes.supplier}>
-        <input
-          type="text"
-          disabled={!checked ? false : true}
-          onChange={supplierInputChangeHandler}
-        />
-      </div>
-      <div className={classes.date}>
-        <input
-          type="date"
-          disabled={!checked ? false : true}
-          onChange={dateInputChangeHandler}
-        />
-      </div>
-      <div className={classes.picture}>
-        <input
-          type="file"
-          id="img"
-          name="img"
-          accept="image/*"
-          onChange={pictureInputChangeHandler}
-        />
-      </div>
+      {materialInputType === true ? "" : inputTypeCheckMarkup}
+      {materialInputType === false ? "" : inputFormMarkup}
     </form>
   );
 };

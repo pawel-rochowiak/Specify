@@ -212,14 +212,16 @@ const TaskPageDetails = (props) => {
                     button to create new material.
                   </div>
                 ) : (
-                  <div className={classes.label_row__material}>
+                  <div className={classes.materialLabel_container}>
                     <div></div>
-                    <div>code</div>
-                    <div>item</div>
-                    <div>desctiption</div>
-                    <div>supplier</div>
-                    <div>date</div>
-                    <div>picture</div>
+                    <div className={classes.label_row__material}>
+                      <div>code</div>
+                      <div>item</div>
+                      <div>desctiption</div>
+                      <div>supplier</div>
+                      <div>date</div>
+                      <div>picture</div>
+                    </div>
                   </div>
                 )}
 
