@@ -100,6 +100,7 @@ const TaskPageDetails = (props) => {
           replaceData={replaceDataHandler}
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
+          checkProps={true}
         />,
       ];
     });

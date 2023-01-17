@@ -4,6 +4,8 @@ import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
 import { Fragment, useState } from "react";
 
+//setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
+
 const NewMaterial = (props) => {
   const [enteredCode, setEnteredCode] = useState("");
   const [enteredItem, setEnteredItem] = useState("");
@@ -13,7 +15,9 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
-  const [materialInputType, setMaterialInputType] = useState(false);
+  const [materialInputType, setMaterialInputType] = useState(props.checkProps);
+
+  console.log(materialInputType);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -39,9 +43,14 @@ const NewMaterial = (props) => {
     setEnteredTaskPicture(event.target.value);
   };
 
-  const materialTypeHandler = (event) => {
+  const materialTypeConfirmHandler = (event) => {
     event.preventDefault();
     setMaterialInputType(true);
+  };
+
+  const materialTypeDenyHandler = (event) => {
+    event.preventDefault();
+    setMaterialInputType(false);
   };
 
   const formSubmissionHandler = (event) => {
@@ -66,6 +75,7 @@ const NewMaterial = (props) => {
     setCurrentIndex(arrIndex);
 
     setChecked(!checked);
+
     props.getChecked(!checked);
   };
 
@@ -135,10 +145,10 @@ const NewMaterial = (props) => {
     <div className={classes.materialInput_choose}>
       <span>Do You want to add material from the library?</span>
       <div className={classes.materialInput_choose__btns}>
-        <button className={classes.button} onClick={materialTypeHandler}>
+        <button className={classes.button} onClick={materialTypeConfirmHandler}>
           <CheckIcon size="2.5rem" />
         </button>
-        <button className={classes.button} onClick={materialTypeHandler}>
+        <button className={classes.button} onClick={materialTypeDenyHandler}>
           <CloseIcon />
         </button>
       </div>
@@ -147,13 +157,12 @@ const NewMaterial = (props) => {
 
   return (
     <form
-      className={!materialInputType ? formInputClasses : formClasses}
+      className={materialInputType ? formInputClasses : formClasses}
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
     >
-      {materialInputType === true ? "" : inputTypeCheckMarkup}
-      {materialInputType === false ? "" : inputFormMarkup}
+      {materialInputType === true ? inputTypeCheckMarkup : inputFormMarkup}
     </form>
   );
 };
