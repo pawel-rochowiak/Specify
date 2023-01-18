@@ -53,8 +53,10 @@ const TaskPageDetails = (props) => {
     });
   };
 
+  ///after adding material to choice form should block other materials for being editied
+
   const getMatCheckedHandler = (checked, arrIndex) => {
-    const btnArr = document.querySelectorAll("button[class*='button']");
+    const btnArr = document.querySelectorAll(".btnMatForm");
 
     if (checked === true) {
       Array.from(btnArr).map((el) => (el.disabled = false));
@@ -89,6 +91,17 @@ const TaskPageDetails = (props) => {
   //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
   const addNewMaterialHandler = () => {
+    const btnArr = document.querySelectorAll(".btnMatForm");
+    const matForms = document.querySelectorAll(".matForm");
+
+    matForms.forEach((el) => {
+      if (el.dataset.checked === "true") {
+        btnArr.forEach((el) => (el.disabled = true));
+      } else {
+        btnArr.forEach((el) => (el.disabled = false));
+      }
+    });
+
     setMaterialArr((prevState) => {
       setFormChecked(true);
       return [

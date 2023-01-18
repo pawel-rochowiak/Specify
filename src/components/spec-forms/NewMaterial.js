@@ -17,8 +17,6 @@ const NewMaterial = (props) => {
   const [currentIndex, setCurrentIndex] = useState();
   const [materialInputType, setMaterialInputType] = useState(props.checkProps);
 
-  console.log(materialInputType);
-
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
   };
@@ -65,9 +63,11 @@ const NewMaterial = (props) => {
       picture: enteredTaskPicture,
     };
 
+    console.log("clicked");
+
     const arrIndex = +event.target.dataset.order;
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
-    props.getMatChecked(checkedMat, arrIndex);
+    props.getMatChecked(checkedMat, arrIndex, props.checkProps);
 
     if (currentIndex !== arrIndex) props.getData(data);
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
@@ -89,7 +89,7 @@ const NewMaterial = (props) => {
 
   const inputFormMarkup = (
     <Fragment>
-      <button className={classes.button}>
+      <button className={`${classes.button} btnMatForm`}>
         {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
       </button>
       <div className={classes.info_materials__detail}>
@@ -134,6 +134,7 @@ const NewMaterial = (props) => {
             id="img"
             name="img"
             accept="image/*"
+            disabled={!checked ? false : true}
             onChange={pictureInputChangeHandler}
           />
         </div>
@@ -157,7 +158,9 @@ const NewMaterial = (props) => {
 
   return (
     <form
-      className={materialInputType ? formInputClasses : formClasses}
+      className={`${
+        materialInputType ? formInputClasses : formClasses
+      } matForm`}
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
