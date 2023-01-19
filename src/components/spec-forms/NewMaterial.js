@@ -88,9 +88,9 @@ const NewMaterial = (props) => {
     props.getChecked(!checked);
   };
 
-  const formInputClasses = !setMaterialInputType
-    ? `${classes.info_materials}`
-    : `${classes.info_materials__type}`;
+  // const formInputClasses = !setMaterialInputType
+  //   ? `${classes.info_materials}`
+  //   : `${classes.info_materials__type}`;
 
   let formInputClasses2;
 
@@ -104,6 +104,9 @@ const NewMaterial = (props) => {
   if (formInputType === "entered" || formInputType === "picked")
     formInputClasses2 = `${classes.info_materials}`;
 
+  if (formInputType === "picked")
+    formInputClasses2 = `${classes.info_materials}`;
+
   const inputFormMarkup = (
     <Fragment>
       <button className={`${classes.button} btnMatForm`}>
@@ -115,7 +118,6 @@ const NewMaterial = (props) => {
             type="number"
             disabled={!checked ? false : true}
             onChange={codeInputChangeHandler}
-            value={selectedMaterial ? 100 : enteredCode}
           />
         </div>
         <div className={classes.item}>
@@ -123,6 +125,7 @@ const NewMaterial = (props) => {
             type="text"
             disabled={!checked ? false : true}
             onChange={itemInputChangeHandler}
+            value={enteredItem}
           />
         </div>
         <div className={classes.description}>
@@ -130,6 +133,7 @@ const NewMaterial = (props) => {
             type="text"
             disabled={!checked ? false : true}
             onChange={descriptionInputChangeHandler}
+            value={enteredDescription}
           />
         </div>
         <div className={classes.supplier}>
@@ -137,6 +141,7 @@ const NewMaterial = (props) => {
             type="text"
             disabled={!checked ? false : true}
             onChange={supplierInputChangeHandler}
+            value={enteredSupplier}
           />
         </div>
         <div className={classes.date}>
@@ -144,6 +149,7 @@ const NewMaterial = (props) => {
             type="date"
             disabled={!checked ? false : true}
             onChange={dateInputChangeHandler}
+            value={enteredTaskDate}
           />
         </div>
         <div className={classes.picture}>
@@ -154,6 +160,7 @@ const NewMaterial = (props) => {
             accept="image/*"
             disabled={!checked ? false : true}
             onChange={pictureInputChangeHandler}
+            value={enteredTaskPicture}
           />
         </div>
       </div>
@@ -179,8 +186,9 @@ const NewMaterial = (props) => {
       ","
     );
     console.log(+categoryIndex, +materialIndex);
-    console.log(materialState[+categoryIndex].materials[+materialIndex]);
+    const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
     setSelectedMaterial(true);
+    setEnteredDescription(selectedMat.info);
     setFormInputType("entered");
   };
 
