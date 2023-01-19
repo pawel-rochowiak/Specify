@@ -2,7 +2,8 @@ import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
@@ -16,6 +17,12 @@ const NewMaterial = (props) => {
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
   const [materialInputType, setMaterialInputType] = useState(props.checkProps);
+  const [formInputType, setFormInputType] = useState("default");
+  const [selectedMaterial, setSelectedMaterial] = useState(false);
+  const materialState = useSelector((state) => state.library);
+  const pickedMaterial = useRef();
+
+  console.log(materialState);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -43,12 +50,14 @@ const NewMaterial = (props) => {
 
   const materialTypeConfirmHandler = (event) => {
     event.preventDefault();
-    setMaterialInputType(true);
+    // setMaterialInputType(true);
+    setFormInputType("picked");
   };
 
   const materialTypeDenyHandler = (event) => {
     event.preventDefault();
-    setMaterialInputType(false);
+    // setMaterialInputType(false);
+    setFormInputType("entered");
   };
 
   const formSubmissionHandler = (event) => {
@@ -83,9 +92,17 @@ const NewMaterial = (props) => {
     ? `${classes.info_materials}`
     : `${classes.info_materials__type}`;
 
+  let formInputClasses2;
+
   const formClasses = !checked
     ? `${classes.info_materials}`
     : `${classes.info_materials} ${classes.checked}`;
+
+  if (formInputType === "default")
+    formInputClasses2 = `${classes.info_materials__type}`;
+
+  if (formInputType === "entered" || formInputType === "picked")
+    formInputClasses2 = `${classes.info_materials}`;
 
   const inputFormMarkup = (
     <Fragment>
@@ -98,6 +115,7 @@ const NewMaterial = (props) => {
             type="number"
             disabled={!checked ? false : true}
             onChange={codeInputChangeHandler}
+            value={selectedMaterial ? 100 : enteredCode}
           />
         </div>
         <div className={classes.item}>
@@ -144,7 +162,7 @@ const NewMaterial = (props) => {
 
   const inputTypeCheckMarkup = (
     <div className={classes.materialInput_choose}>
-      <span>Do You want to add material from the library?</span>
+      <span>Do you want to add material from the library?</span>
       <div className={classes.materialInput_choose__btns}>
         <button className={classes.button} onClick={materialTypeConfirmHandler}>
           <CheckIcon size="2.5rem" />
@@ -156,16 +174,64 @@ const NewMaterial = (props) => {
     </div>
   );
 
+  const testHandler = () => {
+    const [categoryIndex, materialIndex] = pickedMaterial.current.value.split(
+      ","
+    );
+    console.log(+categoryIndex, +materialIndex);
+    console.log(materialState[+categoryIndex].materials[+materialIndex]);
+    setSelectedMaterial(true);
+    setFormInputType("entered");
+  };
+
+  const materialDropdownJSX = (
+    <div>
+      <select ref={pickedMaterial} onChange={testHandler}>
+        <option disabled selected value>
+          {" "}
+          Select{" "}
+        </option>
+        {materialState.map((el, indexCat) => {
+          return (
+            <optgroup label={el.name} key={el.name}>
+              {el.materials?.map((el, indexMat) => {
+                return (
+                  <option value={`${indexCat}, ${indexMat}`} key={el.name}>
+                    {`${el.name}-${el.supplier}`}
+                  </option>
+                );
+              })}
+            </optgroup>
+          );
+        })}
+      </select>
+    </div>
+  );
+
+  const formJSX = (type) => {
+    if (type === "default") {
+      return inputTypeCheckMarkup;
+    }
+    if (type === "entered") {
+      return inputFormMarkup;
+    }
+    if (type === "picked") {
+      return materialDropdownJSX;
+    }
+  };
+
   return (
     <form
       className={`${
-        materialInputType ? formInputClasses : formClasses
+        formInputType === "entered" || formInputType === "picked"
+          ? formInputClasses2
+          : formClasses
       } matForm`}
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
     >
-      {materialInputType === true ? inputTypeCheckMarkup : inputFormMarkup}
+      {formJSX(formInputType)}
     </form>
   );
 };
