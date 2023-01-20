@@ -66,7 +66,6 @@ const Welcome = () => {
         }
       })
       .then((data) => {
-        // console.log(data);
         setIsLogged(true);
         history.push("/home");
         localStorage.setItem("login", data.email);
@@ -114,7 +113,6 @@ const Welcome = () => {
           </button>
 
           <button type="button" onClick={submitHandler}>
-            {/* {!isLoading && <Link to="/home">Login</Link>} */}
             {!isLoading && "Login"}
             {isLoading && <LoadingSpinner />}
           </button>

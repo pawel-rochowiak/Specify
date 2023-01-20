@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 const TasksPage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
 
+  console.log(props);
+
   return (
     <Fragment>
       <div className={classesTaskPage.tasks}>

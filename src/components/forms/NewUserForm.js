@@ -3,6 +3,7 @@ import Modal from "../../UI/Modal";
 import PasswordIcon from "../icons/PasswordIcon";
 import CheckIcon from "../icons/CheckIcon";
 import EmailIcon from "../icons/EmailIcon";
+import UserIcon from "../icons/UserIcon";
 import Logo from "../../Assets/specify_logo.png";
 import classes from "./NewUserForm.module.css";
 import LoadingSpinner from "../../UI/LoadingSpinner";
@@ -83,12 +84,12 @@ const NewUserForm = (props) => {
       </div>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.formGroup}>
-          <EmailIcon className={classes.icon} />
+          <UserIcon className={classes.icon} size="3rem" />
           <input required ref={nameInputRef} type="text" id="name"></input>
           <p className={classes.description}>Name</p>
         </div>
         <div className={classes.formGroup}>
-          <EmailIcon className={classes.icon} />
+          <UserIcon className={classes.icon} size="3rem" />
           <input
             required
             ref={surnameInputRef}

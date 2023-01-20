@@ -7,10 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 const NewMaterialForm = (props) => {
   const suppliersState = useSelector((state) => state.suppliers);
-  const dispatch = useDispatch();
   const materialState = useSelector((state) => state.library);
+  const dispatch = useDispatch();
+  //
   const [selectedSupplier, setSelectedSupplier] = useState("");
-
   const [enteredName, setEnteredName] = useState("");
   const [enteredCollection, setEnteredCollection] = useState("");
   const [enteredCertificates, setEnteredCertificates] = useState("");
@@ -18,6 +18,7 @@ const NewMaterialForm = (props) => {
   const [enteredImage, setEnteredImage] = useState("");
   const [enteredLink, setEnteredLink] = useState("");
   const [enteredCategory, setEnteredCategory] = useState("");
+  //
   const enteredExistingCollection = useRef();
   const enteredCat = useRef();
   const pickedSupplier = useRef();
@@ -26,8 +27,6 @@ const NewMaterialForm = (props) => {
     arr.push(el);
     return arr;
   };
-
-  console.log(props);
 
   let ss,
     specificSupplier,
@@ -81,7 +80,6 @@ const NewMaterialForm = (props) => {
 
   if (selectedSupplier && !props.supplier) {
     //Specific supplier case
-
     const specificSupplierCollections = suppliersState.find(
       (el) => el.name === selectedSupplier
     ).matCollections;
@@ -101,8 +99,6 @@ const NewMaterialForm = (props) => {
         ))}
       </optgroup>
     ));
-
-    console.log(allCollectionsOption2);
   }
 
   const nameInputChangeHandler = (event) => {

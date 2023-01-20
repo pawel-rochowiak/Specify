@@ -2,6 +2,7 @@ import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
+import Modal from "../../UI/Modal";
 import { Fragment, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 
@@ -83,14 +84,30 @@ const NewMaterial = (props) => {
 
     setCurrentIndex(arrIndex);
 
-    setChecked(!checked);
+    const messageInput = (
+      <div>
+        All input fields needs to be filled in order to proceed with next
+        material.
+      </div>
+    );
 
-    props.getChecked(!checked);
+    if (
+      enteredCode !== "" &&
+      enteredItem !== "" &&
+      enteredDescription !== "" &&
+      enteredSupplier !== "" &&
+      enteredTaskDate !== "" &&
+      enteredTaskPicture !== ""
+    ) {
+      setChecked(!checked);
+      props.getChecked(!checked);
+    } else {
+      // <Modal message={messageInput} />;
+      console.log(props);
+      props.modalOpen();
+      console.log("empty");
+    }
   };
-
-  // const formInputClasses = !setMaterialInputType
-  //   ? `${classes.info_materials}`
-  //   : `${classes.info_materials__type}`;
 
   let formInputClasses2;
 

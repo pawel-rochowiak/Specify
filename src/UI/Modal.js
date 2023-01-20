@@ -14,6 +14,7 @@ const ModalOverlay = (props) => {
       <button onClick={props.onClose} className={classes.closeBtn}>
         <CloseIcon />
       </button>
+      {props.message ? props.message : ""}
     </div>
   );
 };
@@ -25,7 +26,9 @@ const Modal = (props) => {
     <React.Fragment>
       {ReactDOM.createPortal(<Backdrop onClose={props.onExit} />, portalEl)}
       {ReactDOM.createPortal(
-        <ModalOverlay onClose={props.onExit}>{props.children}</ModalOverlay>,
+        <ModalOverlay onClose={props.onExit} message={props.message}>
+          {props.children}
+        </ModalOverlay>,
         portalEl
       )}
     </React.Fragment>

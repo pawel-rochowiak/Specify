@@ -74,10 +74,7 @@ input:focus {
 }
 
 .buttons {
-  margin-top: 5rem;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
+  grid-column: 1/3;
 }
 
 .buttons button {

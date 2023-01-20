@@ -20,6 +20,30 @@ const TaskPageDetails = (props) => {
   const areaName = props.area.toUpperCase();
   const specType = props.name.split("-")[0];
 
+
+//add new modal only for this detail page
+
+  // setIsFormVisible(true);
+  // const addNewTaskHandler = () => {
+  //    setIsFormVisible(true);
+  //  };
+  //  const closeNewTaskForm = () => {
+  //    setIsFormVisible(false);
+  //  };
+  // if (stateTarget === "tasks") {
+  //    TargetForm = (
+  //      <NewTaskForm
+  //        onClick={addNewTaskHandler}
+  //        onExit={closeNewTaskForm}
+  //        editing={isEditing === true ? isEditing : false}
+  //        itemToEdit={isEditing === true ? editIndex : ""}
+  //      />
+  //    );
+  //  }
+  // {isFormVisible ? TargetForm : ""}
+
+  console.log(props);
+
   const propsArrLength1 = [
     ["project", projectName],
     ["venue", areaName],
@@ -46,9 +70,7 @@ const TaskPageDetails = (props) => {
 
   const replaceDataHandler = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
-      console.log(arrIndex);
       prevState[arrIndex] = data;
-
       return [...prevState];
     });
   };
@@ -114,11 +136,11 @@ const TaskPageDetails = (props) => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
+          modalOpen={props.onClick}
+          modalClose={props.onExit}
         />,
       ];
     });
-    // console.log(specMatArr);
-    // console.log(materialsArr);
     localStorage.setItem(
       `${projectName}-${areaName}`,
       JSON.stringify(specMatArr)
@@ -140,8 +162,8 @@ const TaskPageDetails = (props) => {
 
     // to be deleted
 
-    const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
-    console.log(data);
+    //const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
+    // console.log(data);
   };
 
   const sendSpecificationDataHandler = () => {

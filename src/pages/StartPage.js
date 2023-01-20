@@ -121,6 +121,8 @@ const StartPage = (props) => {
           date={date}
           project={project}
           createItem={newItemHandler}
+          onClick={addNewTaskHandler}
+          onExit={closeNewTaskForm}
         />
       </Route>
     )
