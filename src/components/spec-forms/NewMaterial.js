@@ -105,7 +105,7 @@ const NewMaterial = (props) => {
     formInputClasses2 = `${classes.info_materials}`;
 
   if (formInputType === "picked")
-    formInputClasses2 = `${classes.info_materials}`;
+    formInputClasses2 = `${classes.info_materials__type}`;
 
   const inputFormMarkup = (
     <Fragment>
@@ -185,7 +185,6 @@ const NewMaterial = (props) => {
     const [categoryIndex, materialIndex] = pickedMaterial.current.value.split(
       ","
     );
-    console.log(+categoryIndex, +materialIndex);
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
     setSelectedMaterial(true);
     setEnteredDescription(selectedMat.info);
@@ -193,11 +192,11 @@ const NewMaterial = (props) => {
   };
 
   const materialDropdownJSX = (
-    <div>
+    <div className={classes.materialInput_dropdown}>
       <select ref={pickedMaterial} onChange={testHandler}>
         <option disabled selected value>
           {" "}
-          Select{" "}
+          Select material
         </option>
         {materialState.map((el, indexCat) => {
           return (
@@ -231,7 +230,9 @@ const NewMaterial = (props) => {
   return (
     <form
       className={`${
-        formInputType === "entered" || formInputType === "picked"
+        formInputType === "entered" ||
+        formInputType === "picked" ||
+        formInputType === "default"
           ? formInputClasses2
           : formClasses
       } matForm`}

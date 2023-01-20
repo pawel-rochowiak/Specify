@@ -28,7 +28,8 @@
   transition: all 0.2s;
 }
 
-.materialInput_choose {
+.materialInput_choose,
+.materialInput_dropdown {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +40,23 @@
   color: #389bdd;
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.materialInput_dropdown {
+  padding: 1rem 0;
+}
+
+.materialInput_dropdown select {
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  border: none;
+  border-radius: 1rem;
+  border-color: #389bdd;
+}
+
+.materialInput_dropdown select:focus {
+  outline-color: #97d5ff;
 }
 
 .checked {
