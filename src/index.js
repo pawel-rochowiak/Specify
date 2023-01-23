@@ -9,14 +9,23 @@ import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <StrictMode>
-        <App />
-      </StrictMode>
-    </BrowserRouter>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 );
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <Provider store={store}>
+//     <BrowserRouter>
+//       <StrictMode>
+//         <App />
+//       </StrictMode>
+//     </BrowserRouter>
+//   </Provider>
+// );
 
 // ReactDOM.render(
 //   <Provider store={store}>

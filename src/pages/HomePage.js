@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 // import Message from "../components/Message";
 import { Fragment } from "react";
 
-const HomePage = () => {
+const HomePage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
 
   return (

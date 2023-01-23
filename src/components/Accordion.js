@@ -35,7 +35,7 @@ const Accordion = (props) => {
   return (
     <div className={classes.accordionItem} data-accordion={props.data}>
       <div className={classes.itemDescription} onClick={liftTargetHandler}>
-        <Link key={props.name} to={`/${props.name.toLowerCase()}`}>
+        <Link key={props.name} to={`/home/${props.name.toLowerCase()}`}>
           <DynamicComponent />
         </Link>
         <span className={classes.mLeft}>{props.name}</span>

@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+
 //CSS module//
 import classes from "./StartPage.module.css";
 //ICONS//
@@ -45,6 +46,8 @@ const StartPage = (props) => {
   const [editItem, setEditItem] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
+
+  console.log(data);
 
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
@@ -106,8 +109,29 @@ const StartPage = (props) => {
 
   let DynamicComponentDetails = componentNamesDetails[category];
 
-  //Creating Routes for main information display.Right part of the container (mainContent).
+  //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
 
+  // const routerLinks = data.map(({ name, path }) => (
+  //   <Link key={path} to={`/${stateTarget}/${path}`}>
+  //     <li className={classes.item}>{name}</li>
+  //   </Link>
+  // ));
+
+  //Creating Routes for sidebar
+
+  const componentNamesKeys = Object.keys(componentNames);
+
+  // const reactRoutesSidebar = componentNamesKeys.map((key) => (
+  //   <Route key={key} path={`/${key}`}>
+  //     <SideMenuLinks
+  //       targetActivation={targetActivationHandler}
+  //       links={routerLinks}
+  //     />
+  //   </Route>
+  // ));
+
+  //Creating Routes for main information display.Right part of the container (mainContent).
+  /*
   const reactRoutesMain = data.map(
     ({ name, path, fireZone, dk, date, project, area, number }) => (
       <Route key={path} path={`/${stateTarget}/${path}`}>
@@ -158,7 +182,7 @@ const StartPage = (props) => {
       />
     </Route>
   ));
-
+*/
   let TargetForm;
 
   //Logic for displaying proper form for creating new items
@@ -236,47 +260,43 @@ const StartPage = (props) => {
   return (
     <Fragment>
       {isFormVisible ? TargetForm : ""}
-      <Router>
-        <div className={classes.container}>
-          <div className={classes.sidebar}>
-            <div className={classes.user}>
-              <UserIcon className={classes.icon} size="12rem" />
-              <Link to="/" onClick={logoutHandler}>
-                <LogOutIcon size="2.5rem" />
+      <div className={classes.container}>
+        <div className={classes.sidebar}>
+          <div className={classes.user}>
+            <UserIcon className={classes.icon} size="12rem" />
+            <Link to="/welcome" onClick={logoutHandler}>
+              <LogOutIcon size="2.5rem" />
+            </Link>
+          </div>
+          <div className={classes.accordionContainer}>
+            <div className={classes.accordionItem} data-accordion={props.data}>
+              <Link to="/home">
+                <div className={classes.itemDescription}>
+                  <HomeIcon unit="2rem" />
+                  <span className={classes.mLeft}>Home</span>
+                </div>
               </Link>
             </div>
-            <div className={classes.accordionContainer}>
-              <div
-                className={classes.accordionItem}
-                data-accordion={props.data}
-              >
-                <Link to="/home">
-                  <div className={classes.itemDescription}>
-                    <HomeIcon unit="2rem" />
-                    <span className={classes.mLeft}>Home</span>
-                  </div>
-                </Link>
-              </div>
-              <Accordion name="Tasks" data="Tasks" />
-              <Accordion name="Projects" data="Projects" />
-              <Accordion name="Suppliers" data="Suppliers" />
-              <Accordion name="Library" data="Library" />
-            </div>
+            <Accordion name="Tasks" data="Tasks" />
+            <Accordion name="Projects" data="Projects" />
+            <Accordion name="Suppliers" data="Suppliers" />
+            <Accordion name="Library" data="Library" />
           </div>
+        </div>
 
-          <Switch>{reactRoutesSidebar}</Switch>
+        {/* <Switch>{reactRoutesSidebar}</Switch> */}
 
-          <div className={classes.mainContent}>
-            <Switch>
+        <div className={classes.mainContent}>
+          {/* <Switch>
               <Route key="home" path="/home" exact>
                 <HomePage />
               </Route>
               {reactRoutesMainStarter}
               {reactRoutesMain}
-            </Switch>
-          </div>
+            </Switch> */}
+          <Outlet />
         </div>
-      </Router>
+      </div>
     </Fragment>
   );
 };

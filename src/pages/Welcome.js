@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./Welcome.module.css";
 import Card from "../UI/Card";
 import PasswordIcon from "../components/icons/PasswordIcon";
@@ -18,7 +18,7 @@ const Welcome = () => {
   console.log(users);
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  let navigate = useNavigate();
 
   const [isLogged, setIsLogged] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -67,7 +67,7 @@ const Welcome = () => {
       })
       .then((data) => {
         setIsLogged(true);
-        history.push("/home");
+        navigate("/");
         localStorage.setItem("login", data.email);
         dispatch(usersActions.login(data));
       })
