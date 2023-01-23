@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import classes from "./Accordion.module.css";
 ///ICONS///
 import TasksIcon from "./icons/TasksIcon";
@@ -12,12 +12,13 @@ import { useDispatch } from "react-redux";
 const Accordion = (props) => {
   const dispatch = useDispatch();
   const liftTargetHandler = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
-    const targetStart = event.target.closest("div[class*='accordionItem']")
-      .dataset.accordion;
+    const targetStart = event.target.closest("div[class*='data']").dataset
+      .accordion;
 
     const target = targetStart.toLowerCase();
+    console.log(target);
 
     dispatch(globalActions.setTarget(target));
   };
@@ -33,14 +34,24 @@ const Accordion = (props) => {
   let DynamicComponent = componentNames[category];
 
   return (
-    <div className={classes.accordionItem} data-accordion={props.data}>
-      <div className={classes.itemDescription} onClick={liftTargetHandler}>
-        <Link key={props.name} to={`/home/${props.name.toLowerCase()}`}>
+    <NavLink
+      key={props.name}
+      to={`/home/${props.name.toLowerCase()}`}
+      className={({ isActive }) =>
+        isActive ? classes.accordionItem_active : classes.accordionItem
+      }
+    >
+      <div
+        className={classes.data}
+        data-accordion={props.data}
+        onClick={liftTargetHandler}
+      >
+        <div className={classes.itemDescription}>
           <DynamicComponent />
-        </Link>
-        <span className={classes.mLeft}>{props.name}</span>
+          <span className={classes.mLeft}>{props.name}</span>
+        </div>
       </div>
-    </div>
+    </NavLink>
   );
 };
 

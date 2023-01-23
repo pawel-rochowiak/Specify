@@ -67,7 +67,7 @@ const Welcome = () => {
       })
       .then((data) => {
         setIsLogged(true);
-        navigate("/");
+        navigate("/home");
         localStorage.setItem("login", data.email);
         dispatch(usersActions.login(data));
       })

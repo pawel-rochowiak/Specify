@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 //CSS module//
 import classes from "./StartPage.module.css";
@@ -264,19 +264,28 @@ const StartPage = (props) => {
         <div className={classes.sidebar}>
           <div className={classes.user}>
             <UserIcon className={classes.icon} size="12rem" />
-            <Link to="/welcome" onClick={logoutHandler}>
+            <Link to="/" onClick={logoutHandler}>
               <LogOutIcon size="2.5rem" />
             </Link>
           </div>
           <div className={classes.accordionContainer}>
-            <div className={classes.accordionItem} data-accordion={props.data}>
-              <Link to="/home">
+            <NavLink
+              to="/home"
+              className={({ isActive }) =>
+                isActive ? classes.active : classes.accordionItem
+              }
+              end
+            >
+              <div
+                // className={classes.accordionItem}
+                data-accordion={props.data}
+              >
                 <div className={classes.itemDescription}>
                   <HomeIcon unit="2rem" />
                   <span className={classes.mLeft}>Home</span>
                 </div>
-              </Link>
-            </div>
+              </div>
+            </NavLink>
             <Accordion name="Tasks" data="Tasks" />
             <Accordion name="Projects" data="Projects" />
             <Accordion name="Suppliers" data="Suppliers" />

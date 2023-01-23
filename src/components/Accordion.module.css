@@ -53,6 +53,20 @@
   margin-left: 1rem;
 }
 
+.accordionItem_active {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 5px;
+  background-color: #3a6887;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  transition: all 0.4s;
+  width: 100%;
+}
+
+.data {
+}
 /* .label {
   position: absolute;
   padding: 1rem;
