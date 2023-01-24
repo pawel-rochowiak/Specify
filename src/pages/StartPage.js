@@ -16,7 +16,6 @@ import NewTaskForm from "../components/forms/NewTaskForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import SideMenuLinks from "../components/SideMenuLinks";
 //PAGES//
-import HomePage from "./HomePage";
 import ProjectPage from "./ProjectsPage";
 import ProjectPageDetails from "./ProjectPageDetails";
 import SuppliersPage from "./SuppliersPage";
@@ -49,15 +48,19 @@ const StartPage = (props) => {
 
   console.log(data);
 
+  //Functions that needs to be accessible for almost all routes
+
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
     setEditIndex(index);
     setIsFormVisible(true);
     setEditItem(itemProps);
   };
+
   const addNewTaskHandler = () => {
     setIsFormVisible(true);
   };
+
   const closeNewTaskForm = () => {
     setIsFormVisible(false);
   };
@@ -276,10 +279,7 @@ const StartPage = (props) => {
               }
               end
             >
-              <div
-                // className={classes.accordionItem}
-                data-accordion={props.data}
-              >
+              <div data-accordion={props.data}>
                 <div className={classes.itemDescription}>
                   <HomeIcon unit="2rem" />
                   <span className={classes.mLeft}>Home</span>
@@ -292,18 +292,11 @@ const StartPage = (props) => {
             <Accordion name="Library" data="Library" />
           </div>
         </div>
-
+        <SideMenuLinks />
         {/* <Switch>{reactRoutesSidebar}</Switch> */}
 
         <div className={classes.mainContent}>
-          {/* <Switch>
-              <Route key="home" path="/home" exact>
-                <HomePage />
-              </Route>
-              {reactRoutesMainStarter}
-              {reactRoutesMain}
-            </Switch> */}
-          <Outlet />
+          <Outlet context={newItemHandler} />
         </div>
       </div>
     </Fragment>

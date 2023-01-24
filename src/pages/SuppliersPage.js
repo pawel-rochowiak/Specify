@@ -4,9 +4,11 @@ import DetailsItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const SuppliersPage = (props) => {
   const stateSuppliers = useSelector((state) => state.suppliers);
+  const createItem = useOutletContext();
 
   return (
     <Fragment>
@@ -27,12 +29,12 @@ const SuppliersPage = (props) => {
               adress={el.adress}
               contact={el.contactPerson}
               dataset={index}
-              edit={props.createItem}
+              edit={createItem}
             />
           ))}
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={props.createItem}
+            onClick={createItem}
           >
             Create Item
             <PlusIcon size="1.6rem" />

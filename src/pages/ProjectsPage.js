@@ -3,9 +3,11 @@ import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import DetailsItem from "../components/DetailsItem";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const ProjectPage = (props) => {
   const stateProjects = useSelector((state) => state.projects);
+  const createItem = useOutletContext();
 
   return (
     <Fragment>
@@ -25,13 +27,13 @@ const ProjectPage = (props) => {
               items={el}
               grid="5"
               dataset={index}
-              edit={props.createItem}
+              edit={createItem}
               type="projectsState"
             />
           ))}
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={props.createItem}
+            onClick={createItem}
           >
             Add project
             <PlusIcon size="1.6rem" />

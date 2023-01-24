@@ -1,6 +1,9 @@
 import "./App.css";
-// import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useOutletContext,
+} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import Welcome from "./pages/Welcome";
 import StartPage from "./pages/StartPage";
@@ -15,7 +18,7 @@ import LibraryPageDetails from "./pages/LibraryPageDetails";
 
 import Footer from "./components/Footer";
 import SideMenuLinks from "./components/SideMenuLinks";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStateData } from "./store/all-actions";
@@ -25,7 +28,9 @@ let isInitial = true;
 
 function App() {
   const dispatch = useDispatch();
+
   let store = useSelector((state) => state);
+  let tasksData = useSelector((state) => state.tasks);
 
   const router = createBrowserRouter([
     { path: "/", element: <Welcome /> },
@@ -40,9 +45,12 @@ function App() {
         },
         {
           path: "/home/tasks",
-          element: <TasksPage />,
+          element: <TasksPage data={tasksData} />,
         },
-        { path: "/home/projects", element: <ProjectPage /> },
+        {
+          path: "/home/projects",
+          element: <ProjectPage />,
+        },
         { path: "/home/suppliers", element: <SuppliersPage /> },
         { path: "/home/library", element: <LibraryPage /> },
       ],

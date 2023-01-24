@@ -4,9 +4,11 @@ import LibraryItem from "../components/LibraryItem";
 import DetailsItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const LibraryPage = (props) => {
   const stateMaterials = useSelector((state) => state.library);
+  const createItem = useOutletContext();
 
   const materialArray = stateMaterials.flatMap((el) =>
     el.materials ? el.materials : []
@@ -42,13 +44,13 @@ const LibraryPage = (props) => {
               imageUrl={el.imageUrl}
               link={el.link}
               dataset={index}
-              edit={props.createItem}
+              edit={createItem}
               disabled={true}
             />
           ))}
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={props.createItem}
+            onClick={createItem}
           >
             Create Item
             <PlusIcon size="1.6rem" />

@@ -4,9 +4,11 @@ import Task from "../components/Task";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const TasksPage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
+  const createItem = useOutletContext();
 
   console.log(props);
 
@@ -33,12 +35,12 @@ const TasksPage = (props) => {
               date={el.date}
               status={el.status}
               dataset={index}
-              edit={props.createItem}
+              edit={createItem}
             />
           ))}
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={props.createItem}
+            onClick={createItem}
           >
             Create task
             <PlusIcon size="1.6rem" />
