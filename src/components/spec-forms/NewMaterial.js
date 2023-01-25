@@ -104,8 +104,8 @@ const NewMaterial = (props) => {
     } else {
       // <Modal message={messageInput} />;
       console.log(props);
-      props.modalOpen();
-      console.log("empty");
+      // props.modalOpen();
+      // console.log("empty");
     }
   };
 

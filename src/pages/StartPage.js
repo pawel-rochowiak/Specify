@@ -48,8 +48,6 @@ const StartPage = (props) => {
 
   console.log(data);
 
-  //Functions that needs to be accessible for almost all routes
-
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
     setEditIndex(index);
@@ -100,20 +98,6 @@ const StartPage = (props) => {
     library: LibraryPage,
   };
 
-  let category = stateTarget;
-  let DynamicComponent = componentNames[category];
-
-  const componentNamesDetails = {
-    tasks: TasksPageDetails,
-    projects: ProjectPageDetails,
-    suppliers: SuppliersPageDetails,
-    library: LibraryPageDetails,
-  };
-
-  let DynamicComponentDetails = componentNamesDetails[category];
-
-  const componentNamesKeys = Object.keys(componentNames);
-
   //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
 
   const routerLinks = data.map(({ name, path }) => (
@@ -122,42 +106,6 @@ const StartPage = (props) => {
     </Link>
   ));
 
-  //Creating Routes for main information display.Right part of the container (mainContent).
-  /*
-  const reactRoutesMain = data.map(
-    ({ name, path, fireZone, dk, date, project, area, number }) => (
-      <Route key={path} path={`/${stateTarget}/${path}`}>
-        <DynamicComponentDetails
-          name={name}
-          area={area}
-          number={number}
-          path={path}
-          fz={fireZone}
-          dk={dk}
-          date={date}
-          project={project}
-          createItem={newItemHandler}
-          onClick={addNewTaskHandler}
-          onExit={closeNewTaskForm}
-        />
-      </Route>
-    )
-  );
-
-
-
-
-  //Creating Routes for sidebar
-
-  const reactRoutesSidebar = componentNamesKeys.map((key) => (
-    <Route key={key} path={`/${key}`}>
-      <SideMenuLinks
-        targetActivation={targetActivationHandler}
-        links={routerLinks}
-      />
-    </Route>
-  ));
-*/
   let TargetForm;
 
   //Logic for displaying proper form for creating new items
@@ -268,7 +216,6 @@ const StartPage = (props) => {
           targetActivation={targetActivationHandler}
           links={routerLinks}
         />
-        {/* <Switch>{reactRoutesSidebar}</Switch> */}
 
         <div className={classes.mainContent}>
           <Outlet

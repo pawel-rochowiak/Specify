@@ -11,7 +11,7 @@ import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
 import { useOutletContext, useParams } from "react-router-dom";
 
-const TaskPageDetails = (props) => {
+const TaskPageDetails = () => {
   const dispatch = useDispatch();
 
   const params = useParams();
@@ -29,7 +29,7 @@ const TaskPageDetails = (props) => {
   const areaName = element.area.toUpperCase();
   const specType = element.name.split("-")[0];
 
-  const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
+  //const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
 
   //add new modal only for this detail page
 
@@ -51,8 +51,6 @@ const TaskPageDetails = (props) => {
   //    );
   //  }
   // {isFormVisible ? TargetForm : ""}
-
-  console.log(props);
 
   const propsArrLength1 = [
     ["project", projectName],
@@ -146,8 +144,8 @@ const TaskPageDetails = (props) => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
-          modalOpen={addNewTaskHandler}
-          modalClose={closeNewTaskForm}
+          // modalOpen={addNewTaskHandler}
+          // modalClose={closeNewTaskForm}
         />,
       ];
     });
