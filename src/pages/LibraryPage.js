@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 
 const LibraryPage = (props) => {
   const stateMaterials = useSelector((state) => state.library);
-  const createItem = useOutletContext();
+  const [createItem] = useOutletContext();
 
   const materialArray = stateMaterials.flatMap((el) =>
     el.materials ? el.materials : []

@@ -48,11 +48,24 @@ function App() {
           element: <TasksPage data={tasksData} />,
         },
         {
+          path: "/home/tasks/:taskId",
+          element: <TasksPageDetails />,
+        },
+        {
           path: "/home/projects",
           element: <ProjectPage />,
         },
+        {
+          path: "/home/projects/:projectId",
+          element: <ProjectPageDetails />,
+        },
         { path: "/home/suppliers", element: <SuppliersPage /> },
+        {
+          path: "/home/suppliers/:supplierId",
+          element: <SuppliersPageDetails />,
+        },
         { path: "/home/library", element: <LibraryPage /> },
+        { path: "/home/library/:supplierId", element: <LibraryPageDetails /> },
       ],
     },
   ]);

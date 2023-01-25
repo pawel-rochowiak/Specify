@@ -3,11 +3,11 @@ import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import DetailsItem from "../components/DetailsItem";
 import { useSelector } from "react-redux";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const ProjectPage = (props) => {
   const stateProjects = useSelector((state) => state.projects);
-  const createItem = useOutletContext();
+  const [createItem] = useOutletContext();
 
   return (
     <Fragment>

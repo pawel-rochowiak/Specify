@@ -9,6 +9,7 @@ import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const TaskPageDetails = (props) => {
   const dispatch = useDispatch();
@@ -20,8 +21,9 @@ const TaskPageDetails = (props) => {
   const areaName = props.area.toUpperCase();
   const specType = props.name.split("-")[0];
 
+  const [createItem, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
 
-//add new modal only for this detail page
+  //add new modal only for this detail page
 
   // setIsFormVisible(true);
   // const addNewTaskHandler = () => {
@@ -136,8 +138,8 @@ const TaskPageDetails = (props) => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
-          modalOpen={props.onClick}
-          modalClose={props.onExit}
+          modalOpen={addNewTaskHandler}
+          modalClose={closeNewTaskForm}
         />,
       ];
     });

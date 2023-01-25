@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 
 const SuppliersPage = (props) => {
   const stateSuppliers = useSelector((state) => state.suppliers);
-  const createItem = useOutletContext();
+  const [createItem] = useOutletContext();
 
   return (
     <Fragment>

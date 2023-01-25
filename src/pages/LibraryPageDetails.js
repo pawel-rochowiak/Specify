@@ -4,13 +4,22 @@ import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const LibraryPageDetails = (props) => {
+  const params = useParams();
+  const path = params.projectId;
+
   function findCategory(el) {
     return el.path === props.path;
   }
 
+  const [createItem] = useOutletContext();
+
   const stateMaterials = useSelector((state) => state.library);
+
+  const element = stateMaterials.find((el) => el.path === path);
+  console.log(element);
 
   const materialArrayByCategory = stateMaterials.find(findCategory).materials;
 
@@ -46,7 +55,7 @@ const LibraryPageDetails = (props) => {
                 imageUrl={el.imageUrl}
                 link={el.link}
                 dataset={index}
-                edit={props.createItem}
+                edit={createItem}
               />
             ))}
             {!materialArrayByCategory ? (
@@ -60,7 +69,7 @@ const LibraryPageDetails = (props) => {
             )}
             <div
               className={`${classes.item} ${classes.action}`}
-              onClick={props.createItem}
+              onClick={createItem}
             >
               Create Item
               <PlusIcon size="1.6rem" />

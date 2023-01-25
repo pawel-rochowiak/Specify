@@ -2,13 +2,20 @@ import classes from "./ProjectPageDetails.module.css";
 import DetailItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
+import { useOutletContext, useParams } from "react-router-dom";
 
-const ProjectPageDetails = (props) => {
+const ProjectPageDetails = () => {
   const stateProjects = useSelector((state) => state.projects);
+  const [createItem] = useOutletContext();
+  const params = useParams();
+  const path = params.projectId;
+
+  const element = stateProjects.find((el) => el.path === path);
+  console.log(element);
   return (
     <div className={classes.mainContent}>
       <div className={classes.tasks}>
-        <div className={classes.name}>{props.name}</div>
+        <div className={classes.name}>{element.name}</div>
         <div className={classes.categoriesAreas}>
           <div>Name</div>
           <div>Deck</div>
@@ -16,10 +23,10 @@ const ProjectPageDetails = (props) => {
           <div>Outfitter</div>
         </div>
         <div className={classes.taskList}>
-          {stateProjects.find((el) => el.name === props.name).area.length !==
+          {stateProjects.find((el) => el.name === element.name).area.length !==
           0 ? (
             stateProjects
-              .find((el) => el.name === props.name)
+              .find((el) => el.name === element.name)
               .area.map((el, index) => (
                 <DetailItem
                   key={index + 1}
@@ -27,7 +34,7 @@ const ProjectPageDetails = (props) => {
                   section="projects"
                   items={el}
                   grid="4"
-                  edit={props.createItem}
+                  edit={createItem}
                   type="projectsState"
                 />
               ))
@@ -36,7 +43,7 @@ const ProjectPageDetails = (props) => {
           )}
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={props.createItem}
+            onClick={createItem}
           >
             Add venue
             <PlusIcon size="1.6rem" />

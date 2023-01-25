@@ -3,15 +3,23 @@ import PlusIcon from "../components/icons/PlusIcon";
 import LibraryItem from "../components/LibraryItem";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const SuppliersPageDetails = (props) => {
   function findSupplier(el) {
     return el.name === props.name;
   }
 
+  const [createItem] = useOutletContext();
+
   const stateSuppliers = useSelector((state) => state.suppliers);
 
-  const correctSupplier = stateSuppliers.find(findSupplier);
+  const params = useParams();
+  const path = params.supplierId;
+
+  const correctSupplier = stateSuppliers.find((el) => el.path === path);
+
+  //const correctSupplier = stateSuppliers.find(findSupplier);
 
   const supplierCollections = !correctSupplier.matCollections
     ? []
@@ -104,7 +112,7 @@ const SuppliersPageDetails = (props) => {
                       imageUrl={el.imageUrl}
                       link={el.link}
                       dataset={index}
-                      edit={props.createItem}
+                      edit={createItem}
                       supEdit={true}
                     />
                   ))}
@@ -113,7 +121,7 @@ const SuppliersPageDetails = (props) => {
             </div>
             <div
               className={`${classes.item} ${classes.action}`}
-              onClick={props.createItem}
+              onClick={createItem}
             >
               Create Item
               <PlusIcon size="1.6rem" />

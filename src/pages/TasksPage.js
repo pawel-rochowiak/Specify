@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 
 const TasksPage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
-  const createItem = useOutletContext();
+  const [createItem] = useOutletContext();
 
   console.log(props);
 

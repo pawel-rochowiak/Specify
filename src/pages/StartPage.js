@@ -112,26 +112,15 @@ const StartPage = (props) => {
 
   let DynamicComponentDetails = componentNamesDetails[category];
 
-  //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
-
-  // const routerLinks = data.map(({ name, path }) => (
-  //   <Link key={path} to={`/${stateTarget}/${path}`}>
-  //     <li className={classes.item}>{name}</li>
-  //   </Link>
-  // ));
-
-  //Creating Routes for sidebar
-
   const componentNamesKeys = Object.keys(componentNames);
 
-  // const reactRoutesSidebar = componentNamesKeys.map((key) => (
-  //   <Route key={key} path={`/${key}`}>
-  //     <SideMenuLinks
-  //       targetActivation={targetActivationHandler}
-  //       links={routerLinks}
-  //     />
-  //   </Route>
-  // ));
+  //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
+
+  const routerLinks = data.map(({ name, path }) => (
+    <Link key={path} to={`/home/${stateTarget}/${path}`}>
+      <li className={classes.item}>{name}</li>
+    </Link>
+  ));
 
   //Creating Routes for main information display.Right part of the container (mainContent).
   /*
@@ -155,27 +144,10 @@ const StartPage = (props) => {
     )
   );
 
-  const reactRoutesMainStarter = data.map(({ _, path }) => (
-    <Route key={path} path={`/${stateTarget}`} exact>
-      {stateTarget === "tasks" ? (
-        <DynamicComponent data={data} createItem={newItemHandler} />
-      ) : (
-        <DynamicComponent createItem={newItemHandler} />
-      )}
-    </Route>
-  ));
 
-  //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
 
-  const routerLinks = data.map(({ name, path }) => (
-    <Link key={path} to={`/${stateTarget}/${path}`}>
-      <li className={classes.item}>{name}</li>
-    </Link>
-  ));
 
   //Creating Routes for sidebar
-
-  const componentNamesKeys = Object.keys(componentNames);
 
   const reactRoutesSidebar = componentNamesKeys.map((key) => (
     <Route key={key} path={`/${key}`}>
@@ -292,11 +264,16 @@ const StartPage = (props) => {
             <Accordion name="Library" data="Library" />
           </div>
         </div>
-        <SideMenuLinks />
+        <SideMenuLinks
+          targetActivation={targetActivationHandler}
+          links={routerLinks}
+        />
         {/* <Switch>{reactRoutesSidebar}</Switch> */}
 
         <div className={classes.mainContent}>
-          <Outlet context={newItemHandler} />
+          <Outlet
+            context={[newItemHandler, addNewTaskHandler, closeNewTaskForm]}
+          />
         </div>
       </div>
     </Fragment>
