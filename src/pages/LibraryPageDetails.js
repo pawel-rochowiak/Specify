@@ -7,11 +7,12 @@ import { useSelector } from "react-redux";
 import { useOutletContext, useParams } from "react-router-dom";
 
 const LibraryPageDetails = (props) => {
+  console.log(props);
   const params = useParams();
-  const path = params.projectId;
+  const path = params.libraryId;
 
   function findCategory(el) {
-    return el.path === props.path;
+    return el.path === path;
   }
 
   const [createItem] = useOutletContext();
@@ -19,7 +20,6 @@ const LibraryPageDetails = (props) => {
   const stateMaterials = useSelector((state) => state.library);
 
   const element = stateMaterials.find((el) => el.path === path);
-  console.log(element);
 
   const materialArrayByCategory = stateMaterials.find(findCategory).materials;
 
@@ -27,7 +27,7 @@ const LibraryPageDetails = (props) => {
     <Fragment>
       <div className={classes.mainContent}>
         <div className={classes.tasks}>
-          <div className={classes.name}>{props.name}</div>
+          <div className={classesLibrary.name}>{element.name}</div>
           {materialArrayByCategory ? (
             <div className={classesLibrary.categoriesTask}>
               <div>No.</div>
@@ -58,7 +58,7 @@ const LibraryPageDetails = (props) => {
                 edit={createItem}
               />
             ))}
-            {!materialArrayByCategory ? (
+            {materialArrayByCategory.length === 0 ? (
               <div className={classes.info_message}>
                 This category has no materials. Please press
                 <span className={classes.highlight}> "Create item" </span>{" "}

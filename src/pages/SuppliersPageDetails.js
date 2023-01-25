@@ -6,10 +6,6 @@ import { useSelector } from "react-redux";
 import { useOutletContext, useParams } from "react-router-dom";
 
 const SuppliersPageDetails = (props) => {
-  function findSupplier(el) {
-    return el.name === props.name;
-  }
-
   const [createItem] = useOutletContext();
 
   const stateSuppliers = useSelector((state) => state.suppliers);
@@ -18,8 +14,6 @@ const SuppliersPageDetails = (props) => {
   const path = params.supplierId;
 
   const correctSupplier = stateSuppliers.find((el) => el.path === path);
-
-  //const correctSupplier = stateSuppliers.find(findSupplier);
 
   const supplierCollections = !correctSupplier.matCollections
     ? []

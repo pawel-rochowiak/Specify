@@ -78,6 +78,14 @@
   color: #44b3fd;
 }
 
+.name {
+  width: 100%;
+  text-align: left;
+  font-size: 2rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #85caf9;
+}
+
 .info span {
   font-weight: 400;
   display: inline-block;

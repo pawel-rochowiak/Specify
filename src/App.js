@@ -1,9 +1,5 @@
 import "./App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useOutletContext,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import Welcome from "./pages/Welcome";
 import StartPage from "./pages/StartPage";
@@ -17,8 +13,7 @@ import LibraryPage from "./pages/LibraryPage";
 import LibraryPageDetails from "./pages/LibraryPageDetails";
 
 import Footer from "./components/Footer";
-import SideMenuLinks from "./components/SideMenuLinks";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStateData } from "./store/all-actions";
@@ -49,7 +44,7 @@ function App() {
         },
         {
           path: "/home/tasks/:taskId",
-          element: <TasksPageDetails />,
+          element: <TasksPageDetails data={tasksData} />,
         },
         {
           path: "/home/projects",
@@ -65,7 +60,7 @@ function App() {
           element: <SuppliersPageDetails />,
         },
         { path: "/home/library", element: <LibraryPage /> },
-        { path: "/home/library/:supplierId", element: <LibraryPageDetails /> },
+        { path: "/home/library/:libraryId", element: <LibraryPageDetails /> },
       ],
     },
   ]);

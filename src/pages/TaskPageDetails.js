@@ -6,22 +6,30 @@ import WordIcon from "../components/icons/WordIcon";
 import SaveIcon from "../components/icons/SaveIcon";
 import ArrowDown from "../components/icons/DownArrow";
 import { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
 import { useOutletContext, useParams } from "react-router-dom";
 
 const TaskPageDetails = (props) => {
   const dispatch = useDispatch();
-  const taskIndex = props.path.split("")[1];
-  const projectNumber = props.number;
-  const projectName = props.project;
-  const deck = props.dk;
-  const fireZone = props.fz;
-  const areaName = props.area.toUpperCase();
-  const specType = props.name.split("-")[0];
 
-  const [createItem, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
+  const params = useParams();
+  const path = params.taskId;
+
+  let stateTasks = useSelector((state) => state.tasks);
+
+  const element = stateTasks.find((el) => el.path === path);
+
+  const taskIndex = element.path.split("")[1];
+  const projectNumber = element.number;
+  const projectName = element.project;
+  const deck = element.dk;
+  const fireZone = element.fireZone;
+  const areaName = element.area.toUpperCase();
+  const specType = element.name.split("-")[0];
+
+  const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
 
   //add new modal only for this detail page
 
@@ -202,7 +210,7 @@ const TaskPageDetails = (props) => {
           <div className={classes.taskList}>
             <div className={classes.table}>
               <div>
-                <p className={classes.heading}>Project Name: {props.project}</p>
+                <p className={classes.heading}>Project Name: {projectName}</p>
                 <div className={classes.info_row}>
                   <div>
                     <span>Yard. Proj:</span>
@@ -235,9 +243,9 @@ const TaskPageDetails = (props) => {
                 </div>
                 <p className={classes.heading}>Material specification</p>
                 <div className={classes.header_labels}>
-                  <div>Venue:{props.area}</div>
+                  <div>Venue:{areaName}</div>
                   <div>Deck:{deck}</div>
-                  <div>Fz:{props.fz}</div>
+                  <div>Fz:{fireZone}</div>
                 </div>
               </div>
             </div>
