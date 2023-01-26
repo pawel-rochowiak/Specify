@@ -23,13 +23,18 @@ import {
 const generateDOC = (
   projectName,
   areaName,
+  yardNumber,
   projectNumber,
   fireZone,
   deck,
   specType,
   year,
   month,
-  day
+  day,
+  resPerson,
+  revDate,
+  revPerson,
+  revId
 ) => {
   const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
 
@@ -91,16 +96,51 @@ const generateDOC = (
               }),
               new Paragraph({
                 style: "second",
-                alignment: AlignmentType.LEFT,
+                alignment: AlignmentType.CENTER,
                 thematicBreak: true,
                 keepLines: true,
                 children: [
                   new TextRun({
-                    text: `Yard Proj.# 6310	TD Proj.#${projectNumber}	Issue Date:${year}-${month}-${day}	By: DT   Rev. Date:	 By:	 Rev:`,
+                    text: `Yard Proj.# ${yardNumber}    `,
                     font: "Encode Sans",
                     size: 18,
                     allCaps: true,
-                    break: 0,
+                  }),
+                  new TextRun({
+                    text: `TD Proj.#${projectNumber}    `,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
+                  }),
+                  new TextRun({
+                    text: `Issue Date:${year}-${month}-${day}    `,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
+                  }),
+                  new TextRun({
+                    text: `By: ${resPerson}    `,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
+                  }),
+                  new TextRun({
+                    text: `Rev.Date: ${revDate}    `,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
+                  }),
+                  new TextRun({
+                    text: `By: ${revPerson}    `,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
+                  }),
+                  new TextRun({
+                    text: `Rev: ${revId}`,
+                    font: "Encode Sans",
+                    size: 18,
+                    allCaps: true,
                   }),
                 ],
               }),

@@ -5,7 +5,7 @@ import MinusIcon from "../components/icons/MinusIcon";
 import WordIcon from "../components/icons/WordIcon";
 import SaveIcon from "../components/icons/SaveIcon";
 import ArrowDown from "../components/icons/DownArrow";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
@@ -28,6 +28,12 @@ const TaskPageDetails = () => {
   const fireZone = element.fireZone;
   const areaName = element.area.toUpperCase();
   const specType = element.name.split("-")[0];
+
+  const resPerson = useRef();
+  const revDate = useRef();
+  const revPerson = useRef();
+  const revId = useRef();
+  const yardNumber = useRef();
 
   //const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
 
@@ -106,13 +112,18 @@ const TaskPageDetails = () => {
     generateDOC(
       projectName,
       areaName,
+      yardNumber.current.value,
       projectNumber,
       fireZone,
       deck,
       specType,
       year,
       month,
-      day
+      day,
+      resPerson.current.value,
+      revDate.current.value,
+      revPerson.current.value,
+      revId.current.value
     );
   };
 
@@ -212,7 +223,7 @@ const TaskPageDetails = () => {
                 <div className={classes.info_row}>
                   <div>
                     <span>Yard. Proj:</span>
-                    <input type="number" />
+                    <input ref={yardNumber} type="number" />
                   </div>
                   <div>
                     <span>TD Proj:</span>
@@ -224,19 +235,19 @@ const TaskPageDetails = () => {
                   </div>
                   <div>
                     <span>By:</span>
-                    <input type="text" />
+                    <input type="text" ref={resPerson} />
                   </div>
                   <div>
                     <span>Date:</span>
-                    <input type="date" />
+                    <input type="date" ref={revDate} />
                   </div>
                   <div>
                     <span>By:</span>
-                    <input type="text" />
+                    <input type="text" ref={revPerson} />
                   </div>
                   <div>
                     <span>Rev:</span>
-                    <input type="text" />
+                    <input type="text" ref={revId} />
                   </div>
                 </div>
                 <p className={classes.heading}>Material specification</p>
