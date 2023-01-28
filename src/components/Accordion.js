@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./Accordion.module.css";
 ///ICONS///
 import TasksIcon from "./icons/TasksIcon";
@@ -18,6 +18,7 @@ const Accordion = (props) => {
       .accordion;
 
     const target = targetStart.toLowerCase();
+    props.onClick();
     console.log(target);
 
     dispatch(globalActions.setTarget(target));
@@ -47,7 +48,7 @@ const Accordion = (props) => {
         onClick={liftTargetHandler}
       >
         <div className={classes.itemDescription}>
-          <DynamicComponent />
+          <DynamicComponent unit="2rem" />
           <span className={classes.mLeft}>{props.name}</span>
         </div>
       </div>

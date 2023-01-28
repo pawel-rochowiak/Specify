@@ -5,13 +5,17 @@
   padding: 5rem;
 }
 
+.data {
+  display: inline-block;
+}
+
 .sidebar {
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background-color: #fff;
-  width: fit-content;
+  width: 20%;
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
   box-shadow: 2px 0 8px #aeb5cc;
@@ -59,7 +63,7 @@
   justify-content: flex-start;
   align-content: flex-start;
   align-items: flex-start;
-  width: 80%;
+  width: 100%;
   gap: 2rem;
   background-color: #fcfcfc;
   padding: 5rem;
@@ -74,6 +78,21 @@
   padding: 3rem;
   position: relative;
   display: flex;
+
+  justify-content: center;
+}
+
+.user_initials {
+  width: fit-content;
+  padding: 2rem;
+  background-color: #85caf9;
+  border-radius: 50%;
+}
+
+.user_initials p {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .icon {
@@ -83,13 +102,13 @@
 .accordionContainer {
   position: relative;
   border-top: 1px solid #c7e7fc;
-  padding: 2rem 1rem 2rem 2rem;
+  padding: 2rem 0.5rem 2rem 2rem;
   height: 100%;
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 2rem;
-  font-size: 1.6rem;
+  gap: 1.5rem;
+  font-size: 1.3rem;
   color: #fff;
   text-transform: uppercase;
   overflow-y: scroll;

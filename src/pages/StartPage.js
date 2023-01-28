@@ -5,7 +5,6 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import classes from "./StartPage.module.css";
 //ICONS//
 import HomeIcon from "../components/icons/HomeIcon";
-import UserIcon from "../components/icons/UserIcon";
 //FORMS//
 import Accordion from "../components/Accordion";
 import NewAreaForm from "../components/forms/NewAreaForm";
@@ -15,15 +14,6 @@ import NewProjectForm from "../components/forms/NewProjectForm";
 import NewTaskForm from "../components/forms/NewTaskForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import SideMenuLinks from "../components/SideMenuLinks";
-//PAGES//
-import ProjectPage from "./ProjectsPage";
-import ProjectPageDetails from "./ProjectPageDetails";
-import SuppliersPage from "./SuppliersPage";
-import SuppliersPageDetails from "./SuppliersPageDetails";
-import LibraryPage from "./LibraryPage";
-import LibraryPageDetails from "./LibraryPageDetails";
-import TasksPage from "./TasksPage";
-import TasksPageDetails from "./TaskPageDetails";
 import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
 import { usersActions } from "../store/users-slice";
@@ -34,6 +24,7 @@ const StartPage = (props) => {
 
   const stateTarget = useSelector((state) => state.global.target);
   //State slices//
+  const stateUsers = useSelector((state) => state.users);
   const stateTasks = useSelector((state) => state.tasks);
   const stateProjects = useSelector((state) => state.projects);
   const stateSuppliers = useSelector((state) => state.suppliers);
@@ -45,8 +36,25 @@ const StartPage = (props) => {
   const [editItem, setEditItem] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [detailTarget, setDetailTarget] = useState("");
+  const [isHome, setIsHome] = useState(true);
 
-  console.log(data);
+  const userEmail = localStorage.getItem("login");
+
+  const { email, isLoggedIn, name, surname } = stateUsers.find(
+    (el) => el.email === userEmail
+  );
+
+  const isNotHomeHandler = () => {
+    setIsHome(false);
+    console.log("false");
+  };
+
+  const isHomeHandler = () => {
+    setIsHome(true);
+    console.log("trur");
+  };
+
+  const userInitials = `${name[0]}${surname[0]}`;
 
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
@@ -54,6 +62,11 @@ const StartPage = (props) => {
     setIsFormVisible(true);
     setEditItem(itemProps);
   };
+
+  // const homeSetHandler = () => {
+  //   setDetailTarget("");
+  //   setData("home");
+  // };
 
   const addNewTaskHandler = () => {
     setIsFormVisible(true);
@@ -89,13 +102,6 @@ const StartPage = (props) => {
     if (target.includes("/projects/p")) {
       setDetailTarget(["detailProject", target.split("/").at(-1)]);
     }
-  };
-
-  const componentNames = {
-    tasks: TasksPage,
-    projects: ProjectPage,
-    suppliers: SuppliersPage,
-    library: LibraryPage,
   };
 
   //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
@@ -186,7 +192,9 @@ const StartPage = (props) => {
       <div className={classes.container}>
         <div className={classes.sidebar}>
           <div className={classes.user}>
-            <UserIcon className={classes.icon} size="12rem" />
+            <div className={classes.user_initials}>
+              <p>{userInitials}</p>
+            </div>
             <Link to="/" onClick={logoutHandler}>
               <LogOutIcon size="2.5rem" />
             </Link>
@@ -194,28 +202,45 @@ const StartPage = (props) => {
           <div className={classes.accordionContainer}>
             <NavLink
               to="/home"
+              onClick={isHomeHandler}
               className={({ isActive }) =>
                 isActive ? classes.active : classes.accordionItem
               }
               end
             >
-              <div data-accordion={props.data}>
+              <div data-accordion="home">
                 <div className={classes.itemDescription}>
                   <HomeIcon unit="2rem" />
                   <span className={classes.mLeft}>Home</span>
                 </div>
               </div>
             </NavLink>
-            <Accordion name="Tasks" data="Tasks" />
-            <Accordion name="Projects" data="Projects" />
-            <Accordion name="Suppliers" data="Suppliers" />
-            <Accordion name="Library" data="Library" />
+            <Accordion name="Tasks" data="Tasks" onClick={isNotHomeHandler} />
+            <Accordion
+              name="Projects"
+              data="Projects"
+              onClick={isNotHomeHandler}
+            />
+            <Accordion
+              name="Suppliers"
+              data="Suppliers"
+              onClick={isNotHomeHandler}
+            />
+            <Accordion
+              name="Library"
+              data="Library"
+              onClick={isNotHomeHandler}
+            />
           </div>
         </div>
-        <SideMenuLinks
-          targetActivation={targetActivationHandler}
-          links={routerLinks}
-        />
+        {isHome === false ? (
+          <SideMenuLinks
+            targetActivation={targetActivationHandler}
+            links={routerLinks}
+          />
+        ) : (
+          ""
+        )}
 
         <div className={classes.mainContent}>
           <Outlet

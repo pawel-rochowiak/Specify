@@ -1,11 +1,12 @@
 const HomeIcon = (props) => {
+  const viewBox = parseFloat(props.unit) * 10;
   return (
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       width={props.unit}
       height={props.unit}
-      viewBox="0 0 20 20"
+      viewBox={`0 0 ${viewBox} ${viewBox}`}
     >
       <title>home</title>
       <path

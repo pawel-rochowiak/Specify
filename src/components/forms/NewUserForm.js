@@ -29,6 +29,8 @@ const NewUserForm = (props) => {
     const enteredPassword = passwordInputRef.current.value;
     const enteredName = nameInputRef.current.value;
     const enteredSurname = surnameInputRef.current.value;
+    const enteredNameFirstLtr = nameInputRef.current.value[0];
+    const enteredSurnameFirstLtr = surnameInputRef.current.value[0];
 
     setIsLoading(true);
 
@@ -66,6 +68,7 @@ const NewUserForm = (props) => {
           usersActions.addUser({
             name: enteredName,
             surname: enteredSurname,
+            initials: `${enteredNameFirstLtr}${enteredSurnameFirstLtr}`,
             token: "",
             email: data.email,
             isLoggedIn: false,

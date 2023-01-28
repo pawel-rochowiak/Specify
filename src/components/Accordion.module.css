@@ -66,6 +66,7 @@
 }
 
 .data {
+  display: inline-block;
 }
 /* .label {
   position: absolute;
