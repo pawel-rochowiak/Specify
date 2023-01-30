@@ -78,23 +78,24 @@ const tasksSlice = createSlice({
         name: `${action.payload.task} - ${action.payload.name}`,
         area: `${action.payload.area}`,
         path: `t${state.length + 1}`,
-        dk: "5",
-        fireZone: "1",
+        dk: action.payload.dk,
+        fireZone: action.payload.fz,
         project: action.payload.name,
         number: action.payload.number,
-        specification: "Carpet",
-        team: action.payload.team,
+        specification: action.payload.task,
+        resPerson: action.payload.resPerson,
         date: action.payload.date,
-        status: "0%",
       });
     },
     editTask(state, action) {
       state[action.payload.taskIndex].name = action.payload.task;
       state[action.payload.taskIndex].project = action.payload.name;
       state[action.payload.taskIndex].number = action.payload.number;
+      state[action.payload.taskIndex].dk = action.payload.dk;
+      state[action.payload.taskIndex].fz = action.payload.fz;
       state[action.payload.taskIndex].area = action.payload.area;
       state[action.payload.taskIndex].date = action.payload.date;
-      state[action.payload.taskIndex].team = action.payload.team;
+      // state[action.payload.taskIndex].team = action.payload.team;
     },
     deleteTask(state, action) {
       state.splice(action.payload, 1);

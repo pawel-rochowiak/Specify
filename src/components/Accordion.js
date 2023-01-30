@@ -19,7 +19,6 @@ const Accordion = (props) => {
 
     const target = targetStart.toLowerCase();
     props.onClick();
-    console.log(target);
 
     dispatch(globalActions.setTarget(target));
   };

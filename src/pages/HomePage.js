@@ -13,21 +13,21 @@ const HomePage = (props) => {
         <div className={classes.name}>Current tasks</div>
         <div className={classes.categoriesTask}>
           <div>Project</div>
-          <div>Subject</div>
-          <div>Team</div>
+          <div>Venue</div>
+          <div>Type</div>
           <div>Date</div>
-          <div>Status</div>
+          <div>Assigned User</div>
         </div>
         <div className={classes.taskList}>
           {stateTasks.map((el, index) => {
             return (
               <Task
                 key={el.path}
+                venue={el.area}
                 name={el.project}
-                team={el.team}
-                task={el.name}
+                person={el.resPerson}
+                task={el.specification}
                 date={el.date}
-                status={el.status}
                 disabled={true}
               />
             );

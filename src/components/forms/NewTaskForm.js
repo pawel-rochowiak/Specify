@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { tasksActions } from "../../store/tasks-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
@@ -11,8 +11,18 @@ const NewTaskForm = (props) => {
   const [enteredAreaName, setEnteredAreaName] = useState("");
   const [enteredNumber, setEnteredNumber] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
-  const [enteredTeam, setEnteredTeam] = useState("");
+  // const [enteredTeam, setEnteredTeam] = useState("");
   const [enteredTaskName, setEnteredTaskName] = useState("");
+  const [enteredDeck, setEnteredDeck] = useState("");
+  const [enteredFz, setEnteredFz] = useState("");
+
+  const stateUsers = useSelector((state) => state.users);
+  //User risponsible for the task
+  const userEmail = localStorage.getItem("login");
+  const { email, isLoggedIn, name, surname } = stateUsers.find(
+    (el) => el.email === userEmail
+  );
+  const userInitials = `${name[0]}${surname[0]}`;
 
   console.log(props);
 
@@ -37,8 +47,15 @@ const NewTaskForm = (props) => {
     setEnteredDate(event.target.value);
   };
 
-  const teamInputChangeHandler = (event) => {
-    setEnteredTeam(event.target.value);
+  // const teamInputChangeHandler = (event) => {
+  //   setEnteredTeam(event.target.value);
+  // };
+
+  const deckInputChangeHandler = (event) => {
+    setEnteredDeck(event.target.value);
+  };
+  const fzInputChangeHandler = (event) => {
+    setEnteredFz(event.target.value);
   };
 
   const taskInputChangeHandler = (event) => {
@@ -52,7 +69,8 @@ const NewTaskForm = (props) => {
       enteredName.trim() === "" ||
       enteredNumber.trim() === "" ||
       enteredDate.trim() === "" ||
-      enteredTeam.trim() === "" ||
+      enteredDeck.trim() === "" ||
+      enteredFz.trim() === "" ||
       enteredAreaName.trim() === ""
     ) {
       console.log("empty");
@@ -68,7 +86,10 @@ const NewTaskForm = (props) => {
           name: enteredName,
           area: enteredAreaName,
           date: enteredDate,
-          team: enteredTeam,
+          resPerson: userInitials,
+          dk: enteredDeck,
+          fz: enteredFz,
+          // team: enteredTeam,
           number: enteredNumber,
           taskIndex,
         })
@@ -80,7 +101,10 @@ const NewTaskForm = (props) => {
           name: enteredName,
           area: enteredAreaName,
           date: enteredDate,
-          team: enteredTeam,
+          resPerson: userInitials,
+          dk: enteredDeck,
+          fz: enteredFz,
+          // team: enteredTeam,
           number: enteredNumber,
         })
       );
@@ -90,7 +114,9 @@ const NewTaskForm = (props) => {
     setEnteredAreaName("");
     setEnteredNumber("");
     setEnteredDate("");
-    setEnteredTeam("");
+    // setEnteredTeam("");
+    setEnteredDeck("");
+    setEnteredFz("");
 
     props.onExit();
   };
@@ -128,6 +154,24 @@ const NewTaskForm = (props) => {
         </div>
         <div className={classes.formGroup}>
           <input
+            type="number"
+            id="deck"
+            onChange={deckInputChangeHandler}
+            value={enteredDeck}
+          ></input>
+          <p className={classes.description}>Deck</p>
+        </div>
+        <div className={classes.formGroup}>
+          <input
+            type="number"
+            id="fire zone"
+            onChange={fzInputChangeHandler}
+            value={enteredFz}
+          ></input>
+          <p className={classes.description}>Fire zone</p>
+        </div>
+        <div className={classes.formGroup}>
+          <input
             type="text"
             id="number"
             onChange={numberInputChangeHandler}
@@ -144,7 +188,7 @@ const NewTaskForm = (props) => {
           ></input>
           <p className={classes.description}>Delivery date</p>
         </div>
-        <div className={classes.formGroup}>
+        {/* <div className={classes.formGroup}>
           <input
             type="text"
             id="team"
@@ -152,7 +196,7 @@ const NewTaskForm = (props) => {
             value={enteredTeam}
           ></input>
           <p className={classes.description}>Team</p>
-        </div>
+        </div> */}
 
         <button type="submit">submit</button>
       </form>

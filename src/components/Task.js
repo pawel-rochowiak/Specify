@@ -3,7 +3,7 @@ import classes from "./Task.module.css";
 import WarningIcon from "../components/icons/WarningIcon";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 
 const Task = (props) => {
@@ -49,8 +49,8 @@ const Task = (props) => {
         ""
       )}
       <div className={classes.projectName}>{props.name}</div>
+      <div className={classes.projectTeam}>{props.venue}</div>
       <div className={classes.projectTask}>{props.task}</div>
-      <div className={classes.projectTeam}>{props.team}</div>
       <div className={dateClasses}>
         {props.date}
         {isFinished ? (
@@ -61,7 +61,10 @@ const Task = (props) => {
           ""
         )}
       </div>
-      <div className={classes.projectStatus}>{props.status}</div>
+      {/* <div className={classes.projectStatus}>{props.status}</div> */}
+      <div className={classes.projectResponsible}>
+        <p className={classes.resPerson}>{props.person}</p>
+      </div>
       {!props.disabled ? (
         <div className={classes.delete} onClick={targetDeleteHandler}>
           <CloseIcon />

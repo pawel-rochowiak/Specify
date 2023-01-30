@@ -30,6 +30,17 @@
   align-items: center;
 }
 
+.resPerson {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #85caf9;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  height: 100%;
+}
+
 .task :not(div:first-of-type) {
   border-left: 1px solid #c7e7fc;
 }

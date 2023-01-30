@@ -18,19 +18,19 @@ const TasksPage = (props) => {
         <div className={classes.name}>Current tasks</div>
         <div className={classes.categoriesTask}>
           <div>Project</div>
-          <div>Subject</div>
-          <div>Team</div>
+          <div>Venue</div>
+          <div>Type</div>
           <div>Date</div>
-          <div>Status</div>
+          <div>Assigned User</div>
         </div>
         <div className={classes.taskList}>
           {stateTasks.map((el, index) => (
             <Task
               key={el.path}
               name={el.project}
-              area={el.area}
+              venue={el.area}
               number={el.number}
-              team={el.team}
+              person={el.resPerson}
               task={el.specification}
               date={el.date}
               status={el.status}
