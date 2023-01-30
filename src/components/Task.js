@@ -61,7 +61,6 @@ const Task = (props) => {
           ""
         )}
       </div>
-      {/* <div className={classes.projectStatus}>{props.status}</div> */}
       <div className={classes.projectResponsible}>
         <p className={classes.resPerson}>{props.person}</p>
       </div>

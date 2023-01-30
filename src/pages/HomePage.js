@@ -1,7 +1,6 @@
 import classes from "./StartPage.module.css";
 import Task from "../components/Task";
 import { useSelector } from "react-redux";
-// import Message from "../components/Message";
 import { Fragment } from "react";
 
 const HomePage = (props) => {

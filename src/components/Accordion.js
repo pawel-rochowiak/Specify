@@ -12,8 +12,6 @@ import { useDispatch } from "react-redux";
 const Accordion = (props) => {
   const dispatch = useDispatch();
   const liftTargetHandler = (event) => {
-    // event.preventDefault();
-
     const targetStart = event.target.closest("div[class*='data']").dataset
       .accordion;
 

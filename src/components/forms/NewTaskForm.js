@@ -11,7 +11,6 @@ const NewTaskForm = (props) => {
   const [enteredAreaName, setEnteredAreaName] = useState("");
   const [enteredNumber, setEnteredNumber] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
-  // const [enteredTeam, setEnteredTeam] = useState("");
   const [enteredTaskName, setEnteredTaskName] = useState("");
   const [enteredDeck, setEnteredDeck] = useState("");
   const [enteredFz, setEnteredFz] = useState("");
@@ -46,10 +45,6 @@ const NewTaskForm = (props) => {
   const dateInputChangeHandler = (event) => {
     setEnteredDate(event.target.value);
   };
-
-  // const teamInputChangeHandler = (event) => {
-  //   setEnteredTeam(event.target.value);
-  // };
 
   const deckInputChangeHandler = (event) => {
     setEnteredDeck(event.target.value);
@@ -89,7 +84,6 @@ const NewTaskForm = (props) => {
           resPerson: userInitials,
           dk: enteredDeck,
           fz: enteredFz,
-          // team: enteredTeam,
           number: enteredNumber,
           taskIndex,
         })
@@ -104,7 +98,6 @@ const NewTaskForm = (props) => {
           resPerson: userInitials,
           dk: enteredDeck,
           fz: enteredFz,
-          // team: enteredTeam,
           number: enteredNumber,
         })
       );
@@ -114,7 +107,6 @@ const NewTaskForm = (props) => {
     setEnteredAreaName("");
     setEnteredNumber("");
     setEnteredDate("");
-    // setEnteredTeam("");
     setEnteredDeck("");
     setEnteredFz("");
 
@@ -188,15 +180,6 @@ const NewTaskForm = (props) => {
           ></input>
           <p className={classes.description}>Delivery date</p>
         </div>
-        {/* <div className={classes.formGroup}>
-          <input
-            type="text"
-            id="team"
-            onChange={teamInputChangeHandler}
-            value={enteredTeam}
-          ></input>
-          <p className={classes.description}>Team</p>
-        </div> */}
 
         <button type="submit">submit</button>
       </form>

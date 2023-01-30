@@ -46,12 +46,10 @@ const StartPage = (props) => {
 
   const isNotHomeHandler = () => {
     setIsHome(false);
-    console.log("false");
   };
 
   const isHomeHandler = () => {
     setIsHome(true);
-    console.log("trur");
   };
 
   const userInitials = `${name[0]}${surname[0]}`;
@@ -62,11 +60,6 @@ const StartPage = (props) => {
     setIsFormVisible(true);
     setEditItem(itemProps);
   };
-
-  // const homeSetHandler = () => {
-  //   setDetailTarget("");
-  //   setData("home");
-  // };
 
   const addNewTaskHandler = () => {
     setIsFormVisible(true);
