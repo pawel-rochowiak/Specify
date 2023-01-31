@@ -1,3 +1,4 @@
+// import { getStorage } from "firebase/storage";
 import classes from "./ProjectPageDetails.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
@@ -9,7 +10,7 @@ import { Fragment, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const TaskPageDetails = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,20 @@ const TaskPageDetails = () => {
   const areaName = element.area.toUpperCase();
   const specType = element.name.split("-")[0];
 
+  const dataBaseMaterials = element.materials;
+  const localDataMaterials = JSON.parse(
+    localStorage.getItem(`${projectName}-${areaName}`)
+  );
+
+  console.log(dataBaseMaterials, localDataMaterials);
+
   const resPerson = useRef();
   const revDate = useRef();
   const revPerson = useRef();
   const revId = useRef();
   const yardNumber = useRef();
 
+  console.log(taskIndex);
   //const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
 
   //add new modal only for this detail page
@@ -128,6 +137,9 @@ const TaskPageDetails = () => {
   };
 
   const [materialsArr, setMaterialArr] = useState([]);
+
+  // if (data.length > 0) setMaterialArr(data);
+  // if (data.length === 0) setMaterialArr(element.materials);
 
   //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 

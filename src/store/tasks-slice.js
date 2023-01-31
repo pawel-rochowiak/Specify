@@ -77,7 +77,7 @@ const tasksSlice = createSlice({
       state.push({
         name: `${action.payload.task} - ${action.payload.name}`,
         area: `${action.payload.area}`,
-        path: `t${state.length + 1}`,
+        path: `t${state.length}`,
         dk: action.payload.dk,
         fireZone: action.payload.fz,
         project: action.payload.name,

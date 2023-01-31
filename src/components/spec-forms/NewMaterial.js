@@ -5,6 +5,9 @@ import EditIcon from "../icons/EditIcon";
 import Modal from "../../UI/Modal";
 import { Fragment, useState, useRef } from "react";
 import { useSelector } from "react-redux";
+import { storage } from "../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
@@ -17,9 +20,11 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
-  const [materialInputType, setMaterialInputType] = useState(props.checkProps);
+  // const [materialInputType, setMaterialInputType] = useState(props.checkProps);
   const [formInputType, setFormInputType] = useState("default");
   const [selectedMaterial, setSelectedMaterial] = useState(false);
+  //State for keeping the image
+  const [imageUpload, setImageUpload] = useState(null);
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
@@ -47,6 +52,7 @@ const NewMaterial = (props) => {
 
   const pictureInputChangeHandler = (event) => {
     setEnteredTaskPicture(event.target.value);
+    setImageUpload(event.target.files[0]);
   };
 
   const materialTypeConfirmHandler = (event) => {
@@ -59,6 +65,16 @@ const NewMaterial = (props) => {
     event.preventDefault();
     // setMaterialInputType(false);
     setFormInputType("entered");
+  };
+
+  //Fn for uploading image to Firebase
+  //add code material for better image identification
+  const uploadImage = (event) => {
+    if (imageUpload === null) return;
+    const imgRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    uploadBytes(imgRef, imageUpload).then(() => {
+      alert("image uploaded");
+    });
   };
 
   const formSubmissionHandler = (event) => {
@@ -103,10 +119,11 @@ const NewMaterial = (props) => {
       props.getChecked(!checked);
     } else {
       // <Modal message={messageInput} />;
-      console.log(props);
+      // console.log(props);
       // props.modalOpen();
-      // console.log("empty");
+      console.log("empty");
     }
+    uploadImage();
   };
 
   let formInputClasses2;
