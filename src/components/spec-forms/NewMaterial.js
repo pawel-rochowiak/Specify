@@ -121,8 +121,8 @@ const NewMaterial = (props) => {
       // props.modalOpen();
       console.log("empty");
     }
-    testHandler();
-    // uploadImage();
+
+    uploadImage();
   };
 
   const testHandler = () => {
@@ -234,7 +234,7 @@ const NewMaterial = (props) => {
 
   const materialDropdownJSX = (
     <div className={classes.materialInput_dropdown}>
-      <select ref={pickedMaterial}>
+      <select ref={pickedMaterial} onChange={testHandler}>
         <option disabled selected value>
           {" "}
           Select material
