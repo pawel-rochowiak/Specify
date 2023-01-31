@@ -35,8 +35,6 @@ const TaskPageDetails = () => {
     localStorage.getItem(`${projectName}-${areaName}`)
   );
 
-  console.log(dataBaseMaterials, localDataMaterials);
-
   const resPerson = useRef();
   const revDate = useRef();
   const revPerson = useRef();
@@ -167,7 +165,7 @@ const TaskPageDetails = () => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
-          // modalOpen={addNewTaskHandler}
+
           // modalClose={closeNewTaskForm}
         />,
       ];

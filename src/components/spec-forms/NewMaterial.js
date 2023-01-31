@@ -25,10 +25,9 @@ const NewMaterial = (props) => {
   const [selectedMaterial, setSelectedMaterial] = useState(false);
   //State for keeping the image
   const [imageUpload, setImageUpload] = useState(null);
+  //Other
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
-
-  console.log(materialState);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -57,13 +56,11 @@ const NewMaterial = (props) => {
 
   const materialTypeConfirmHandler = (event) => {
     event.preventDefault();
-    // setMaterialInputType(true);
     setFormInputType("picked");
   };
 
   const materialTypeDenyHandler = (event) => {
     event.preventDefault();
-    // setMaterialInputType(false);
     setFormInputType("entered");
   };
 
@@ -71,7 +68,10 @@ const NewMaterial = (props) => {
   //add code material for better image identification
   const uploadImage = (event) => {
     if (imageUpload === null) return;
-    const imgRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    const imgRef = ref(
+      storage,
+      `images/${enteredCode}-${imageUpload.name + v4()}`
+    );
     uploadBytes(imgRef, imageUpload).then(() => {
       alert("image uploaded");
     });
@@ -88,8 +88,6 @@ const NewMaterial = (props) => {
       date: enteredTaskDate,
       picture: enteredTaskPicture,
     };
-
-    console.log("clicked");
 
     const arrIndex = +event.target.dataset.order;
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
@@ -123,7 +121,18 @@ const NewMaterial = (props) => {
       // props.modalOpen();
       console.log("empty");
     }
-    uploadImage();
+    testHandler();
+    // uploadImage();
+  };
+
+  const testHandler = () => {
+    const [categoryIndex, materialIndex] = pickedMaterial.current.value.split(
+      ","
+    );
+    const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
+    setSelectedMaterial(true);
+    setEnteredDescription(selectedMat.info);
+    setFormInputType("entered");
   };
 
   let formInputClasses2;
@@ -141,9 +150,17 @@ const NewMaterial = (props) => {
   if (formInputType === "picked")
     formInputClasses2 = `${classes.info_materials__type}`;
 
+  // const materialAddHandler = (props) => {
+  //   console.log(props);
+  //   //add a pointer to the material arrays so they could be filled as the form is accepted instead of adding new material
+  // };
+
   const inputFormMarkup = (
     <Fragment>
-      <button className={`${classes.button} btnMatForm`}>
+      <button
+        className={`${classes.button} btnMatForm`}
+        // onClick={materialAddHandler}
+      >
         {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
       </button>
       <div className={classes.info_materials__detail}>
@@ -215,19 +232,9 @@ const NewMaterial = (props) => {
     </div>
   );
 
-  const testHandler = () => {
-    const [categoryIndex, materialIndex] = pickedMaterial.current.value.split(
-      ","
-    );
-    const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
-    setSelectedMaterial(true);
-    setEnteredDescription(selectedMat.info);
-    setFormInputType("entered");
-  };
-
   const materialDropdownJSX = (
     <div className={classes.materialInput_dropdown}>
-      <select ref={pickedMaterial} onChange={testHandler}>
+      <select ref={pickedMaterial}>
         <option disabled selected value>
           {" "}
           Select material
