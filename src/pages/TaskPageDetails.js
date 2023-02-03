@@ -6,7 +6,7 @@ import MinusIcon from "../components/icons/MinusIcon";
 import WordIcon from "../components/icons/WordIcon";
 import SaveIcon from "../components/icons/SaveIcon";
 import ArrowDown from "../components/icons/DownArrow";
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
@@ -139,6 +139,23 @@ const TaskPageDetails = () => {
   // if (data.length > 0) setMaterialArr(data);
   // if (data.length === 0) setMaterialArr(element.materials);
 
+  const [checkedMaterial, setCheckedMaterial] = useState(false);
+
+  const addCheckedMaterialToArrays = () => {
+    setCheckedMaterial(true);
+    localStorage.setItem(
+      `${projectName}-${areaName}`,
+      JSON.stringify(specMatArr)
+    );
+  };
+
+  useEffect(() => {
+    addCheckedMaterialToArrays();
+    // console.log("spec mat arr chainged");
+  }, [specMatArr, addCheckedMaterialToArrays]);
+
+  console.log(checkedMaterial);
+
   //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
   const addNewMaterialHandler = () => {
@@ -165,15 +182,12 @@ const TaskPageDetails = () => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
-
+          materialToLocalStorage={addCheckedMaterialToArrays}
           // modalClose={closeNewTaskForm}
         />,
       ];
     });
-    localStorage.setItem(
-      `${projectName}-${areaName}`,
-      JSON.stringify(specMatArr)
-    );
+
     setIndex(index + 1);
   };
 

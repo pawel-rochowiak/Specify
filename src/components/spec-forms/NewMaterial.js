@@ -65,7 +65,6 @@ const NewMaterial = (props) => {
   };
 
   //Fn for uploading image to Firebase
-  //add code material for better image identification
   const uploadImage = (event) => {
     if (imageUpload === null) return;
     const imgRef = ref(
@@ -121,7 +120,6 @@ const NewMaterial = (props) => {
       // props.modalOpen();
       console.log("empty");
     }
-
     uploadImage();
   };
 
@@ -159,7 +157,7 @@ const NewMaterial = (props) => {
     <Fragment>
       <button
         className={`${classes.button} btnMatForm`}
-        // onClick={materialAddHandler}
+        onClick={props.checkMaterial}
       >
         {!checked ? <CheckIcon size="2.5rem" /> : <EditIcon size="2.5rem" />}
       </button>

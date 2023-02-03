@@ -78,7 +78,7 @@ function App() {
         { method: "PUT", body: JSON.stringify(store) }
       );
       if (!response.ok) {
-        throw new Error("sending cart date failed");
+        throw new Error("Sending data failed!");
       }
     };
 
