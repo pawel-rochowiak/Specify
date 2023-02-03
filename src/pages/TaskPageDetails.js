@@ -41,30 +41,6 @@ const TaskPageDetails = () => {
   const revId = useRef();
   const yardNumber = useRef();
 
-  console.log(taskIndex);
-  //const [_, addNewTaskHandler, closeNewTaskForm] = useOutletContext();
-
-  //add new modal only for this detail page
-
-  // setIsFormVisible(true);
-  // const addNewTaskHandler = () => {
-  //    setIsFormVisible(true);
-  //  };
-  //  const closeNewTaskForm = () => {
-  //    setIsFormVisible(false);
-  //  };
-  // if (stateTarget === "tasks") {
-  //    TargetForm = (
-  //      <NewTaskForm
-  //        onClick={addNewTaskHandler}
-  //        onExit={closeNewTaskForm}
-  //        editing={isEditing === true ? isEditing : false}
-  //        itemToEdit={isEditing === true ? editIndex : ""}
-  //      />
-  //    );
-  //  }
-  // {isFormVisible ? TargetForm : ""}
-
   const propsArrLength1 = [
     ["project", projectName],
     ["venue", areaName],
@@ -136,9 +112,6 @@ const TaskPageDetails = () => {
 
   const [materialsArr, setMaterialArr] = useState([]);
 
-  // if (data.length > 0) setMaterialArr(data);
-  // if (data.length === 0) setMaterialArr(element.materials);
-
   const [checkedMaterial, setCheckedMaterial] = useState(false);
 
   const addCheckedMaterialToArrays = () => {
@@ -151,12 +124,7 @@ const TaskPageDetails = () => {
 
   useEffect(() => {
     addCheckedMaterialToArrays();
-    // console.log("spec mat arr chainged");
   }, [specMatArr, addCheckedMaterialToArrays]);
-
-  console.log(checkedMaterial);
-
-  //Dane z newMaterial potem do nowego ARR -> do bazy przy tasku & do local storage-> przy ladowaniu pobranie z local czy bazy? local szybciej
 
   const addNewMaterialHandler = () => {
     const btnArr = document.querySelectorAll(".btnMatForm");
@@ -182,7 +150,6 @@ const TaskPageDetails = () => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
-          materialToLocalStorage={addCheckedMaterialToArrays}
           // modalClose={closeNewTaskForm}
         />,
       ];
@@ -202,11 +169,6 @@ const TaskPageDetails = () => {
       `${projectName}-${areaName}`,
       JSON.stringify(specMatArr)
     );
-
-    // to be deleted
-
-    //const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
-    // console.log(data);
   };
 
   const sendSpecificationDataHandler = () => {

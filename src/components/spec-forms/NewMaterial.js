@@ -148,11 +148,6 @@ const NewMaterial = (props) => {
   if (formInputType === "picked")
     formInputClasses2 = `${classes.info_materials__type}`;
 
-  // const materialAddHandler = (props) => {
-  //   console.log(props);
-  //   //add a pointer to the material arrays so they could be filled as the form is accepted instead of adding new material
-  // };
-
   const inputFormMarkup = (
     <Fragment>
       <button
