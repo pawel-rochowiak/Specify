@@ -69,7 +69,9 @@ const NewMaterial = (props) => {
     if (imageUpload === null) return;
     const imgRef = ref(
       storage,
-      `images/${enteredCode}-${imageUpload.name + v4()}`
+      `images/${props.project}/${props.area}/${enteredCode}-${
+        imageUpload.name + v4()
+      }`
     );
     uploadBytes(imgRef, imageUpload).then(() => {
       alert("image uploaded");

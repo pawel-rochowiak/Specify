@@ -20,6 +20,13 @@ const TaskPageDetails = () => {
 
   let stateTasks = useSelector((state) => state.tasks);
 
+  const [index, setIndex] = useState(0);
+  const [specMatArr, setSpecMatArr] = useState([]);
+  const [formChecked, setFormChecked] = useState(false);
+  const [materialsArr, setMaterialArr] = useState([]);
+  const [dataSource, setDataSource] = useState("");
+  const [checkedMaterial, setCheckedMaterial] = useState(false);
+
   const element = stateTasks.find((el) => el.path === path);
 
   const taskIndex = element.path.split("")[1];
@@ -30,10 +37,7 @@ const TaskPageDetails = () => {
   const areaName = element.area.toUpperCase();
   const specType = element.name.split("-")[0];
 
-  const dataBaseMaterials = element.materials;
-  const localDataMaterials = JSON.parse(
-    localStorage.getItem(`${projectName}-${areaName}`)
-  );
+  //Set reference for the required inputs
 
   const resPerson = useRef();
   const revDate = useRef();
@@ -48,6 +52,8 @@ const TaskPageDetails = () => {
     ["fz", fireZone],
   ];
 
+  //Getting current date to compare it to the deadline for each task, helps to render outdated tasks
+
   const date = new Date();
   const [day, month, year] = [
     date.getDay(),
@@ -55,9 +61,25 @@ const TaskPageDetails = () => {
     date.getFullYear(),
   ];
 
-  const [index, setIndex] = useState(0);
-  const [specMatArr, setSpecMatArr] = useState([]);
-  const [formChecked, setFormChecked] = useState(false);
+  //Condition to set data source, is it from DataBase or LocalStorage
+
+  const dataBaseMaterials = element.materials;
+  const localDataMaterials = JSON.parse(
+    localStorage.getItem(`${projectName}-${areaName}`)
+  );
+
+  //jak strona sie otwiera moze sciagac dane z bazy i zapisywac jako setSpecMatArr
+  //jak danych z bazy nie ma to specmat jest []
+  //jak jest cos to set jako database materials
+
+  useEffect(() => {
+    if (dataBaseMaterials.length > 0) {
+      setSpecMatArr(dataBaseMaterials);
+      console.log("run once");
+    }
+  }, []);
+
+  //Pushing & removing data into material arrays. This array contains material objects with data
 
   const getDataHanlder = (data) => {
     setSpecMatArr((prevState) => {
@@ -110,10 +132,6 @@ const TaskPageDetails = () => {
     );
   };
 
-  const [materialsArr, setMaterialArr] = useState([]);
-
-  const [checkedMaterial, setCheckedMaterial] = useState(false);
-
   const addCheckedMaterialToArrays = () => {
     setCheckedMaterial(true);
     localStorage.setItem(
@@ -150,10 +168,14 @@ const TaskPageDetails = () => {
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
+          project={projectName}
+          area={areaName}
           // modalClose={closeNewTaskForm}
         />,
       ];
     });
+
+    console.log(materialsArr);
 
     setIndex(index + 1);
   };
