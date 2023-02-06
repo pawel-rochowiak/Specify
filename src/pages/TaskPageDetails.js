@@ -75,7 +75,22 @@ const TaskPageDetails = () => {
   useEffect(() => {
     if (dataBaseMaterials.length > 0) {
       setSpecMatArr(dataBaseMaterials);
-      console.log("run once");
+      setMaterialArr(
+        dataBaseMaterials.map((el) => (
+          <NewMaterial
+            key={index}
+            data={index}
+            getData={getDataHanlder}
+            replaceData={replaceDataHandler}
+            getChecked={getCheckedHandler}
+            getMatChecked={getMatCheckedHandler}
+            checkProps={true}
+            project={projectName}
+            area={areaName}
+            dataObj={el}
+          />
+        ))
+      );
     }
   }, []);
 

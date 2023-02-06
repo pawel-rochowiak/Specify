@@ -3,7 +3,7 @@ import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
 import Modal from "../../UI/Modal";
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { storage } from "../../firebase";
 import { ref, uploadBytes } from "firebase/storage";
@@ -28,6 +28,19 @@ const NewMaterial = (props) => {
   //Other
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
+
+  useEffect(() => {
+    if (props.dataObj) {
+      setFormInputType("entered");
+      setChecked(true);
+      setEnteredCode(props.dataObj.number);
+      setEnteredItem(props.dataObj.item);
+      setEnteredDescription(props.dataObj.description);
+      setEnteredSupplier(props.dataObj.supplier);
+      setEnteredTaskDate(props.dataObj.date);
+      // setEnteredTaskPicture(props.dataObj.picture);
+    }
+  }, []);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -62,6 +75,7 @@ const NewMaterial = (props) => {
   const materialTypeDenyHandler = (event) => {
     event.preventDefault();
     setFormInputType("entered");
+    setChecked(false);
   };
 
   //Fn for uploading image to Firebase
@@ -94,10 +108,19 @@ const NewMaterial = (props) => {
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
     props.getMatChecked(checkedMat, arrIndex, props.checkProps);
 
-    if (currentIndex !== arrIndex) props.getData(data);
+    if (
+      currentIndex !== arrIndex &&
+      enteredCode !== "" &&
+      enteredItem !== "" &&
+      enteredDescription !== "" &&
+      enteredSupplier !== "" &&
+      enteredTaskDate !== "" &&
+      enteredTaskPicture !== ""
+    ) {
+      props.getData(data);
+      setCurrentIndex(arrIndex);
+    }
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
-
-    setCurrentIndex(arrIndex);
 
     const messageInput = (
       <div>
@@ -164,6 +187,7 @@ const NewMaterial = (props) => {
             type="number"
             disabled={!checked ? false : true}
             onChange={codeInputChangeHandler}
+            value={enteredCode}
           />
         </div>
         <div className={classes.item}>
