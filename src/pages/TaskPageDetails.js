@@ -21,13 +21,18 @@ const TaskPageDetails = () => {
   let stateTasks = useSelector((state) => state.tasks);
 
   const [index, setIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState(false);
   const [materialsArr, setMaterialArr] = useState([]);
-  const [dataSource, setDataSource] = useState("");
+  // const [dataSource, setDataSource] = useState("");
   const [checkedMaterial, setCheckedMaterial] = useState(false);
 
+  //Picking right task using params to match the task path
+
   const element = stateTasks.find((el) => el.path === path);
+
+  //Using retreived element to get project data
 
   const taskIndex = element.path.split("")[1];
   const projectNumber = element.number;
@@ -64,19 +69,12 @@ const TaskPageDetails = () => {
   //Condition to set data source, is it from DataBase or LocalStorage
 
   const dataBaseMaterials = element.materials;
-  const localDataMaterials = JSON.parse(
-    localStorage.getItem(`${projectName}-${areaName}`)
-  );
-
-  //jak strona sie otwiera moze sciagac dane z bazy i zapisywac jako setSpecMatArr
-  //jak danych z bazy nie ma to specmat jest []
-  //jak jest cos to set jako database materials
 
   useEffect(() => {
     if (dataBaseMaterials.length > 0) {
       setSpecMatArr(dataBaseMaterials);
       setMaterialArr(
-        dataBaseMaterials.map((el) => (
+        dataBaseMaterials.map((el, index) => (
           <NewMaterial
             key={index}
             data={index}
@@ -92,6 +90,7 @@ const TaskPageDetails = () => {
         ))
       );
     }
+    setCounter(dataBaseMaterials.length);
   }, []);
 
   //Pushing & removing data into material arrays. This array contains material objects with data
@@ -173,11 +172,12 @@ const TaskPageDetails = () => {
 
     setMaterialArr((prevState) => {
       setFormChecked(true);
+      setCounter(counter + 1);
       return [
         ...prevState,
         <NewMaterial
-          key={index}
-          data={index}
+          key={counter}
+          data={counter}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
           getChecked={getCheckedHandler}

@@ -12,6 +12,7 @@ import { v4 } from "uuid";
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
 const NewMaterial = (props) => {
+  const [initDataBase, setInitDataBase] = useState(true);
   const [enteredCode, setEnteredCode] = useState("");
   const [enteredItem, setEnteredItem] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
@@ -20,7 +21,6 @@ const NewMaterial = (props) => {
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
-  // const [materialInputType, setMaterialInputType] = useState(props.checkProps);
   const [formInputType, setFormInputType] = useState("default");
   const [selectedMaterial, setSelectedMaterial] = useState(false);
   //State for keeping the image
@@ -28,6 +28,9 @@ const NewMaterial = (props) => {
   //Other
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
+
+  const startingData = props.dataObj;
+  console.log(startingData);
 
   useEffect(() => {
     if (props.dataObj) {
@@ -38,7 +41,6 @@ const NewMaterial = (props) => {
       setEnteredDescription(props.dataObj.description);
       setEnteredSupplier(props.dataObj.supplier);
       setEnteredTaskDate(props.dataObj.date);
-      // setEnteredTaskPicture(props.dataObj.picture);
     }
   }, []);
 
@@ -108,34 +110,34 @@ const NewMaterial = (props) => {
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
     props.getMatChecked(checkedMat, arrIndex, props.checkProps);
 
+    console.log(arrIndex, currentIndex);
+
     if (
-      currentIndex !== arrIndex &&
-      enteredCode !== "" &&
-      enteredItem !== "" &&
-      enteredDescription !== "" &&
-      enteredSupplier !== "" &&
-      enteredTaskDate !== "" &&
-      enteredTaskPicture !== ""
+      (currentIndex !== arrIndex &&
+        enteredCode !== "" &&
+        enteredItem !== "" &&
+        enteredDescription !== "" &&
+        enteredSupplier !== "" &&
+        enteredTaskDate !== "" &&
+        enteredTaskPicture !== "") ||
+      initDataBase === true
     ) {
       props.getData(data);
       setCurrentIndex(arrIndex);
+      setInitDataBase(false);
     }
-    if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
-    const messageInput = (
-      <div>
-        All input fields needs to be filled in order to proceed with next
-        material.
-      </div>
-    );
+    if (currentIndex === arrIndex && initDataBase === false)
+      props.replaceData(data, arrIndex);
 
     if (
-      enteredCode !== "" &&
-      enteredItem !== "" &&
-      enteredDescription !== "" &&
-      enteredSupplier !== "" &&
-      enteredTaskDate !== "" &&
-      enteredTaskPicture !== ""
+      (enteredCode !== "" &&
+        enteredItem !== "" &&
+        enteredDescription !== "" &&
+        enteredSupplier !== "" &&
+        enteredTaskDate !== "" &&
+        enteredTaskPicture !== "") ||
+      props.dataObj
     ) {
       setChecked(!checked);
       props.getChecked(!checked);
@@ -157,6 +159,8 @@ const NewMaterial = (props) => {
     setEnteredDescription(selectedMat.info);
     setFormInputType("entered");
   };
+
+  //Condicionally picking the classes by the form "vaesion/state" (default,picked,entered)
 
   let formInputClasses2;
 

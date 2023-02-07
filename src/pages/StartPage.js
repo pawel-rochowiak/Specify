@@ -18,9 +18,14 @@ import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
 import { usersActions } from "../store/users-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const StartPage = (props) => {
   const dispatch = useDispatch();
+
+  const params = useParams();
+
+  console.log(params);
 
   const stateTarget = useSelector((state) => state.global.target);
   //State slices//
