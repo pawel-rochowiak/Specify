@@ -25,9 +25,6 @@ const StartPage = (props) => {
 
   const params = useParams();
 
-  console.log(params);
-
-  const stateTarget = useSelector((state) => state.global.target);
   //State slices//
   const stateUsers = useSelector((state) => state.users);
   const stateTasks = useSelector((state) => state.tasks);
@@ -40,6 +37,7 @@ const StartPage = (props) => {
   const [editIndex, setEditIndex] = useState("");
   const [editItem, setEditItem] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [stateTarget, setStateTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
   const [isHome, setIsHome] = useState(true);
 
@@ -91,15 +89,24 @@ const StartPage = (props) => {
       setDetailTarget("");
       setData(stateLibrary);
     }
-  }, [stateTarget, stateTasks, stateProjects, stateSuppliers, stateLibrary]);
+    if (params.projectId?.includes("p")) {
+      setDetailTarget(["detailProject", params.projectId]);
+    }
+    if (params.supplierId?.includes("s")) {
+      setDetailTarget(["detailSupplier", params.supplierId]);
+    }
+  }, [
+    stateTarget,
+    stateTasks,
+    stateProjects,
+    stateSuppliers,
+    stateLibrary,
+    params,
+  ]);
 
-  const targetActivationHandler = (target) => {
-    if (target.includes("/suppliers/s")) {
-      setDetailTarget(["detailSupplier", target.split("/").at(-1)]);
-    }
-    if (target.includes("/projects/p")) {
-      setDetailTarget(["detailProject", target.split("/").at(-1)]);
-    }
+  console.log(params);
+  const getTargetHandler = (target) => {
+    setStateTarget(target);
   };
 
   //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
@@ -201,6 +208,7 @@ const StartPage = (props) => {
             <NavLink
               to="/home"
               onClick={isHomeHandler}
+              getTarget={getTargetHandler}
               className={({ isActive }) =>
                 isActive ? classes.active : classes.accordionItem
               }
@@ -213,32 +221,33 @@ const StartPage = (props) => {
                 </div>
               </div>
             </NavLink>
-            <Accordion name="Tasks" data="Tasks" onClick={isNotHomeHandler} />
+            <Accordion
+              name="Tasks"
+              data="Tasks"
+              onClick={isNotHomeHandler}
+              getTarget={getTargetHandler}
+            />
             <Accordion
               name="Projects"
               data="Projects"
               onClick={isNotHomeHandler}
+              getTarget={getTargetHandler}
             />
             <Accordion
               name="Suppliers"
               data="Suppliers"
               onClick={isNotHomeHandler}
+              getTarget={getTargetHandler}
             />
             <Accordion
               name="Library"
               data="Library"
               onClick={isNotHomeHandler}
+              getTarget={getTargetHandler}
             />
           </div>
         </div>
-        {isHome === false ? (
-          <SideMenuLinks
-            targetActivation={targetActivationHandler}
-            links={routerLinks}
-          />
-        ) : (
-          ""
-        )}
+        {isHome === false ? <SideMenuLinks links={routerLinks} /> : ""}
 
         <div className={classes.mainContent}>
           <Outlet

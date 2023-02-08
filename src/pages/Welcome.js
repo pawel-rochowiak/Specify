@@ -101,7 +101,7 @@ const Welcome = () => {
             <input
               required
               ref={passwordInputRef}
-              type="text"
+              type="password"
               id="password"
             ></input>
             <p className={classes.description}>password</p>

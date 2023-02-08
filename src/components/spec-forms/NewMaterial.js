@@ -29,9 +29,6 @@ const NewMaterial = (props) => {
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
-  const startingData = props.dataObj;
-  console.log(startingData);
-
   useEffect(() => {
     if (props.dataObj) {
       setFormInputType("entered");
@@ -109,8 +106,6 @@ const NewMaterial = (props) => {
     const arrIndex = +event.target.dataset.order;
     const checkedMat = event.target.dataset.checked === "true" ? false : true;
     props.getMatChecked(checkedMat, arrIndex, props.checkProps);
-
-    console.log(arrIndex, currentIndex);
 
     if (
       (currentIndex !== arrIndex &&

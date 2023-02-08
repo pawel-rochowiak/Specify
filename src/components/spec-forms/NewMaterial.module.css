@@ -103,6 +103,10 @@ input:focus {
   box-shadow: none;
 }
 
+.empty_input {
+  border: 5px solid #ff3131 0.5;
+}
+
 .form {
   margin-top: 2rem;
   display: grid;

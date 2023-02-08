@@ -10,15 +10,18 @@ import { globalActions } from "../store/global-slice";
 import { useDispatch } from "react-redux";
 
 const Accordion = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const liftTargetHandler = (event) => {
     const targetStart = event.target.closest("div[class*='data']").dataset
       .accordion;
 
     const target = targetStart.toLowerCase();
+
     props.onClick();
 
-    dispatch(globalActions.setTarget(target));
+    props.getTarget(target);
+
+    // dispatch(globalActions.setTarget(target));
   };
 
   const componentNames = {
