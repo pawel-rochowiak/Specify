@@ -18,6 +18,14 @@
   gap: 2rem;
 }
 
+.materialInput_choose__btns span {
+  padding: 0.5rem;
+}
+
+.delete_btn {
+  background-color: rgb(255, 62, 62) !important;
+}
+
 .info_materials__detail {
   display: grid;
   gap: 2rem;

@@ -155,6 +155,15 @@ const TaskPageDetails = () => {
     );
   };
 
+  const addMaterialCancelHandler = (event) => {
+    event.preventDefault();
+    setMaterialArr((prevState) => {
+      setFormChecked(false);
+      setCounter(counter - 1);
+      return [...prevState.slice(0, -1)];
+    });
+  };
+
   useEffect(() => {
     addCheckedMaterialToArrays();
   }, [specMatArr, addCheckedMaterialToArrays]);
@@ -181,6 +190,7 @@ const TaskPageDetails = () => {
           data={counter}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
+          removeMatForm={addMaterialCancelHandler}
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
@@ -212,9 +222,10 @@ const TaskPageDetails = () => {
     const materials = JSON.parse(
       localStorage.getItem(`${projectName}-${areaName}`)
     );
+    console.log(materials);
     resolve({
       index: taskIndex,
-      materials,
+      materials: materials,
     });
     reject(new Error("Problem with sending the data! Please try again"));
   });
@@ -222,6 +233,7 @@ const TaskPageDetails = () => {
   const sendSpecificationDataHandler = () => {
     sendingDataPromise
       .then((data) => {
+        console.log(data);
         dispatch(tasksActions.addMaterials(data));
         swal("Data was sent to the server!", {
           buttons: false,

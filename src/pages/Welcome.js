@@ -8,6 +8,7 @@ import UserIcon from "../components/icons/UserIcon";
 import Logo from "../Assets/specify_logo.png";
 import NewUserForm from "../components/forms/NewUserForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import swal from "sweetalert";
 
 //STATE//
 import { usersActions } from "../store/users-slice";
@@ -55,7 +56,8 @@ const Welcome = () => {
           return res.json();
         } else {
           return res.json().then((data) => {
-            let errorMessage = "Autenthication failed!";
+            let errorMessage =
+              "Autenthication failed! Please check your login and password!";
 
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
@@ -72,7 +74,11 @@ const Welcome = () => {
         dispatch(usersActions.login(data));
       })
       .catch((err) => {
-        alert(err.message);
+        console.log(err);
+        swal(`${err.message}`, {
+          buttons: false,
+          timer: 2000,
+        });
       });
   };
 

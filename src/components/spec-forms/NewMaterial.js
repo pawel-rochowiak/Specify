@@ -242,12 +242,21 @@ const NewMaterial = (props) => {
       <span>Do you want to add material from the library?</span>
       <div className={classes.materialInput_choose__btns}>
         <button className={classes.button} onClick={materialTypeConfirmHandler}>
-          <CheckIcon size="2.5rem" />
+          {/* <CheckIcon size="2.5rem" /> */}
+          <span>Yes</span>
         </button>
         <button className={classes.button} onClick={materialTypeDenyHandler}>
-          <CloseIcon />
+          {/* <CloseIcon /> */}
+          <span>No</span>
         </button>
       </div>
+
+      <button
+        className={`${classes.button} ${classes.delete_btn}`}
+        onClick={props.removeMatForm}
+      >
+        <CloseIcon className={`${classes.delete_btn} ${classes.delete_btn}`} />
+      </button>
     </div>
   );
 
