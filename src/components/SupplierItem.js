@@ -1,12 +1,16 @@
 import classes from "./SupplierItem.module.css";
+import classesModal from "./SwalModal.module.css";
 import classesEdit from "./DetailsItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
+import swal from "sweetalert";
 import { useSelector, useDispatch } from "react-redux";
 import { suppliersActions } from "../store/suppliers-slice";
 
 const SupplierItem = (props) => {
   const state = useSelector((state) => state.suppliers);
+
+  const supplerName = props.name;
 
   const dispatch = useDispatch();
 
@@ -26,7 +30,22 @@ const SupplierItem = (props) => {
     const targetStart = ev.target.closest("div[class*='SupplierItem_item']")
       .dataset.order;
 
-    dispatch(suppliersActions.deleteSupplier({ index: targetStart }));
+    swal({
+      title: `You are about to delete supplier named ${supplerName}.`,
+      text: "Once deleted, supplier informations will be lost!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal(`${supplerName} detailed page was deleted!`, {
+          icon: "success",
+        });
+        dispatch(suppliersActions.deleteSupplier({ index: targetStart }));
+      } else {
+        swal("Your supplier details are safe!");
+      }
+    });
   };
   return (
     <div className={classes.item} data-order={props.dataset}>

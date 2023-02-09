@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import generateDOC from "../components/functions/generateDOC";
 import { useParams } from "react-router-dom";
+import swal from "sweetalert";
 
 const TaskPageDetails = () => {
   const dispatch = useDispatch();
@@ -185,7 +186,6 @@ const TaskPageDetails = () => {
           checkProps={true}
           project={projectName}
           area={areaName}
-          // modalClose={closeNewTaskForm}
         />,
       ];
     });
@@ -208,16 +208,32 @@ const TaskPageDetails = () => {
     );
   };
 
-  const sendSpecificationDataHandler = () => {
+  const sendingDataPromise = new Promise((resolve, reject) => {
     const materials = JSON.parse(
       localStorage.getItem(`${projectName}-${areaName}`)
     );
-    dispatch(
-      tasksActions.addMaterials({
-        index: taskIndex,
-        materials,
+    resolve({
+      index: taskIndex,
+      materials,
+    });
+    reject(new Error("Problem with sending the data! Please try again"));
+  });
+
+  const sendSpecificationDataHandler = () => {
+    sendingDataPromise
+      .then((data) => {
+        dispatch(tasksActions.addMaterials(data));
+        swal("Data was sent to the server!", {
+          buttons: false,
+          timer: 1500,
+        });
       })
-    );
+      .catch((err) =>
+        swal(`${err}`, {
+          buttons: false,
+          timer: 3000,
+        })
+      );
   };
 
   const btnClass = !formChecked

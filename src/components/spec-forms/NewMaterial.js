@@ -2,7 +2,6 @@ import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
-import Modal from "../../UI/Modal";
 import swal from "sweetalert";
 import { Fragment, useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";

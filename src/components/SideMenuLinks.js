@@ -12,9 +12,9 @@ const SideMenuLinks = (props) => {
     setIsVisible(!isVisible);
   };
 
-  const targetHandler = (ev) => {
-    props.targetActivation(window.location.href);
-  };
+  // const targetHandler = (ev) => {
+  //   props.targetActivation(window.location.href);
+  // };
 
   const classList = !isVisible
     ? `${classes.sidebarDropdown}`
@@ -22,7 +22,7 @@ const SideMenuLinks = (props) => {
 
   return (
     <div id="dropdown" className={classList}>
-      <ul onClick={targetHandler}>{props.links}</ul>
+      <ul>{props.links}</ul>
       {!isVisible ? (
         <ArrowLeft
           unit="4.5rem"
