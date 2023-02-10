@@ -3,7 +3,8 @@ import classes from "./Task.module.css";
 import WarningIcon from "../components/icons/WarningIcon";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
-import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+import { useDispatch } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 
 const Task = (props) => {
@@ -12,6 +13,10 @@ const Task = (props) => {
   //Current Date
   const date = new Date().getTime();
   const projectDate = new Date(props.date).getTime();
+
+  const projectName = props.name;
+  const venueName = props.venue;
+  const taskName = props.task;
 
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);
@@ -36,7 +41,22 @@ const Task = (props) => {
     const targetStart = ev.target.closest("div[class*='Task_task']").dataset
       .order;
 
-    dispatch(tasksActions.deleteTask(targetStart));
+    swal({
+      title: `You are about to delete ${taskName} for ${projectName}-${venueName}.`,
+      text: "Once deleted, specification details will be lost!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal(`${venueName} ${taskName} was deleted!`, {
+          icon: "success",
+        });
+        dispatch(tasksActions.deleteTask(targetStart));
+      } else {
+        swal("Your specification details are safe!");
+      }
+    });
   };
 
   return (
