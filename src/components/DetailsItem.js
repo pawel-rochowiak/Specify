@@ -1,12 +1,14 @@
 import classes from "./DetailsItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
-import CheckIcon from "../components/icons/CheckIcon";
+import swal from "sweetalert";
 import { projectActions } from "../store/projects-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 const DetailsItem = (props) => {
   let gridClass, itemsArr, elArray;
+
+  const itemName = props.items.name;
 
   const state = useSelector((state) => state);
 
@@ -68,16 +70,46 @@ const DetailsItem = (props) => {
         (el) => el.path === item
       );
 
-      dispatch(
-        projectActions.deleteProjectArea({
-          sectionMainItemIndex: +currentMainSectionItem,
-          index: +targetStart,
-        })
-      );
+      swal({
+        title: `You are about to delete ${itemName}.`,
+        text: "Once deleted, informations will be lost!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          swal(`${itemName} was deleted!`, {
+            icon: "success",
+          });
+          dispatch(
+            projectActions.deleteProjectArea({
+              sectionMainItemIndex: +currentMainSectionItem,
+              index: +targetStart,
+            })
+          );
+        } else {
+          swal(`Your ${itemName} details are safe!`);
+        }
+      });
     }
 
     if (!props.section) {
-      dispatch(projectActions.deleteProject({ index: targetStart }));
+      swal({
+        title: `You are about to delete ${itemName}.`,
+        text: "Once deleted, informations will be lost!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          swal(`${itemName} was deleted!`, {
+            icon: "success",
+          });
+          dispatch(projectActions.deleteProject({ index: targetStart }));
+        } else {
+          swal(`Your ${itemName} details are safe!`);
+        }
+      });
     }
   };
 

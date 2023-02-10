@@ -1,15 +1,11 @@
 import classes from "./SupplierItem.module.css";
-import classesModal from "./SwalModal.module.css";
-import classesEdit from "./DetailsItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
 import swal from "sweetalert";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { suppliersActions } from "../store/suppliers-slice";
 
 const SupplierItem = (props) => {
-  const state = useSelector((state) => state.suppliers);
-
   const supplerName = props.name;
 
   const dispatch = useDispatch();
@@ -25,7 +21,6 @@ const SupplierItem = (props) => {
 
   const targetDeleteHandler = (ev) => {
     ev.preventDefault();
-    ///rember to chenge the path & key when deleting!!!
 
     const targetStart = ev.target.closest("div[class*='SupplierItem_item']")
       .dataset.order;
