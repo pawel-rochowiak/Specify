@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./Welcome.module.css";
@@ -12,21 +12,21 @@ import swal from "sweetalert";
 
 //STATE//
 import { usersActions } from "../store/users-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { ref } from "firebase/storage";
 
 const Welcome = () => {
-  const users = useSelector((state) => state.users);
-  console.log(users);
+  // const users = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const [isLogged, setIsLogged] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
+  const keyRef = useRef(null);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -68,7 +68,6 @@ const Welcome = () => {
         }
       })
       .then((data) => {
-        setIsLogged(true);
         navigate("/home");
         localStorage.setItem("login", data.email);
         dispatch(usersActions.login(data));
@@ -81,6 +80,17 @@ const Welcome = () => {
         });
       });
   };
+
+  useEffect(() => {
+    document
+      .getElementById("password")
+      .addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("loginBtn").click();
+        }
+      });
+  }, []);
 
   const addNewUserHandler = () => {
     setIsVisible(true);
@@ -96,7 +106,7 @@ const Welcome = () => {
         <div className={classes.logo}>
           <img src={Logo}></img>
         </div>
-        <form className={classes.form}>
+        <form id="loginForm" className={classes.form}>
           <div className={classes.formGroup}>
             <UserIcon className={classes.icon} size="3rem" />
             <input required ref={emailInputRef} type="text" id="user"></input>
@@ -118,7 +128,7 @@ const Welcome = () => {
             New user
           </button>
 
-          <button type="button" onClick={submitHandler}>
+          <button type="button" id="loginBtn" onClick={submitHandler}>
             {!isLoading && "Login"}
             {isLoading && <LoadingSpinner />}
           </button>

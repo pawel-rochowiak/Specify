@@ -103,8 +103,6 @@ const StartPage = (props) => {
     stateLibrary,
     params,
   ]);
-
-  console.log(params);
   const getTargetHandler = (target) => {
     setStateTarget(target);
   };

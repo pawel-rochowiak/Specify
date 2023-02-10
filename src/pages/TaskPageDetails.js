@@ -155,11 +155,10 @@ const TaskPageDetails = () => {
     );
   };
 
-  const addMaterialCancelHandler = (event) => {
+  const materialCancelHandler = (event) => {
     event.preventDefault();
     setMaterialArr((prevState) => {
       setFormChecked(false);
-      setCounter(counter - 1);
       return [...prevState.slice(0, -1)];
     });
   };
@@ -190,7 +189,7 @@ const TaskPageDetails = () => {
           data={counter}
           getData={getDataHanlder}
           replaceData={replaceDataHandler}
-          removeMatForm={addMaterialCancelHandler}
+          removeMatForm={materialCancelHandler}
           getChecked={getCheckedHandler}
           getMatChecked={getMatCheckedHandler}
           checkProps={true}
@@ -199,8 +198,6 @@ const TaskPageDetails = () => {
         />,
       ];
     });
-
-    console.log(materialsArr);
 
     setIndex(index + 1);
   };
@@ -218,35 +215,70 @@ const TaskPageDetails = () => {
     );
   };
 
-  const sendingDataPromise = new Promise((resolve, reject) => {
+  const sendingDataPromise = () => {
     const materials = JSON.parse(
       localStorage.getItem(`${projectName}-${areaName}`)
     );
-    console.log(materials);
-    resolve({
-      index: taskIndex,
-      materials: materials,
-    });
-    reject(new Error("Problem with sending the data! Please try again"));
-  });
-
-  const sendSpecificationDataHandler = () => {
-    sendingDataPromise
-      .then((data) => {
-        console.log(data);
-        dispatch(tasksActions.addMaterials(data));
-        swal("Data was sent to the server!", {
-          buttons: false,
-          timer: 1500,
+    return new Promise((resolve, reject) => {
+      if (materials.length > 0) {
+        resolve({
+          index: taskIndex,
+          materials,
         });
-      })
-      .catch((err) =>
-        swal(`${err}`, {
-          buttons: false,
-          timer: 3000,
-        })
-      );
+      } else {
+        reject(new Error("Problem with sending the data! Please try again"));
+      }
+    });
   };
+
+  const sendSpecificationDataHandler = async () => {
+    try {
+      const res = await sendingDataPromise();
+      dispatch(tasksActions.addMaterials(res));
+      swal("Data was sent to the server!", {
+        buttons: false,
+        timer: 1500,
+      });
+    } catch (err) {
+      swal(`${err.messagge}`, {
+        buttons: false,
+        timer: 3000,
+      });
+    }
+    // sendingDataPromise
+    //   .then((data) => {
+    //     console.log(data);
+    //     // dispatch(tasksActions.addMaterials(data));
+    //     // swal("Data was sent to the server!", {
+    //     //   buttons: false,
+    //     //   timer: 1500,
+    //     // });
+    //   })
+    //   .catch((err) =>
+    //     swal(`${err}`, {
+    //       buttons: false,
+    //       timer: 3000,
+    //     })
+    //   );
+  };
+
+  // const sendSpecificationDataHandler = async () => {
+  //   sendingDataPromise
+  //     .then((data) => {
+  //       console.log(data.JSON());
+  //       // dispatch(tasksActions.addMaterials(data));
+  //       // swal("Data was sent to the server!", {
+  //       //   buttons: false,
+  //       //   timer: 1500,
+  //       // });
+  //     })
+  //     .catch((err) =>
+  //       swal(`${err}`, {
+  //         buttons: false,
+  //         timer: 3000,
+  //       })
+  //     );
+  // };
 
   const btnClass = !formChecked
     ? `${classes.item} ${classes.action} ${classes.enabled}`

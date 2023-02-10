@@ -10,8 +10,6 @@ const TasksPage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
   const [createItem] = useOutletContext();
 
-  console.log(props);
-
   return (
     <Fragment>
       <div className={classesTaskPage.tasks}>

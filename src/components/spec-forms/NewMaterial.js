@@ -156,7 +156,7 @@ const NewMaterial = (props) => {
     setFormInputType("entered");
   };
 
-  //Condicionally picking the classes by the form "vaesion/state" (default,picked,entered)
+  //Condicionally picking the classes by the form "version/state" (default,picked,entered)
 
   let formInputClasses2;
 
@@ -242,11 +242,9 @@ const NewMaterial = (props) => {
       <span>Do you want to add material from the library?</span>
       <div className={classes.materialInput_choose__btns}>
         <button className={classes.button} onClick={materialTypeConfirmHandler}>
-          {/* <CheckIcon size="2.5rem" /> */}
           <span>Yes</span>
         </button>
         <button className={classes.button} onClick={materialTypeDenyHandler}>
-          {/* <CloseIcon /> */}
           <span>No</span>
         </button>
       </div>
