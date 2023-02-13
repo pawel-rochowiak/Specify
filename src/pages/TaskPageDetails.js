@@ -104,8 +104,9 @@ const TaskPageDetails = () => {
 
   const replaceDataHandler = (data, arrIndex) => {
     setSpecMatArr((prevState) => {
-      prevState[arrIndex] = data;
-      return [...prevState];
+      const prevStateCopy = [...prevState];
+      prevStateCopy[arrIndex] = data;
+      return [...prevStateCopy];
     });
   };
 

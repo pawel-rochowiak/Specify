@@ -117,13 +117,12 @@ const NewMaterial = (props) => {
       // &&
       // enteredTaskPicture !== ""
     ) {
-      props.getData(data);
+      //props.getData(data);
       setCurrentIndex(arrIndex);
       setInitDataBase(false);
     }
 
-    if (currentIndex === arrIndex && initDataBase === false)
-      props.replaceData(data, arrIndex);
+    if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
     if (
       enteredCode !== "" &&
