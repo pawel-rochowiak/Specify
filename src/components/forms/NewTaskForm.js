@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { tasksActions } from "../../store/tasks-slice";
+import { projectActions } from "../../store/projects-slice";
 import { useDispatch, useSelector } from "react-redux";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
+
+  console.log(props);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
@@ -17,18 +20,10 @@ const NewTaskForm = (props) => {
 
   const stateUsers = useSelector((state) => state.users);
   //User risponsible for the task
-  const userEmail = localStorage.getItem("login");
-  const { email, isLoggedIn, name, surname } = stateUsers.find(
-    (el) => el.email === userEmail
-  );
-  const userInitials = `${name[0]}${surname[0]}`;
+
+  const userInitials = localStorage.getItem("currentUser");
 
   console.log(props);
-
-  // const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
-  // const [enteredNumberIsValid, setEnteredNumberIsValid] = useState(false);
-  // const [enteredDateIsValid, setEnteredDateIsValid] = useState(false);
-  // const [enteredTeamIsValid, setEnteredTeamIsValid] = useState(false);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -74,31 +69,34 @@ const NewTaskForm = (props) => {
 
     const taskIndex = props.itemToEdit;
 
+    const payload = {
+      task: enteredTaskName,
+      name: enteredName,
+      area: enteredAreaName,
+      date: enteredDate,
+      resPerson: userInitials,
+      dk: enteredDeck,
+      fz: enteredFz,
+      number: enteredNumber,
+    };
+
     if (props.editing === true) {
       dispatch(
         tasksActions.editTask({
-          task: enteredTaskName,
-          name: enteredName,
-          area: enteredAreaName,
-          date: enteredDate,
-          resPerson: userInitials,
-          dk: enteredDeck,
-          fz: enteredFz,
-          number: enteredNumber,
+          ...payload,
           taskIndex,
         })
       );
     } else {
       dispatch(
         tasksActions.addTasks({
-          task: enteredTaskName,
-          name: enteredName,
-          area: enteredAreaName,
-          date: enteredDate,
-          resPerson: userInitials,
-          dk: enteredDeck,
-          fz: enteredFz,
-          number: enteredNumber,
+          ...payload,
+        })
+      );
+
+      dispatch(
+        projectActions.addAreaTasks({
+          ...payload,
         })
       );
     }

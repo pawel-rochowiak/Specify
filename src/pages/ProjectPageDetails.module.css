@@ -287,6 +287,37 @@ span {
   display: inline-block;
 }
 
+.area__spec_container {
+  margin-top: 1rem;
+  background-color: #e1f3ff;
+  border-radius: 1rem;
+  padding: 0 1rem 1rem;
+  /* color: #fff; */
+}
+
+.area__specifications {
+  border: 5px solid #e1f3ff;
+  background-color: #fff;
+  color: #555 !important;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+/* div[class*="itemLabel"] {
+  background-color: #fff;
+}
+
+div[class*="DetailsItem_item"] {
+  border-radius: 5px;
+  gap: 1rem;
+  border: none;
+} */
+
+div[class*="Task__task"] {
+  margin-top: 0;
+}
+
 /* Utility classes */
 
 .mLeft {

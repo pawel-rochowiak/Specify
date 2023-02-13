@@ -47,6 +47,10 @@ const StartPage = (props) => {
     (el) => el.email === userEmail
   );
 
+  const userInitials = `${name[0]}${surname[0]}`;
+
+  localStorage.setItem("currentUser", userInitials);
+
   const isNotHomeHandler = () => {
     setIsHome(false);
   };
@@ -54,8 +58,6 @@ const StartPage = (props) => {
   const isHomeHandler = () => {
     setIsHome(true);
   };
-
-  const userInitials = `${name[0]}${surname[0]}`;
 
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);

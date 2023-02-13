@@ -1,7 +1,6 @@
 import { useState } from "react";
 import classes from "../pages/StartPage.module.css";
 import classesIcons from "../components/icons/Arrows.module.css";
-import PlusIcon from "../components/icons/PlusIcon";
 import ArrowRight from "../components/icons/ArrowRight";
 import ArrowLeft from "../components/icons/ArrowLeft";
 
@@ -11,10 +10,6 @@ const SideMenuLinks = (props) => {
   const sidebarVisibilityHandler = () => {
     setIsVisible(!isVisible);
   };
-
-  // const targetHandler = (ev) => {
-  //   props.targetActivation(window.location.href);
-  // };
 
   const classList = !isVisible
     ? `${classes.sidebarDropdown}`

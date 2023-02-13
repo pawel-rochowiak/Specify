@@ -33,7 +33,7 @@ export const fetchStateData = () => {
           team: el.team,
           path: el.path,
           area: el.area,
-          projectTasks: el.projectTasks,
+          projectTasks: el.projectTasks ? el.projectTasks : [],
         };
       });
 
