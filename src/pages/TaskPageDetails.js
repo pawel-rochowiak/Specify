@@ -26,12 +26,39 @@ const TaskPageDetails = () => {
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState(false);
   const [materialsArr, setMaterialArr] = useState([]);
-  // const [dataSource, setDataSource] = useState("");
-  const [checkedMaterial, setCheckedMaterial] = useState(false);
+  // const [checkedMaterial, setCheckedMaterial] = useState(false);
 
   //Picking right task using params to match the task path
 
-  const element = stateTasks.find((el) => el.path === path);
+  let element = stateTasks.find((el) => el.path === path);
+  let dataBaseMaterials = element.materials;
+
+  //Condition to set data source, is it from DataBase or LocalStorage
+
+  useEffect(() => {
+    if (dataBaseMaterials.length >= 0) {
+      setSpecMatArr(dataBaseMaterials);
+      setMaterialArr(
+        dataBaseMaterials.map((el, index) => (
+          <NewMaterial
+            key={index}
+            data={index}
+            getData={getDataHanlder}
+            replaceData={replaceDataHandler}
+            getChecked={getCheckedHandler}
+            getMatChecked={getMatCheckedHandler}
+            checkProps={true}
+            project={projectName}
+            area={areaName}
+            dataObj={el}
+          />
+        ))
+      );
+    }
+    setCounter(dataBaseMaterials.length);
+  }, [path]);
+
+  console.log(element, dataBaseMaterials);
 
   //Using retreived element to get project data
 
@@ -66,33 +93,6 @@ const TaskPageDetails = () => {
     date.getMonth(),
     date.getFullYear(),
   ];
-
-  //Condition to set data source, is it from DataBase or LocalStorage
-
-  const dataBaseMaterials = element.materials;
-
-  useEffect(() => {
-    if (dataBaseMaterials.length > 0) {
-      setSpecMatArr(dataBaseMaterials);
-      setMaterialArr(
-        dataBaseMaterials.map((el, index) => (
-          <NewMaterial
-            key={index}
-            data={index}
-            getData={getDataHanlder}
-            replaceData={replaceDataHandler}
-            getChecked={getCheckedHandler}
-            getMatChecked={getMatCheckedHandler}
-            checkProps={true}
-            project={projectName}
-            area={areaName}
-            dataObj={el}
-          />
-        ))
-      );
-    }
-    setCounter(dataBaseMaterials.length);
-  }, []);
 
   //Pushing & removing data into material arrays. This array contains material objects with data
 
@@ -149,7 +149,7 @@ const TaskPageDetails = () => {
   };
 
   const addCheckedMaterialToArrays = () => {
-    setCheckedMaterial(true);
+    // setCheckedMaterial(true);
     localStorage.setItem(
       `${projectName}-${areaName}`,
       JSON.stringify(specMatArr)

@@ -117,10 +117,13 @@ const NewMaterial = (props) => {
       // &&
       // enteredTaskPicture !== ""
     ) {
-      //props.getData(data);
       setCurrentIndex(arrIndex);
       setInitDataBase(false);
+      props.getData(data);
     }
+    // else if (initDataBase === false && checkedMat === false) {
+    //   props.getData(data);
+    // }
 
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
