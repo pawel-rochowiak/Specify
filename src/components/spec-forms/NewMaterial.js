@@ -108,14 +108,14 @@ const NewMaterial = (props) => {
     props.getMatChecked(checkedMat, arrIndex, props.checkProps);
 
     if (
-      (currentIndex !== arrIndex &&
-        enteredCode !== "" &&
-        enteredItem !== "" &&
-        enteredDescription !== "" &&
-        enteredSupplier !== "" &&
-        enteredTaskDate !== "" &&
-        enteredTaskPicture !== "") ||
-      initDataBase === true
+      currentIndex !== arrIndex &&
+      enteredCode !== "" &&
+      enteredItem !== "" &&
+      enteredDescription !== "" &&
+      enteredSupplier !== "" &&
+      enteredTaskDate !== ""
+      // &&
+      // enteredTaskPicture !== ""
     ) {
       props.getData(data);
       setCurrentIndex(arrIndex);
@@ -126,13 +126,13 @@ const NewMaterial = (props) => {
       props.replaceData(data, arrIndex);
 
     if (
-      (enteredCode !== "" &&
-        enteredItem !== "" &&
-        enteredDescription !== "" &&
-        enteredSupplier !== "" &&
-        enteredTaskDate !== "" &&
-        enteredTaskPicture !== "") ||
-      props.dataObj
+      enteredCode !== "" &&
+      enteredItem !== "" &&
+      enteredDescription !== "" &&
+      enteredSupplier !== "" &&
+      enteredTaskDate !== ""
+      // &&
+      // enteredTaskPicture !== ""
     ) {
       setChecked(!checked);
       props.getChecked(!checked);
