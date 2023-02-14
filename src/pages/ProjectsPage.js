@@ -9,28 +9,49 @@ const ProjectPage = (props) => {
   const stateProjects = useSelector((state) => state.projects);
   const [createItem] = useOutletContext();
 
+  /*
+  <div className={classes.info_message}>
+              No supplier has been added. Please press
+              <span className={classes.highlight}>"Create item"</span> button to
+              add new supplier.
+            </div>
+  */
+
   return (
     <Fragment>
       <div className={classes.tasks}>
         <div className={classes.name}>All projects</div>
-        <div className={classes.categoriesTask}>
-          <div>Project</div>
-          <div>Type</div>
-          <div>Scope</div>
-          <div>Date</div>
-          <div>Team</div>
-        </div>
+
+        {stateProjects.length > 0 ? (
+          <div className={classes.categoriesTask}>
+            <div>Project</div>
+            <div>Type</div>
+            <div>Scope</div>
+            <div>Date</div>
+            <div>Team</div>
+          </div>
+        ) : (
+          ""
+        )}
         <div className={classes.taskList}>
-          {stateProjects?.map((el, index) => (
-            <DetailsItem
-              key={`project${index + 1}`}
-              items={el}
-              grid="5"
-              dataset={index}
-              edit={createItem}
-              type="projectsState"
-            />
-          ))}
+          {stateProjects.length > 0 ? (
+            stateProjects?.map((el, index) => (
+              <DetailsItem
+                key={`project${index + 1}`}
+                items={el}
+                grid="5"
+                dataset={index}
+                edit={createItem}
+                type="projectsState"
+              />
+            ))
+          ) : (
+            <div className={classes.info_message}>
+              No project has been added. Please press
+              <span className={classes.highlight}>"Create item"</span> button to
+              add new project.
+            </div>
+          )}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={createItem}

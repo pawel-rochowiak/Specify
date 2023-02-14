@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
+let initialState = [
   { name: "Wood", path: "cat1", materials: [] },
   { name: "Tiles", path: "cat2", materials: [] },
   { name: "Curtain", path: "cat3", materials: [] },

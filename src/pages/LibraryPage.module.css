@@ -91,6 +91,16 @@
   display: inline-block;
 }
 
+.info_message {
+  margin: 2rem 0;
+  font-size: 1.8rem;
+}
+
+.info_message span {
+  color: #44b3fd;
+  font-weight: 600;
+}
+
 ::-webkit-scrollbar {
   width: 1rem;
 }

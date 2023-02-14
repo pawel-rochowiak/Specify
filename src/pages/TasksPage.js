@@ -14,28 +14,40 @@ const TasksPage = (props) => {
     <Fragment>
       <div className={classesTaskPage.tasks}>
         <div className={classes.name}>Current tasks</div>
-        <div className={classes.categoriesTask}>
-          <div>Project</div>
-          <div>Venue</div>
-          <div>Type</div>
-          <div>Date</div>
-          <div>Assigned User</div>
-        </div>
+        {stateTasks.length > 0 ? (
+          <div className={classes.categoriesTask}>
+            <div>Project</div>
+            <div>Venue</div>
+            <div>Type</div>
+            <div>Date</div>
+            <div>Assigned User</div>
+          </div>
+        ) : (
+          ""
+        )}
         <div className={classes.taskList}>
-          {stateTasks.map((el, index) => (
-            <Task
-              key={el.path}
-              name={el.project}
-              venue={el.area}
-              number={el.number}
-              person={el.resPerson}
-              task={el.specification}
-              date={el.date}
-              status={el.status}
-              dataset={index}
-              edit={createItem}
-            />
-          ))}
+          {stateTasks.length > 0 ? (
+            stateTasks.map((el, index) => (
+              <Task
+                key={el.path}
+                name={el.project}
+                venue={el.area}
+                number={el.number}
+                person={el.resPerson}
+                task={el.specification}
+                date={el.date}
+                status={el.status}
+                dataset={index}
+                edit={createItem}
+              />
+            ))
+          ) : (
+            <div className={classes.info_message}>
+              No task has been added. Please press
+              <span className={classes.highlight}>"Create item"</span> button to
+              add new task.
+            </div>
+          )}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={createItem}
