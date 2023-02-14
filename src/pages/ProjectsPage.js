@@ -9,14 +9,6 @@ const ProjectPage = (props) => {
   const stateProjects = useSelector((state) => state.projects);
   const [createItem] = useOutletContext();
 
-  /*
-  <div className={classes.info_message}>
-              No supplier has been added. Please press
-              <span className={classes.highlight}>"Create item"</span> button to
-              add new supplier.
-            </div>
-  */
-
   return (
     <Fragment>
       <div className={classes.tasks}>
@@ -48,7 +40,7 @@ const ProjectPage = (props) => {
           ) : (
             <div className={classes.info_message}>
               No project has been added. Please press
-              <span className={classes.highlight}>"Create item"</span> button to
+              <span className={classes.highlight}>"Add project"</span> button to
               add new project.
             </div>
           )}

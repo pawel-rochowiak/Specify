@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchStateData } from "./all-actions";
 
-const initialState = [];
+const initialState = [{}];
 
 // const getGet =
 
