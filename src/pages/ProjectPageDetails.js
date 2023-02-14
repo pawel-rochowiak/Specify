@@ -13,13 +13,12 @@ const ProjectPageDetails = () => {
   const path = params.projectId;
 
   const element = stateProjects.find((el) => el.path === path);
-  const projectAreas = element.area;
-  const currentProjectTasks = stateProjectsTasks.filter(
-    (el) => el.project === element.name
-  );
+  const currentProjectTasks = element.projectTasks;
+
+  console.log(element);
 
   const userInitials = localStorage.getItem("currentUser");
-  console.log(currentProjectTasks);
+
   // <Link key={path} to={`/home/${stateTarget}/${path}`}>
   //     <li className={classes.item}>{name}</li>
   //   </Link>
@@ -34,36 +33,34 @@ const ProjectPageDetails = () => {
           <div>Outfitter</div>
         </div>
         <div className={classes.taskList}>
-          {stateProjects.find((el) => el.name === element.name).area.length !==
-          0 ? (
-            stateProjects
-              .find((el) => el.name === element.name)
-              .area.map((el, index) => (
-                <div className={classes.area__spec_container}>
-                  <DetailItem
-                    key={index + 1}
-                    dataset={index}
-                    section="projects"
-                    items={el}
-                    grid="4"
-                    edit={createItem}
-                    type="projectsState"
-                  />
-                  {currentProjectTasks.map((el) => (
-                    <div className={classes.area__specifications}>
-                      <Task
-                        key={path}
-                        venue={el.area}
-                        name={element.name}
-                        person={userInitials}
-                        task={el.specification}
-                        date={el.date}
-                        disabled={true}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))
+          {element.area.length !== 0 ? (
+            element.area.map((el, index) => (
+              <div className={classes.area__spec_container}>
+                <DetailItem
+                  key={index + 1}
+                  dataset={index}
+                  section="projects"
+                  items={el}
+                  grid="4"
+                  edit={createItem}
+                  type="projectsState"
+                />
+
+                {currentProjectTasks.map((ele) => (
+                  <div className={classes.area__specifications}>
+                    <Task
+                      key={path}
+                      venue={ele.area}
+                      name={element.name}
+                      person={userInitials}
+                      task={ele.specification}
+                      date={ele.date}
+                      disabled={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))
           ) : (
             <p>No areas please add</p>
           )}

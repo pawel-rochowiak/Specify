@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react";
+import { fetchStateData } from "./all-actions";
 
 const initialState = [];
+
+// const getGet =
+
+// const data = await fetchStateData();
+// console.log(data);
 
 const usersSlice = createSlice({
   name: "users",
@@ -31,6 +36,7 @@ const usersSlice = createSlice({
       });
     },
     replceUsers(_, action) {
+      initialState = action.payload;
       return action.payload;
     },
   },

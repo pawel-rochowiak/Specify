@@ -12,6 +12,7 @@ const globalSlice = createSlice({
       state.target = action.payload;
     },
     replaceTarget(state, action) {
+      initialState = action.payload;
       return action.payload;
     },
   },

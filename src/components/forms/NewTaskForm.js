@@ -3,12 +3,10 @@ import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { tasksActions } from "../../store/tasks-slice";
 import { projectActions } from "../../store/projects-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
-
-  console.log(props);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
@@ -18,12 +16,9 @@ const NewTaskForm = (props) => {
   const [enteredDeck, setEnteredDeck] = useState("");
   const [enteredFz, setEnteredFz] = useState("");
 
-  const stateUsers = useSelector((state) => state.users);
   //User risponsible for the task
 
   const userInitials = localStorage.getItem("currentUser");
-
-  console.log(props);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);

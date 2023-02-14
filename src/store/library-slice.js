@@ -71,6 +71,7 @@ const librarySlice = createSlice({
       }
     },
     replceLibrary(state, action) {
+      initialState = action.payload;
       return action.payload;
     },
   },

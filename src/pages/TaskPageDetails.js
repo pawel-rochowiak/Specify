@@ -26,7 +26,6 @@ const TaskPageDetails = () => {
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState(false);
   const [materialsArr, setMaterialArr] = useState([]);
-  // const [checkedMaterial, setCheckedMaterial] = useState(false);
 
   //Picking right task using params to match the task path
 
@@ -36,7 +35,7 @@ const TaskPageDetails = () => {
   //Condition to set data source, is it from DataBase or LocalStorage
 
   useEffect(() => {
-    if (dataBaseMaterials.length >= 0) {
+    if (dataBaseMaterials?.length >= 0) {
       setSpecMatArr(dataBaseMaterials);
       setMaterialArr(
         dataBaseMaterials.map((el, index) => (
@@ -55,10 +54,8 @@ const TaskPageDetails = () => {
         ))
       );
     }
-    setCounter(dataBaseMaterials.length);
+    setCounter(dataBaseMaterials?.length);
   }, [path]);
-
-  console.log(element, dataBaseMaterials);
 
   //Using retreived element to get project data
 

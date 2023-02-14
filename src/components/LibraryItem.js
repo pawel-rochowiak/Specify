@@ -10,8 +10,6 @@ const LibraryItem = (props) => {
   const materialName = props.name;
   const materialSupplier = props.supplier;
 
-  console.log(`You are about to delete ${materialName} by ${materialSupplier}`);
-
   const dispatch = useDispatch();
 
   const targetEditHandler = (ev) => {
