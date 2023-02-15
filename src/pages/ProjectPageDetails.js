@@ -7,7 +7,6 @@ import { useOutletContext, useParams } from "react-router-dom";
 
 const ProjectPageDetails = () => {
   const stateProjects = useSelector((state) => state.projects);
-  const stateProjectsTasks = useSelector((state) => state.tasks);
   const [createItem] = useOutletContext();
   const params = useParams();
   const path = params.projectId;
@@ -26,12 +25,16 @@ const ProjectPageDetails = () => {
     <div className={classes.mainContent}>
       <div className={classes.tasks}>
         <div className={classes.name}>{element.name}</div>
-        <div className={classes.categoriesAreas}>
-          <div>Name</div>
-          <div>Deck</div>
-          <div>Fire Zone</div>
-          <div>Outfitter</div>
-        </div>
+        {element.area.length !== 0 ? (
+          <div className={classes.categoriesAreas}>
+            <div>Name</div>
+            <div>Deck</div>
+            <div>Fire Zone</div>
+            <div>Outfitter</div>
+          </div>
+        ) : (
+          ""
+        )}
         <div className={classes.taskList}>
           {element.area.length !== 0 ? (
             element.area.map((el, index) => (
@@ -62,7 +65,11 @@ const ProjectPageDetails = () => {
               </div>
             ))
           ) : (
-            <p>No areas please add</p>
+            <div className={classes.info_message}>
+              No area has been added. Please press
+              <span className={classes.highlight}>"Add venue"</span> button to
+              add new area.
+            </div>
           )}
           <div
             className={`${classes.item} ${classes.action}`}

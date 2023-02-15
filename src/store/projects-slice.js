@@ -19,20 +19,7 @@ const projectSlice = createSlice({
         date: action.payload.date,
         team: action.payload.team,
         path: `p${state.length + 1}`,
-        area: [
-          {
-            name: "MSC restaurant 1",
-            deck: "5",
-            fireZone: "1",
-            subcontractor: "TSI",
-          },
-          {
-            name: "MSC restaurant 2",
-            deck: "9",
-            fireZone: "2",
-            subcontractor: "TSI",
-          },
-        ],
+        area: [],
         projectTasks: [],
       });
     },
