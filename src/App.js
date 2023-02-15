@@ -69,7 +69,11 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchStateData());
-  });
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("store", JSON.stringify(store));
+  }, [store]);
 
   useEffect(() => {
     const fetchStatus = async () => {

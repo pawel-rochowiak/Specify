@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchStateData } from "./all-actions";
 
-const initialState = [{}];
+const initialPersistLS = JSON.parse(window.localStorage.getItem("store")).users
+  ? JSON.parse(window.localStorage.getItem("store")).users
+  : [];
 
-// const getGet =
+console.log(initialPersistLS);
 
-// const data = await fetchStateData();
-// console.log(data);
+const initialState = [];
 
 const usersSlice = createSlice({
   name: "users",
-  initialState: initialState,
+  initialState: initialPersistLS,
   reducers: {
     login(state, action) {
       if (action.payload) {
@@ -36,7 +36,7 @@ const usersSlice = createSlice({
       });
     },
     replceUsers(_, action) {
-      initialState = action.payload;
+      //initialPersistLS = action.payload;
       return action.payload;
     },
   },
