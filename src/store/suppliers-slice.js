@@ -2,9 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = [];
 
+let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))
+  ?.suppliers
+  ? JSON.parse(window.localStorage.getItem("store")).suppliers
+  : initialState;
+
 const suppliersSlice = createSlice({
   name: "suppliers",
-  initialState: initialState,
+  initialState: initialPersistLS,
   reducers: {
     addSuppliers(state, action) {
       state.push({

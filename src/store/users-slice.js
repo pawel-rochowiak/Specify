@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialPersistLS = JSON.parse(window.localStorage.getItem("store")).users
-  ? JSON.parse(window.localStorage.getItem("store")).users
-  : [];
-
-console.log(initialPersistLS);
-
 const initialState = [];
+
+let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))?.users
+  ? JSON.parse(window.localStorage.getItem("store")).users
+  : initialState;
 
 const usersSlice = createSlice({
   name: "users",
@@ -36,7 +34,7 @@ const usersSlice = createSlice({
       });
     },
     replceUsers(_, action) {
-      //initialPersistLS = action.payload;
+      initialPersistLS = action.payload;
       return action.payload;
     },
   },

@@ -2,9 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = [];
 
+let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))?.tasks
+  ? JSON.parse(window.localStorage.getItem("store")).tasks
+  : initialState;
+
 const tasksSlice = createSlice({
   name: "tasks",
-  initialState: initialState,
+  initialState: initialPersistLS,
   reducers: {
     addTasks(state, action) {
       state.push({
@@ -35,11 +39,10 @@ const tasksSlice = createSlice({
       state.map((el, index) => (el.path = `t${index}`));
     },
     replceTasks(_, action) {
-      initialState = action.payload;
+      initialPersistLS = action.payload;
       return action.payload;
     },
     addMaterials(state, action) {
-      console.log("clicked");
       state[action.payload.index].materials = action.payload.materials;
     },
   },

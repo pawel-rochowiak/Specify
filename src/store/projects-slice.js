@@ -2,127 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = [];
 
-// const initialState = [
-//   {
-//     name: "Princess Cruises",
-//     type: "NB",
-//     scope: "Public",
-//     date: "",
-//     team: "Anna, Hanna",
-//     path: "p1",
-//     area: [
-//       {
-//         name: "International Restaurant",
-//         deck: "7-9",
-//         fireZone: "4",
-//         subcontractor: "TSI",
-//       },
-//       {
-//         name: "Lido Pools",
-//         deck: "17-18",
-//         fireZone: "2-3",
-//         subcontractor: "DeWave",
-//       },
-//     ],
-//     projectTasks: [],
-//   },
-//   {
-//     name: "Four Seasons",
-//     type: "NB",
-//     scope: "Public",
-//     date: "",
-//     team: "Anna, Hanna",
-//     path: "p2",
-//     area: [
-//       {
-//         name: "4 seasons Lounge 1",
-//         deck: "5-6",
-//         fireZone: "2",
-//         subcontractor: "TSI",
-//       },
-//       {
-//         name: "4 seasons Lounge 2",
-//         deck: "7",
-//         fireZone: "4",
-//         subcontractor: "Molteni",
-//       },
-//     ],
-//     projectTasks: [],
-//   },
-//   {
-//     name: "MSC",
-//     type: "NB",
-//     scope: "Public",
-//     date: "",
-//     team: "Anna, Hanna",
-//     path: "p3",
-//     area: [
-//       {
-//         name: "MSC restaurant 1",
-//         deck: "5",
-//         fireZone: "1",
-//         subcontractor: "TSI",
-//       },
-//       {
-//         name: "MSC restaurant 2",
-//         deck: "9",
-//         fireZone: "2",
-//         subcontractor: "TSI",
-//       },
-//     ],
-//     projectTasks: [],
-//   },
-//   {
-//     name: "Crystal Cruises",
-//     type: "NB",
-//     scope: "Public",
-//     date: "",
-//     team: "Anna, Hanna",
-//     path: "p4",
-//     area: [
-//       {
-//         name: "MSC restaurant 1",
-//         deck: "5",
-//         fireZone: "1",
-//         subcontractor: "TSI",
-//       },
-//       {
-//         name: "MSC restaurant 2",
-//         deck: "9",
-//         fireZone: "2",
-//         subcontractor: "TSI",
-//       },
-//     ],
-//     projectTasks: [],
-//   },
-//   {
-//     name: "NCL",
-//     type: "NB",
-//     scope: "Public",
-//     date: "",
-//     team: "Anna, Hanna",
-//     path: "p5",
-//     area: [
-//       {
-//         name: "MSC restaurant 1",
-//         deck: "5",
-//         fireZone: "1",
-//         subcontractor: "TSI",
-//       },
-//       {
-//         name: "MSC restaurant 2",
-//         deck: "9",
-//         fireZone: "2",
-//         subcontractor: "TSI",
-//       },
-//     ],
-//     projectTasks: [],
-//   },
-// ];
+let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))
+  ?.projects
+  ? JSON.parse(window.localStorage.getItem("store")).projects
+  : initialState;
 
 const projectSlice = createSlice({
   name: "projects",
-  initialState: initialState,
+  initialState: initialPersistLS,
   reducers: {
     addProjects(state, action) {
       state.push({
@@ -193,7 +80,7 @@ const projectSlice = createSlice({
     },
 
     replceProjects(state, action) {
-      initialState = action.payload;
+      initialPersistLS = action.payload;
       return action.payload;
     },
   },
