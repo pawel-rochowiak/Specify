@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = [
-  { name: "Wood", path: "cat1", materials: [] },
-  { name: "Tiles", path: "cat2", materials: [] },
-  { name: "Curtain", path: "cat3", materials: [] },
-  { name: "Upholstery", path: "cat4", materials: [] },
+  // { name: "Wood", path: "cat1", materials: [] },
+  // { name: "Tiles", path: "cat2", materials: [] },
+  // { name: "Curtain", path: "cat3", materials: [] },
+  // { name: "Upholstery", path: "cat4", materials: [] },
 ];
+
+let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))?.library
+  ? JSON.parse(window.localStorage.getItem("store")).library
+  : initialState;
 
 const librarySlice = createSlice({
   name: "library",
-  initialState: initialState,
+  initialState: initialPersistLS,
   reducers: {
     addMaterials(state, action) {
       const pushInto = (el, arr) => {
@@ -71,7 +75,7 @@ const librarySlice = createSlice({
       }
     },
     replceLibrary(state, action) {
-      initialState = action.payload;
+      initialPersistLS = action.payload;
       return action.payload;
     },
   },

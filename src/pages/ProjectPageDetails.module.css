@@ -270,6 +270,11 @@ span {
   text-transform: uppercase;
 }
 
+.material_collections h4 {
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+}
+
 .collection {
   display: flex;
   flex-direction: column;
