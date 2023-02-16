@@ -14,8 +14,6 @@ const ProjectPageDetails = () => {
   const element = stateProjects.find((el) => el.path === path);
   const currentProjectTasks = element.projectTasks;
 
-  console.log(element);
-
   const userInitials = localStorage.getItem("currentUser");
 
   // <Link key={path} to={`/home/${stateTarget}/${path}`}>
@@ -49,19 +47,21 @@ const ProjectPageDetails = () => {
                   type="projectsState"
                 />
 
-                {currentProjectTasks.map((ele) => (
-                  <div className={classes.area__specifications}>
-                    <Task
-                      key={path}
-                      venue={ele.area}
-                      name={element.name}
-                      person={userInitials}
-                      task={ele.specification}
-                      date={ele.date}
-                      disabled={true}
-                    />
-                  </div>
-                ))}
+                {currentProjectTasks
+                  .filter((el1) => el1.area === el.name)
+                  .map((el2) => (
+                    <div className={classes.area__specifications}>
+                      <Task
+                        key={path}
+                        venue={el2.area}
+                        name={element.name}
+                        person={userInitials}
+                        task={el2.specification}
+                        date={el2.date}
+                        disabled={true}
+                      />
+                    </div>
+                  ))}
               </div>
             ))
           ) : (
