@@ -223,8 +223,8 @@ const TaskPageDetails = () => {
           index: taskIndex,
           materials,
         });
-      } else {
-        reject(new Error("Problem with sending the data! Please try again"));
+      } else if (materials.length === 0) {
+        reject(new Error("No data to be send to the server!"));
       }
     });
   };

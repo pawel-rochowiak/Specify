@@ -97,6 +97,11 @@
   grid-column: auto !important;
 }
 
+.task_image {
+  width: 12rem;
+  height: 12rem;
+}
+
 input {
   width: 100%;
   border: 2px solid #c7e7fc;
