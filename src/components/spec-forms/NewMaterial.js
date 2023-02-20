@@ -13,19 +13,17 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { v4 } from "uuid";
-import { MathIntegral } from "docx";
 
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
 const NewMaterial = (props) => {
-  const [initDataBase, setInitDataBase] = useState(true);
   const [enteredCode, setEnteredCode] = useState("");
   const [enteredItem, setEnteredItem] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
   const [enteredSupplier, setEnteredSupplier] = useState("");
   const [enteredTaskDate, setEnteredTaskDate] = useState("");
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
   const [formInputType, setFormInputType] = useState("default");
@@ -48,6 +46,8 @@ const NewMaterial = (props) => {
       setEnteredTaskDate(props.dataObj.date);
     }
   }, []);
+
+  useEffect(() => {}, [imageUrl]);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -87,26 +87,15 @@ const NewMaterial = (props) => {
 
   const imageFileName =
     enteredCode && imageUpload
-      ? `images/${props.project}/${props.area}/${enteredCode}/${enteredCode}-${
-          imageUpload.name
-          // + v4()
-        }`
+      ? `images/${props.project}/${props.area}/${enteredCode}/${enteredCode}-${imageUpload.name}`
       : "";
 
   let imageListRef = ref(
     storage,
     `images/${props.project}/${props.area}/${enteredCode}`
   );
+
   //Fn for uploading image to Firebase
-
-  // useEffect(() => {
-  //   imageListRef = ref(
-  //     storage,
-  //     `images/${props.project}/${props.area}/${enteredCode}`
-  //   );
-  // }, []);
-
-  // console.log(imageListRef);
 
   const uploadImage = (event) => {
     if (imageUpload === null) return;
@@ -121,34 +110,17 @@ const NewMaterial = (props) => {
   //Fn for downloading image from Firebase
   const downloadImg = () => {
     listAll(imageListRef).then((response) => {
-      console.log(response.items);
-      response.items
-        .filter((el) => el._location.path === imageFileName)
-        .forEach((item) => {
-          console.log(item);
-          getDownloadURL(item).then((url) => {
-            setImageList([url]);
-            //setImageList([(prev) => [...prev, url]]);
-          });
-        });
-    });
-  };
-
-  /*
-    const downloadImg = () => {
-    listAll(imageListRef).then((response) => {
-      console.log(response.items);
       response.items
         .filter((el) => el._location.path === imageFileName)
         .forEach((item) => {
           getDownloadURL(item).then((url) => {
             setImageList([url]);
+            setImageUrl(url);
             //setImageList([(prev) => [...prev, url]]);
           });
         });
     });
   };
-  */
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {
@@ -166,9 +138,6 @@ const NewMaterial = (props) => {
             .catch((error) => {
               console.log(error.message);
             });
-          // getDownloadURL(item).then((url) => {
-          //   setImageList((prev) => ([...prev] = [url]));
-          // });
         });
     });
   };
@@ -199,12 +168,8 @@ const NewMaterial = (props) => {
       // enteredTaskPicture !== ""
     ) {
       setCurrentIndex(arrIndex);
-      setInitDataBase(false);
       props.getData(data);
     }
-    // else if (initDataBase === false && checkedMat === false) {
-    //   props.getData(data);
-    // }
 
     if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
 
@@ -234,7 +199,7 @@ const NewMaterial = (props) => {
       ","
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
-    setSelectedMaterial(true);
+    // setSelectedMaterial(true);
     setEnteredDescription(selectedMat.info);
     setFormInputType("entered");
   };
@@ -306,15 +271,6 @@ const NewMaterial = (props) => {
           />
         </div>
         <div className={classes.picture}>
-          {/* <input
-            type="file"
-            id="img"
-            name="img"
-            accept="image/*"
-            disabled={!checked ? false : true}
-            onChange={pictureInputChangeHandler}
-            value={enteredTaskPicture}
-          /> */}
           {imageList.length > 0 && checked === true ? (
             imageList.map((url, index) => {
               return (
@@ -406,6 +362,7 @@ const NewMaterial = (props) => {
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
+      data-url={imageUrl}
     >
       {formJSX(formInputType)}
     </form>
