@@ -13,11 +13,8 @@ import swal from "sweetalert";
 //STATE//
 import { usersActions } from "../store/users-slice";
 import { useDispatch } from "react-redux";
-import { ref } from "firebase/storage";
 
 const Welcome = () => {
-  // const users = useSelector((state) => state.users);
-
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -26,7 +23,6 @@ const Welcome = () => {
 
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
-  const keyRef = useRef(null);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -73,7 +69,6 @@ const Welcome = () => {
         dispatch(usersActions.login(data));
       })
       .catch((err) => {
-        console.log(err);
         swal(`${err.message}`, {
           buttons: false,
           timer: 2000,

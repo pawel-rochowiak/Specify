@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStateData } from "./store/all-actions";
 import HomePage from "./pages/HomePage";
+import swal from "sweetalert";
 
 let isInitial = true;
 
@@ -91,7 +92,12 @@ function App() {
       return;
     }
 
-    fetchStatus().catch((error) => console.log(error));
+    fetchStatus().catch((error) =>
+      swal(`${error.messagge}`, {
+        buttons: false,
+        timer: 3000,
+      })
+    );
   }, [store, dispatch]);
 
   return (
