@@ -14,6 +14,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { v4 } from "uuid";
+import { MathIntegral } from "docx";
 
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
@@ -31,7 +32,6 @@ const NewMaterial = (props) => {
   const [selectedMaterial, setSelectedMaterial] = useState(false);
   //State for keeping the image
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageDelete, setImageDelete] = useState(null);
   const [imageList, setImageList] = useState([]);
   //Other
   const materialState = useSelector((state) => state.library);
@@ -87,72 +87,94 @@ const NewMaterial = (props) => {
 
   const imageFileName =
     enteredCode && imageUpload
-      ? `images/${props.project}/${props.area}/${enteredCode}-${
+      ? `images/${props.project}/${props.area}/${enteredCode}/${enteredCode}-${
           imageUpload.name
           // + v4()
         }`
       : "";
 
+  let imageListRef = ref(
+    storage,
+    `images/${props.project}/${props.area}/${enteredCode}`
+  );
   //Fn for uploading image to Firebase
-  const imageListRef = ref(storage, `images/${props.project}/${props.area}`);
+
+  // useEffect(() => {
+  //   imageListRef = ref(
+  //     storage,
+  //     `images/${props.project}/${props.area}/${enteredCode}`
+  //   );
+  // }, []);
+
+  // console.log(imageListRef);
+
   const uploadImage = (event) => {
     if (imageUpload === null) return;
     const imgRef = ref(storage, imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
-      // deleteImage();
-      // if (imageDelete !== imageFileName && imageDelete) deleteImage();
+      deleteImage(imageFileName);
       downloadImg();
       setImageUpload(null);
-      setImageDelete(imageFileName);
-      console.log(imageDelete);
     });
   };
-
-  // //Fn for downloading all images from Firebase
-  // const downloadAllImgs = () => {
-  //   listAll(imageListRef).then((response) => {
-  //     response.items.forEach((item) => {
-  //       getDownloadURL(item).then((url) => {
-  //         setImageList((prev) => [...prev, url]);
-  //       });
-  //     });
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   downloadImg();
-  // }, []);
 
   //Fn for downloading image from Firebase
   const downloadImg = () => {
     listAll(imageListRef).then((response) => {
+      console.log(response.items);
       response.items
         .filter((el) => el._location.path === imageFileName)
         .forEach((item) => {
+          console.log(item);
           getDownloadURL(item).then((url) => {
-            setImageList((prev) => [...prev, url]);
+            setImageList([url]);
+            //setImageList([(prev) => [...prev, url]]);
           });
         });
     });
   };
 
+  /*
+    const downloadImg = () => {
+    listAll(imageListRef).then((response) => {
+      console.log(response.items);
+      response.items
+        .filter((el) => el._location.path === imageFileName)
+        .forEach((item) => {
+          getDownloadURL(item).then((url) => {
+            setImageList([url]);
+            //setImageList([(prev) => [...prev, url]]);
+          });
+        });
+    });
+  };
+  */
+
   //Fn for deleting image from Firebase
-  const deleteImage = (event) => {
+  const deleteImage = (image) => {
     if (imageUpload === null) return;
-    const imgRef = ref(storage, imageDelete);
-    // Delete the file
-    deleteObject(imgRef)
-      .then(() => {
-        setImageUpload(null);
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-      });
+
+    listAll(imageListRef).then((response) => {
+      response.items
+        .filter((el) => el._location.path !== image)
+        .forEach((item) => {
+          const imgRef = ref(storage, item._location.path);
+          deleteObject(imgRef)
+            .then(() => {
+              setImageUpload(null);
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
+          // getDownloadURL(item).then((url) => {
+          //   setImageList((prev) => ([...prev] = [url]));
+          // });
+        });
+    });
   };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-
     const data = {
       number: enteredCode,
       item: enteredItem,
@@ -171,8 +193,10 @@ const NewMaterial = (props) => {
       enteredCode !== "" &&
       enteredItem !== "" &&
       enteredDescription !== "" &&
-      enteredSupplier !== "" &&
-      enteredTaskPicture !== ""
+      enteredSupplier !== ""
+      //temporary
+      //&&
+      // enteredTaskPicture !== ""
     ) {
       setCurrentIndex(arrIndex);
       setInitDataBase(false);
@@ -188,8 +212,10 @@ const NewMaterial = (props) => {
       enteredCode !== "" &&
       enteredItem !== "" &&
       enteredDescription !== "" &&
-      enteredSupplier !== "" &&
-      enteredTaskPicture !== ""
+      enteredSupplier !== ""
+      //temp
+      //&&
+      //enteredTaskPicture !== ""
     ) {
       setChecked(!checked);
       props.getChecked(!checked);
@@ -290,8 +316,10 @@ const NewMaterial = (props) => {
             value={enteredTaskPicture}
           /> */}
           {imageList.length > 0 && checked === true ? (
-            imageList.map((url) => {
-              return <img className={classes.task_image} src={url} />;
+            imageList.map((url, index) => {
+              return (
+                <img key={index} className={classes.task_image} src={url} />
+              );
             })
           ) : (
             <input
