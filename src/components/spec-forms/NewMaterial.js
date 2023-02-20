@@ -44,8 +44,9 @@ const NewMaterial = (props) => {
       setEnteredDescription(props.dataObj.description);
       setEnteredSupplier(props.dataObj.supplier);
       setEnteredTaskDate(props.dataObj.date);
+      downloadAllImgs();
     }
-  }, []);
+  });
 
   useEffect(() => {}, [imageUrl]);
 
@@ -119,6 +120,18 @@ const NewMaterial = (props) => {
             //setImageList([(prev) => [...prev, url]]);
           });
         });
+    });
+  };
+
+  const downloadAllImgs = () => {
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList([url]);
+          setImageUrl(url);
+          //setImageList([(prev) => [...prev, url]]);
+        });
+      });
     });
   };
 
