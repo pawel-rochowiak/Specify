@@ -13,10 +13,13 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { useParams } from "react-router-dom";
 
 //setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
 
 const NewMaterial = (props) => {
+  const params = useParams();
+
   const [enteredCode, setEnteredCode] = useState("");
   const [enteredItem, setEnteredItem] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
@@ -46,7 +49,7 @@ const NewMaterial = (props) => {
       setEnteredTaskDate(props.dataObj.date);
       downloadAllImgs();
     }
-  });
+  }, [params]);
 
   useEffect(() => {}, [imageUrl]);
 
