@@ -26,7 +26,7 @@ function App() {
   const dispatch = useDispatch();
 
   let store = useSelector((state) => state);
-  let tasksData = useSelector((state) => state.tasks);
+  let tasksData = store.tasks;
 
   const router = createBrowserRouter([
     { path: "/", element: <Welcome /> },
@@ -92,11 +92,12 @@ function App() {
       return;
     }
 
-    fetchStatus().catch((error) =>
-      swal(`${error.messagge}`, {
-        buttons: false,
-        timer: 3000,
-      })
+    fetchStatus().catch(
+      (error) => console.log("Problem")
+      // swal(`${error.messagge}`, {
+      //   buttons: false,
+      //   timer: 3000,
+      // })
     );
   }, [store, dispatch]);
 

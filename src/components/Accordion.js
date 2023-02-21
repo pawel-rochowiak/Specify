@@ -49,7 +49,7 @@ const Accordion = (props) => {
       >
         <div className={classes.itemDescription}>
           <DynamicComponent unit="2rem" />
-          <span className={classes.mLeft}>{props.name}</span>
+          {/* <span className={classes.accordionItemLabel}>{props.name}</span> */}
         </div>
       </div>
     </NavLink>

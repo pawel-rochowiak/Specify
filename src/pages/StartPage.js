@@ -199,10 +199,10 @@ const StartPage = (props) => {
           <div className={classes.user}>
             <div className={classes.user_initials}>
               <p>{userInitials}</p>
+              <Link to="/" onClick={logoutHandler}>
+                <LogOutIcon className={classes.logout} size="2.5rem" />
+              </Link>
             </div>
-            <Link to="/" onClick={logoutHandler}>
-              <LogOutIcon size="2.5rem" />
-            </Link>
           </div>
           <div className={classes.accordionContainer}>
             <NavLink
@@ -217,7 +217,7 @@ const StartPage = (props) => {
               <div data-accordion="home">
                 <div className={classes.itemDescription}>
                   <HomeIcon unit="2rem" />
-                  <span className={classes.mLeft}>Home</span>
+                  {/* <span className={classes.accordionItemLabel}>Home</span> */}
                 </div>
               </div>
             </NavLink>

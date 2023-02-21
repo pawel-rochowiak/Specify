@@ -15,7 +15,7 @@
   flex-direction: column;
   overflow: hidden;
   background-color: #fff;
-  width: 20%;
+  width: max-content;
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
   box-shadow: 2px 0 8px #aeb5cc;
@@ -76,13 +76,12 @@
 .user {
   width: 100%;
   padding: 3rem;
-  position: relative;
   display: flex;
-
   justify-content: center;
 }
 
 .user_initials {
+  position: relative;
   width: fit-content;
   padding: 2rem;
   background-color: #85caf9;
@@ -99,12 +98,25 @@
   height: 150%;
 }
 
+.logout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #c7e7fc;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
 .accordionContainer {
   position: relative;
   border-top: 1px solid #c7e7fc;
   padding: 2rem 0.5rem 2rem 2rem;
   height: 100%;
   display: flex;
+
+  align-items: center;
   width: 100%;
   flex-direction: column;
   gap: 1.5rem;
@@ -112,16 +124,18 @@
   color: #fff;
   text-transform: uppercase;
   overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .accordionItem {
+  position: relative;
   padding: 1.5rem;
   border-radius: 5px;
   background-color: #85caf9;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: fit-content;
   transition: all 0.4s;
 }
 
@@ -129,8 +143,26 @@
   background-color: #74b2db;
 }
 
+.accordionItem:hover .accordionItemLabel {
+  visibility: visible;
+  opacity: 100;
+}
+
 .accordionItem:active {
   background-color: #639bc0;
+}
+
+.accordionItemLabel {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  background-color: #fff;
+  border: 2px solid #74b2db;
+  border-radius: 5px;
 }
 
 .active {
@@ -142,7 +174,7 @@
   flex-direction: column;
   gap: 2rem;
   transition: all 0.4s;
-  width: 100%;
+  width: fit-content;
 }
 
 .itemDescription {

@@ -14,18 +14,6 @@
   background-color: #c7e7fc;
   padding: 1rem;
   border-radius: 50%;
-
-  /* transform: translate(-50%, -50%); */
-}
-
-.logout {
-  position: absolute;
-  left: 10%;
-  background-color: #c7e7fc;
-  border-radius: 50%;
-  padding: 5px;
-  cursor: pointer;
-  transition: all 300ms;
 }
 
 .logout:hover {
