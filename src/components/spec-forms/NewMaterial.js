@@ -26,15 +26,14 @@ const NewMaterial = (props) => {
   const [enteredSupplier, setEnteredSupplier] = useState("");
   const [enteredTaskDate, setEnteredTaskDate] = useState("");
   const [enteredTaskPicture, setEnteredTaskPicture] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
   const [formInputType, setFormInputType] = useState("default");
-  const [selectedMaterial, setSelectedMaterial] = useState(false);
-  //State for keeping the image
+  //State for the image
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   //Other
+  const [isProps, setIsProp] = useState(false);
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
@@ -47,11 +46,14 @@ const NewMaterial = (props) => {
       setEnteredDescription(props.dataObj.description);
       setEnteredSupplier(props.dataObj.supplier);
       setEnteredTaskDate(props.dataObj.date);
+      setIsProp(true);
       downloadAllImgs();
     }
-  }, [params]);
+  }, [props.dataObj]);
 
-  useEffect(() => {}, [imageUrl]);
+  useEffect(() => {
+    downloadAllImgs();
+  }, [params]);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -94,14 +96,13 @@ const NewMaterial = (props) => {
       ? `images/${props.project}/${props.area}/${enteredCode}/${enteredCode}-${imageUpload.name}`
       : "";
 
-  let imageListRef = ref(
+  const imageListRef = ref(
     storage,
     `images/${props.project}/${props.area}/${enteredCode}`
   );
 
   //Fn for uploading image to Firebase
-
-  const uploadImage = (event) => {
+  const uploadImage = () => {
     if (imageUpload === null) return;
     const imgRef = ref(storage, imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
@@ -119,7 +120,6 @@ const NewMaterial = (props) => {
         .forEach((item) => {
           getDownloadURL(item).then((url) => {
             setImageList([url]);
-            setImageUrl(url);
             //setImageList([(prev) => [...prev, url]]);
           });
         });
@@ -131,7 +131,6 @@ const NewMaterial = (props) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
-          setImageUrl(url);
           //setImageList([(prev) => [...prev, url]]);
         });
       });
@@ -178,25 +177,24 @@ const NewMaterial = (props) => {
       enteredCode !== "" &&
       enteredItem !== "" &&
       enteredDescription !== "" &&
-      enteredSupplier !== ""
-      //temporary
-      //&&
-      // enteredTaskPicture !== ""
+      enteredSupplier !== "" &&
+      isProps === false
     ) {
-      setCurrentIndex(arrIndex);
       props.getData(data);
+    } else {
+      setCurrentIndex(arrIndex);
     }
 
-    if (currentIndex === arrIndex) props.replaceData(data, arrIndex);
+    if (currentIndex === arrIndex || isProps === true) {
+      console.log(isProps);
+      props.replaceData(data, arrIndex);
+    }
 
     if (
       enteredCode !== "" &&
       enteredItem !== "" &&
       enteredDescription !== "" &&
       enteredSupplier !== ""
-      //temp
-      //&&
-      //enteredTaskPicture !== ""
     ) {
       setChecked(!checked);
       props.getChecked(!checked);
@@ -378,7 +376,6 @@ const NewMaterial = (props) => {
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
-      data-url={imageUrl}
     >
       {formJSX(formInputType)}
     </form>
