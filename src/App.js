@@ -78,27 +78,28 @@ function App() {
 
   useEffect(() => {
     const fetchStatus = async () => {
-      const response = await fetch(
-        "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json",
-        { method: "PUT", body: JSON.stringify(store) }
-      );
-      if (!response.ok) {
-        throw new Error("Sending data failed!");
+      try {
+        const response = await fetch(
+          "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json",
+          { method: "PUT", body: JSON.stringify(store) }
+        );
+        console.log(response);
+        if (!response.ok) {
+          throw new Error("Sending data failed!");
+        }
+
+        if (isInitial) {
+          isInitial = false;
+          return;
+        }
+      } catch (error) {
+        swal("Sending data failed!", {
+          buttons: false,
+          icon: "warning",
+          timer: 3000,
+        });
       }
     };
-
-    if (isInitial) {
-      isInitial = false;
-      return;
-    }
-
-    fetchStatus().catch(
-      (error) => console.log("Problem")
-      // swal(`${error.messagge}`, {
-      //   buttons: false,
-      //   timer: 3000,
-      // })
-    );
   }, [store, dispatch]);
 
   return (

@@ -199,7 +199,7 @@ const StartPage = (props) => {
           <div className={classes.user}>
             <div className={classes.user_initials}>
               <p>{userInitials}</p>
-              <Link to="/" onClick={logoutHandler}>
+              <Link to="/" onClick={logoutHandler} className={classes.absolute}>
                 <LogOutIcon className={classes.logout} size="2.5rem" />
               </Link>
             </div>

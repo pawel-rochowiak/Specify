@@ -232,51 +232,21 @@ const TaskPageDetails = () => {
   const sendSpecificationDataHandler = async () => {
     try {
       const res = await sendingDataPromise();
+      console.log(res);
       dispatch(tasksActions.addMaterials(res));
       swal("Data was sent to the server!", {
         buttons: false,
+        icon: "success",
         timer: 1500,
       });
     } catch (err) {
       swal(`${err.messagge}`, {
         buttons: false,
+        icon: "warning",
         timer: 3000,
       });
     }
-    // sendingDataPromise
-    //   .then((data) => {
-    //     console.log(data);
-    //     // dispatch(tasksActions.addMaterials(data));
-    //     // swal("Data was sent to the server!", {
-    //     //   buttons: false,
-    //     //   timer: 1500,
-    //     // });
-    //   })
-    //   .catch((err) =>
-    //     swal(`${err}`, {
-    //       buttons: false,
-    //       timer: 3000,
-    //     })
-    //   );
   };
-
-  // const sendSpecificationDataHandler = async () => {
-  //   sendingDataPromise
-  //     .then((data) => {
-  //       console.log(data.JSON());
-  //       // dispatch(tasksActions.addMaterials(data));
-  //       // swal("Data was sent to the server!", {
-  //       //   buttons: false,
-  //       //   timer: 1500,
-  //       // });
-  //     })
-  //     .catch((err) =>
-  //       swal(`${err}`, {
-  //         buttons: false,
-  //         timer: 3000,
-  //       })
-  //     );
-  // };
 
   const btnClass = !formChecked
     ? `${classes.item} ${classes.action} ${classes.enabled}`
