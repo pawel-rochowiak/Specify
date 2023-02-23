@@ -4,6 +4,9 @@ import classes from "./NewMaterialForm.module.css";
 import { libraryActions } from "../../store/library-slice";
 import { suppliersActions } from "../../store/suppliers-slice";
 import { useSelector, useDispatch } from "react-redux";
+import { storage } from "../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import swal from "sweetalert";
 
 const NewMaterialForm = (props) => {
   const suppliersState = useSelector((state) => state.suppliers);
@@ -18,6 +21,9 @@ const NewMaterialForm = (props) => {
   const [enteredImage, setEnteredImage] = useState("");
   const [enteredLink, setEnteredLink] = useState("");
   const [enteredCategory, setEnteredCategory] = useState("");
+  //State for the image
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([]);
   //
   const enteredExistingCollection = useRef();
   const enteredCat = useRef();
@@ -119,6 +125,7 @@ const NewMaterialForm = (props) => {
   };
   const imageInputChangeHandler = (event) => {
     setEnteredImage(event.target.value);
+    setImageUpload(event.target.files[0]);
   };
   const linkInputChangeHandler = (event) => {
     setEnteredLink(event.target.value);
@@ -126,6 +133,23 @@ const NewMaterialForm = (props) => {
 
   const supplierSelectionHandler = (event) => {
     setSelectedSupplier(event.target.value);
+  };
+
+  const imageFileName = imageUpload
+    ? `library/${
+        enteredCategory === "" ? enteredCat.current.value : enteredCategory
+      }/${pickedSupplier.current.value}/${enteredCollection}/${enteredName}-${
+        imageUpload.name
+      }`
+    : "";
+
+  //Fn for uploading image to Firebase
+  const uploadImage = () => {
+    if (imageUpload === null) return;
+    const imgRef = ref(storage, imageFileName);
+    uploadBytes(imgRef, imageUpload).then(() => {
+      setImageUpload(null);
+    });
   };
 
   const formSubmissionHandler = (event) => {
@@ -142,8 +166,14 @@ const NewMaterialForm = (props) => {
       (enteredCategory.trim() === "" || enteredCat.current.value === "") &&
       pickedSupplier.current.value === ""
     ) {
-      console.log("empty");
+      swal({
+        title: "Empty inputs!",
+        text: "Please enter all inputs for material. Date can be ommited.",
+        icon: "error",
+      });
       return;
+    } else {
+      uploadImage();
     }
 
     ///Utility functions///

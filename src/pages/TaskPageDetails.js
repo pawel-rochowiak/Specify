@@ -219,33 +219,72 @@ const TaskPageDetails = () => {
     );
     return new Promise((resolve, reject) => {
       if (materials.length > 0) {
-        resolve({
-          index: taskIndex,
-          materials,
-        });
+        resolve(
+          dispatch(
+            tasksActions.addMaterials({
+              index: taskIndex,
+              materials,
+            })
+          )
+        );
       } else if (materials.length === 0) {
         reject(new Error("No data to be send to the server!"));
       }
     });
   };
 
-  const sendSpecificationDataHandler = async () => {
-    try {
-      const res = await sendingDataPromise();
-      console.log(res);
-      dispatch(tasksActions.addMaterials(res));
-      swal("Data was sent to the server!", {
-        buttons: false,
-        icon: "success",
-        timer: 1500,
+  const sendSpecificationDataHandler = () => {
+    // try {
+    sendingDataPromise()
+      .then((result) => {
+        const currentProjectTasks = stateTasks.filter(
+          (el) => el.project === projectName
+        );
+
+        if (
+          currentProjectTasks[0].materials.length ===
+          result.payload.materials.length
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .then((res) => {
+        if (res === true) {
+          swal("Data was sent to the server!", {
+            buttons: false,
+            icon: "success",
+            timer: 1500,
+          });
+        }
+        if (res === false) {
+          throw new Error(
+            "Problem with sending data! Please check your internet connection and try again."
+          );
+        }
+      })
+      .catch((err) => {
+        swal(`${err.messagge}`, {
+          buttons: false,
+          icon: "warning",
+          timer: 3000,
+        });
       });
-    } catch (err) {
-      swal(`${err.messagge}`, {
-        buttons: false,
-        icon: "warning",
-        timer: 3000,
-      });
-    }
+
+    // dispatch(tasksActions.addMaterials(res));
+    // swal("Data was sent to the server!", {
+    //   buttons: false,
+    //   icon: "success",
+    //   timer: 1500,
+    // });
+    // } catch (err) {
+    //   swal(`${err.messagge}`, {
+    //     buttons: false,
+    //     icon: "warning",
+    //     timer: 3000,
+    //   });
+    // }
   };
 
   const btnClass = !formChecked

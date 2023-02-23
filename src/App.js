@@ -83,7 +83,6 @@ function App() {
           "https://specify-ec0ca-default-rtdb.europe-west1.firebasedatabase.app/state.json",
           { method: "PUT", body: JSON.stringify(store) }
         );
-        console.log(response);
         if (!response.ok) {
           throw new Error("Sending data failed!");
         }
@@ -93,13 +92,14 @@ function App() {
           return;
         }
       } catch (error) {
-        swal("Sending data failed!", {
-          buttons: false,
-          icon: "warning",
-          timer: 3000,
-        });
+        // swal("Sending data failed!", {
+        //   buttons: false,
+        //   icon: "warning",
+        //   timer: 3000,
+        // });
       }
     };
+    fetchStatus();
   }, [store, dispatch]);
 
   return (
