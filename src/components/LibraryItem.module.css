@@ -66,6 +66,11 @@
   background-color: rgb(255, 62, 62);
 }
 
+.materialImage {
+  width: 12rem;
+  height: 12rem;
+}
+
 .materialNumber,
 .materialName,
 .materialSupplier,

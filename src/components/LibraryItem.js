@@ -4,11 +4,26 @@ import CloseIcon from "../components/icons/CloseIcon";
 import { useDispatch } from "react-redux";
 import { libraryActions } from "../store/library-slice";
 import { suppliersActions } from "../store/suppliers-slice";
+import { useState, useEffect } from "react";
 import swal from "sweetalert";
+import { storage } from "../firebase";
+import { listAll, ref, getDownloadURL } from "firebase/storage";
 
 const LibraryItem = (props) => {
   const materialName = props.name;
+  const materialCategory = props.category;
   const materialSupplier = props.supplier;
+  const materialCollection = props.collection;
+
+  //State for the image
+  const [imageList, setImageList] = useState([]);
+
+  useEffect(() => downloadAllImgs());
+
+  const imageListRef = ref(
+    storage,
+    `library/${materialCategory}/${materialSupplier}/${materialCollection}`
+  );
 
   const dispatch = useDispatch();
 
@@ -60,6 +75,18 @@ const LibraryItem = (props) => {
       }
     });
   };
+
+  const downloadAllImgs = () => {
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList([url]);
+          //setImageList([(prev) => [...prev, url]]);
+        });
+      });
+    });
+  };
+
   return (
     <div className={classes.item} data-order={props.dataset}>
       {!props.disabled ? (
@@ -75,11 +102,21 @@ const LibraryItem = (props) => {
       <div className={classes.materialSupplier}>{props.supplier}</div>
       <div className={classes.materialCertificate}>{props.certificate}</div>
       <div className={classes.materialInfo}>{props.info}</div>
-      <img
+      {imageList.map((url, index) => {
+        return (
+          <img
+            key={index}
+            className={classes.materialImage}
+            alt={`Material name: ${materialName}. Supplier name: ${materialSupplier}`}
+            src={url}
+          />
+        );
+      })}
+      {/* <img
         className={classes.materialImage}
         alt={`Material name: ${materialName}. Supplier name: ${materialSupplier}`}
         src={props.imageUrl}
-      />
+      /> */}
       <a className={classes.materialLink} href={props.link} target="_blank">
         Link
       </a>
