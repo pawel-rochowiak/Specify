@@ -3,7 +3,7 @@ import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
 import swal from "sweetalert";
-import { Fragment, useState, useRef, useEffect } from "react";
+import { Fragment, useState, useRef, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { storage } from "../../firebase";
 import {
@@ -50,10 +50,6 @@ const NewMaterial = (props) => {
       downloadAllImgs();
     }
   }, [props.dataObj]);
-
-  useEffect(() => {
-    downloadAllImgs();
-  }, [params]);
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -120,22 +116,24 @@ const NewMaterial = (props) => {
         .forEach((item) => {
           getDownloadURL(item).then((url) => {
             setImageList([url]);
-            //setImageList([(prev) => [...prev, url]]);
           });
         });
     });
   };
 
-  const downloadAllImgs = () => {
+  const downloadAllImgs = useCallback(() => {
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
-          //setImageList([(prev) => [...prev, url]]);
         });
       });
     });
-  };
+  });
+
+  useEffect(() => {
+    downloadAllImgs();
+  }, [params, downloadAllImgs]);
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {

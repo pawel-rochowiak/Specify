@@ -18,7 +18,7 @@ const LibraryItem = (props) => {
   //State for the image
   const [imageList, setImageList] = useState([]);
 
-  useEffect(() => downloadAllImgs());
+  useEffect(() => downloadAllImgs(), []);
 
   const imageListRef = ref(
     storage,
@@ -78,10 +78,10 @@ const LibraryItem = (props) => {
 
   const downloadAllImgs = () => {
     listAll(imageListRef).then((response) => {
+      console.log(response.items);
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
-          //setImageList([(prev) => [...prev, url]]);
         });
       });
     });
@@ -102,24 +102,23 @@ const LibraryItem = (props) => {
       <div className={classes.materialSupplier}>{props.supplier}</div>
       <div className={classes.materialCertificate}>{props.certificate}</div>
       <div className={classes.materialInfo}>{props.info}</div>
-      {imageList.map((url, index) => {
-        return (
-          <img
-            key={index}
-            className={classes.materialImage}
-            alt={`Material name: ${materialName}. Supplier name: ${materialSupplier}`}
-            src={url}
-          />
-        );
-      })}
-      {/* <img
-        className={classes.materialImage}
-        alt={`Material name: ${materialName}. Supplier name: ${materialSupplier}`}
-        src={props.imageUrl}
-      /> */}
-      <a className={classes.materialLink} href={props.link} target="_blank">
-        Link
-      </a>
+      <div className={classes.materialImg}>
+        {imageList.map((url, index) => {
+          return (
+            <img
+              key={index}
+              className={classes.materialImage}
+              alt={`Material name: ${materialName}. Supplier name: ${materialSupplier}`}
+              src={url}
+            />
+          );
+        })}
+      </div>
+      <div className={classes.materialLink}>
+        <a className={classes.materialLink} href={props.link} target="_blank">
+          Link
+        </a>
+      </div>
       {!props.disabled ? (
         <div className={classes.delete} onClick={targetDeleteHandler}>
           <CloseIcon />

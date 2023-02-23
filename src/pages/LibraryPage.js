@@ -1,7 +1,6 @@
 import classes from "./LibraryPage.module.css";
 import { Fragment } from "react";
 import LibraryItem from "../components/LibraryItem";
-import DetailsItem from "../components/DetailsItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
