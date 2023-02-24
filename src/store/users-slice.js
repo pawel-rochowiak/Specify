@@ -33,6 +33,10 @@ const usersSlice = createSlice({
         isLoggedIn: action.payload.isLoggedIn,
       });
     },
+    addUserError(state, action) {
+      state.find((user) => user.email === action.payload.email).error =
+        action.payload.error;
+    },
     replceUsers(_, action) {
       initialPersistLS = action.payload;
       return action.payload;

@@ -272,6 +272,11 @@ const TaskPageDetails = () => {
         });
       });
 
+    //action to add error property to user object
+    // dispatch(
+    //   usersActions.addUserError({ email: data.email, error: "Error" })
+    // );
+
     // dispatch(tasksActions.addMaterials(res));
     // swal("Data was sent to the server!", {
     //   buttons: false,

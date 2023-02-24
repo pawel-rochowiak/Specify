@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 
 //CSS module//
 import classes from "./StartPage.module.css";
+import classesAccordion from "../components/Accordion.module.css";
 //ICONS//
 import HomeIcon from "../components/icons/HomeIcon";
 //FORMS//
@@ -221,6 +222,7 @@ const StartPage = (props) => {
                 </div>
               </div>
             </NavLink>
+
             <Accordion
               name="Tasks"
               data="Tasks"
