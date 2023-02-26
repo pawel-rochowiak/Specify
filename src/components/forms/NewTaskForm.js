@@ -3,10 +3,11 @@ import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { tasksActions } from "../../store/tasks-slice";
 import { projectActions } from "../../store/projects-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
+  const currentTasks = useSelector((state) => state.tasks);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
@@ -73,6 +74,7 @@ const NewTaskForm = (props) => {
       dk: enteredDeck,
       fz: enteredFz,
       number: enteredNumber,
+      path: `t${currentTasks.length}`,
     };
 
     if (props.editing === true) {

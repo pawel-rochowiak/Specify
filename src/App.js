@@ -92,11 +92,11 @@ function App() {
           return;
         }
       } catch (error) {
-        // swal("Sending data failed!", {
-        //   buttons: false,
-        //   icon: "warning",
-        //   timer: 3000,
-        // });
+        swal("Sending data failed!", {
+          buttons: false,
+          icon: "warning",
+          timer: 3000,
+        });
       }
     };
     fetchStatus();

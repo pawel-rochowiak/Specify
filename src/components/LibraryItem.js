@@ -78,7 +78,6 @@ const LibraryItem = (props) => {
 
   const downloadAllImgs = () => {
     listAll(imageListRef).then((response) => {
-      console.log(response.items);
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);

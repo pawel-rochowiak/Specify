@@ -11,8 +11,6 @@ const Accordion = (props) => {
     const targetStart = event.target.closest("a[class*='accordionItem']")
       .dataset.accordion;
 
-    console.log(targetStart);
-
     const target = targetStart.toLowerCase();
 
     props.onClick();

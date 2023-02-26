@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { useOutletContext, useParams } from "react-router-dom";
 
 const LibraryPageDetails = (props) => {
-  console.log(props);
   const params = useParams();
   const path = params.libraryId;
 

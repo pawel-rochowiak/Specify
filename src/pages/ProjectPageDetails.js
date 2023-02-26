@@ -3,7 +3,7 @@ import DetailItem from "../components/DetailsItem";
 import Task from "../components/Task";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, Link } from "react-router-dom";
 
 const ProjectPageDetails = () => {
   const stateProjects = useSelector((state) => state.projects);
@@ -16,7 +16,7 @@ const ProjectPageDetails = () => {
 
   const userInitials = localStorage.getItem("currentUser");
 
-  // <Link key={path} to={`/home/${stateTarget}/${path}`}>
+  // <Link key={path} to={`/home/tasks/${path}`}>
   //     <li className={classes.item}>{name}</li>
   //   </Link>
   return (
@@ -51,15 +51,17 @@ const ProjectPageDetails = () => {
                   .filter((el1) => el1.area === el.name)
                   .map((el2) => (
                     <div className={classes.area__specifications}>
-                      <Task
-                        key={path}
-                        venue={el2.area}
-                        name={element.name}
-                        person={userInitials}
-                        task={el2.specification}
-                        date={el2.date}
-                        disabled={true}
-                      />
+                      <Link key={path} to={`/home/tasks/${el2.path}`}>
+                        <Task
+                          key={path}
+                          venue={el2.area}
+                          name={element.name}
+                          person={userInitials}
+                          task={el2.specification}
+                          date={el2.date}
+                          disabled={true}
+                        />
+                      </Link>
                     </div>
                   ))}
               </div>

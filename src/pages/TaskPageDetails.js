@@ -1,4 +1,4 @@
-// import { getStorage } from "firebase/storage";
+import { usersActions } from "../store/users-slice";
 import classes from "./ProjectPageDetails.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
@@ -19,7 +19,15 @@ const TaskPageDetails = () => {
   const params = useParams();
   const path = params.taskId;
 
+  const userEmail = localStorage.getItem("login");
+
   let stateTasks = useSelector((state) => state.tasks);
+
+  let userError = useSelector(
+    (state) => state.users.find((el) => el.email === userEmail).error
+  );
+
+  console.log(userError);
 
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
@@ -146,7 +154,6 @@ const TaskPageDetails = () => {
   };
 
   const addCheckedMaterialToArrays = () => {
-    // setCheckedMaterial(true);
     localStorage.setItem(
       `${projectName}-${areaName}`,
       JSON.stringify(specMatArr)
@@ -234,62 +241,43 @@ const TaskPageDetails = () => {
   };
 
   const sendSpecificationDataHandler = () => {
-    // try {
     sendingDataPromise()
       .then((result) => {
         const currentProjectTasks = stateTasks.filter(
           (el) => el.project === projectName
         );
-
         if (
           currentProjectTasks[0].materials.length ===
           result.payload.materials.length
         ) {
           return true;
         } else {
-          return false;
+          dispatch(
+            usersActions.addUserError({ email: userEmail, error: "Error" })
+          );
         }
       })
-      .then((res) => {
-        if (res === true) {
+      .then(() => {
+        if (!userError) {
           swal("Data was sent to the server!", {
             buttons: false,
             icon: "success",
             timer: 1500,
           });
         }
-        if (res === false) {
+        if (userError) {
           throw new Error(
             "Problem with sending data! Please check your internet connection and try again."
           );
         }
       })
       .catch((err) => {
-        swal(`${err.messagge}`, {
+        swal(`${err}`, {
           buttons: false,
           icon: "warning",
           timer: 3000,
         });
       });
-
-    //action to add error property to user object
-    // dispatch(
-    //   usersActions.addUserError({ email: data.email, error: "Error" })
-    // );
-
-    // dispatch(tasksActions.addMaterials(res));
-    // swal("Data was sent to the server!", {
-    //   buttons: false,
-    //   icon: "success",
-    //   timer: 1500,
-    // });
-    // } catch (err) {
-    //   swal(`${err.messagge}`, {
-    //     buttons: false,
-    //     icon: "warning",
-    //     timer: 3000,
-    //   });
-    // }
   };
 
   const btnClass = !formChecked
@@ -403,12 +391,13 @@ const TaskPageDetails = () => {
           </button>
         </div>
         <div className={classes.btnMaterials}>
-          <div
-            className={`${classes.item} ${classes.action}`}
+          <button
+            className={btnClass}
             onClick={sendSpecificationDataHandler}
+            disabled={formChecked}
           >
             <SaveIcon />
-          </div>
+          </button>
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={saveToWord}
