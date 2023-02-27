@@ -23,7 +23,6 @@ const NewMaterialForm = (props) => {
   const [enteredCategory, setEnteredCategory] = useState("");
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageList, setImageList] = useState([]);
   //
   const enteredExistingCollection = useRef();
   const enteredCat = useRef();
@@ -88,7 +87,9 @@ const NewMaterialForm = (props) => {
     //Specific supplier case
     const specificSupplierCollections = suppliersState.find(
       (el) => el.name === selectedSupplier
-    ).matCollections;
+    )
+      ? suppliersState.find((el) => el.name === selectedSupplier).matCollections
+      : [];
 
     specificSupplier = pushInto(selectedSupplier, []);
 
@@ -96,15 +97,19 @@ const NewMaterialForm = (props) => {
       pushInto(specificSupplierCollections, specificSupplier),
     ];
 
-    allCollectionsOption2 = specificSupplierOptions.map((el) => (
+    allCollectionsOption2 = specificSupplierOptions.map((el) => {
+      // if (el[1].length > 0) {
       <optgroup label={el[0]} key={el[0]}>
-        {el[1]?.map((el) => (
-          <option value={el.name} key={el.name}>
-            {el.name}
-          </option>
-        ))}
-      </optgroup>
-    ));
+        {el[1].length > 0
+          ? el[1]?.map((el) => (
+              <option value={el.name} key={el.name}>
+                {el.name}
+              </option>
+            ))
+          : []}
+      </optgroup>;
+      //}
+    });
   }
 
   const nameInputChangeHandler = (event) => {
@@ -164,7 +169,7 @@ const NewMaterialForm = (props) => {
       (enteredCollection.trim() === "" ||
         enteredExistingCollection.current.value === "") &&
       (enteredCategory.trim() === "" || enteredCat.current.value === "") &&
-      pickedSupplier.current.value === ""
+      (pickedSupplier.current.value === "" || selectedSupplier.trim() === "")
     ) {
       swal({
         title: "Empty inputs!",
@@ -188,7 +193,11 @@ const NewMaterialForm = (props) => {
     }
 
     function findSupplier(el) {
-      return el.name === pickedSupplier.current.value;
+      if (selectedSupplier) {
+        return el.name === selectedSupplier;
+      } else {
+        return el.name === pickedSupplier.current.value;
+      }
     }
 
     function findCollection(el) {
@@ -203,7 +212,7 @@ const NewMaterialForm = (props) => {
     ///////////////////////
     const materialCollection = suppliersState
       .find(findSupplier)
-      .matCollections.find(findCollection);
+      ?.matCollections.find(findCollection);
 
     if (props.editing === true) {
       dispatch(
@@ -234,11 +243,63 @@ const NewMaterialForm = (props) => {
           materialToEdit: props.item,
         })
       );
+    } else if (
+      suppliersState.find(findSupplier)?.name !== selectedSupplier &&
+      suppliersState.find(findSupplier)?.name !== pickedSupplier.current.value
+    ) {
+      dispatch(
+        suppliersActions.addSuppliers({
+          name: selectedSupplier
+            ? selectedSupplier
+            : pickedSupplier.current.value,
+          field: "N/A",
+          country: "N/A",
+          city: "N/A",
+          street: "N/A",
+          number: "N/A",
+          fullName: "N/A",
+          email: "N/A",
+          tel: "N/A",
+        })
+      );
+
+      dispatch(
+        libraryActions.addMaterials({
+          name: enteredName,
+          supplier: selectedSupplier,
+          collection: enteredCollection,
+          category: enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+        })
+      );
+
+      dispatch(
+        suppliersActions.addCollection({
+          name: enteredName,
+          supplier: selectedSupplier,
+          collection: enteredCollection,
+          category: materialState.find(findCategory)
+            ? enteredCat.current.value
+            : enteredCategory,
+          certificates: enteredCertificates,
+          info: enteredDescription,
+          image: enteredImage,
+          link: enteredLink,
+          findSupplier: findSupplier,
+          findCollection: findCollection,
+          pushInto: pushInto,
+        })
+      );
     } else {
       dispatch(
         libraryActions.addMaterials({
           name: enteredName,
-          supplier: pickedSupplier.current.value,
+          supplier: selectedSupplier
+            ? selectedSupplier
+            : pickedSupplier.current.value,
           collection: materialCollection
             ? enteredExistingCollection.current.value
             : enteredCollection,
@@ -255,7 +316,9 @@ const NewMaterialForm = (props) => {
       dispatch(
         suppliersActions.addCollection({
           name: enteredName,
-          supplier: pickedSupplier.current.value,
+          supplier: selectedSupplier
+            ? selectedSupplier
+            : pickedSupplier.current.value,
           collection: materialCollection
             ? enteredExistingCollection.current.value
             : enteredCollection,
@@ -283,6 +346,7 @@ const NewMaterialForm = (props) => {
     setEnteredDescription("");
     setEnteredImage("");
     setEnteredLink("");
+    setSelectedSupplier("");
 
     props.onExit();
   };
@@ -307,7 +371,6 @@ const NewMaterialForm = (props) => {
             <div className={`${classes.custom_select}`}>
               <select
                 ref={pickedSupplier}
-                onChange={supplierSelectionHandler}
                 current={selectedSupplier}
                 disabled={props.editing}
               >
@@ -322,6 +385,17 @@ const NewMaterialForm = (props) => {
                 )}
               </select>
               <p className={classes.description}>Pick existing supplier</p>
+            </div>
+            <span>OR</span>
+            <div>
+              <input
+                type="text"
+                id="supplier"
+                onChange={supplierSelectionHandler}
+                value={selectedSupplier}
+                disabled={props.editing}
+              ></input>
+              <p className={classes.description}>type new</p>
             </div>
             <p>
               Supplier{" "}

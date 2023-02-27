@@ -70,7 +70,7 @@ const LibraryPageDetails = (props) => {
               className={`${classes.item} ${classes.action}`}
               onClick={createItem}
             >
-              Create Item
+              Create material
               <PlusIcon size="1.6rem" />
             </div>
           </div>
