@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
   const currentTasks = useSelector((state) => state.tasks);
+  const allProjects = useSelector((state) => state.projects);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
@@ -20,6 +21,10 @@ const NewTaskForm = (props) => {
   //User risponsible for the task
 
   const userInitials = localStorage.getItem("currentUser");
+
+  const taskInputChangeHandler = (event) => {
+    setEnteredTaskName(event.target.value);
+  };
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -42,10 +47,6 @@ const NewTaskForm = (props) => {
   };
   const fzInputChangeHandler = (event) => {
     setEnteredFz(event.target.value);
-  };
-
-  const taskInputChangeHandler = (event) => {
-    setEnteredTaskName(event.target.value);
   };
 
   const formSubmissionHandler = (event) => {
@@ -85,6 +86,28 @@ const NewTaskForm = (props) => {
         })
       );
     } else {
+      // /*
+      dispatch(
+        projectActions.addProjects({
+          name: enteredName,
+          type: "",
+          scope: "",
+          date: "",
+          team: "",
+        })
+      );
+
+      dispatch(
+        projectActions.addAreas({
+          name: enteredAreaName,
+          deck: enteredDeck,
+          fz: enteredFz,
+          subcontractor: "",
+          project: allProjects.length,
+        })
+      );
+      // */
+
       dispatch(
         tasksActions.addTasks({
           ...payload,

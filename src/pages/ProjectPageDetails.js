@@ -16,9 +16,6 @@ const ProjectPageDetails = () => {
 
   const userInitials = localStorage.getItem("currentUser");
 
-  // <Link key={path} to={`/home/tasks/${path}`}>
-  //     <li className={classes.item}>{name}</li>
-  //   </Link>
   return (
     <div className={classes.mainContent}>
       <div className={classes.tasks}>
