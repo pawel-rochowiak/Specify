@@ -4,11 +4,13 @@ import classes from "./NewTaskForm.module.css";
 import { tasksActions } from "../../store/tasks-slice";
 import { projectActions } from "../../store/projects-slice";
 import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
   const currentTasks = useSelector((state) => state.tasks);
   const allProjects = useSelector((state) => state.projects);
+  console.log(allProjects);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
@@ -60,7 +62,11 @@ const NewTaskForm = (props) => {
       enteredFz.trim() === "" ||
       enteredAreaName.trim() === ""
     ) {
-      console.log("empty");
+      swal({
+        title: "Empty inputs!",
+        text: "Please enter all data!",
+        icon: "error",
+      });
       return;
     }
 
@@ -86,16 +92,28 @@ const NewTaskForm = (props) => {
         })
       );
     } else {
-      // /*
-      dispatch(
-        projectActions.addProjects({
-          name: enteredName,
-          type: "",
-          scope: "",
-          date: "",
-          team: "",
-        })
+      const isProjectExisting = allProjects
+        .map((el) => el.name === enteredName)
+        .find((el) => el === true);
+
+      const projectIndex = allProjects.findIndex(
+        (el) => el.name === enteredName
       );
+
+      console.log(isProjectExisting);
+
+      // /*
+      if (isProjectExisting === false || isProjectExisting === undefined) {
+        dispatch(
+          projectActions.addProjects({
+            name: enteredName,
+            type: "",
+            scope: "",
+            date: "",
+            team: "",
+          })
+        );
+      }
 
       dispatch(
         projectActions.addAreas({
@@ -103,7 +121,10 @@ const NewTaskForm = (props) => {
           deck: enteredDeck,
           fz: enteredFz,
           subcontractor: "",
-          project: allProjects.length,
+          project:
+            isProjectExisting === false || isProjectExisting === undefined
+              ? allProjects.length
+              : projectIndex,
         })
       );
       // */
