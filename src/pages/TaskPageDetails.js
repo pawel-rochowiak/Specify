@@ -1,4 +1,3 @@
-import { usersActions } from "../store/users-slice";
 import classes from "./ProjectPageDetails.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
@@ -9,9 +8,11 @@ import ArrowDown from "../components/icons/DownArrow";
 import { Fragment, useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
+import { usersActions } from "../store/users-slice";
 import generateDOC from "../components/functions/generateDOC";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const TaskPageDetails = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,15 @@ const TaskPageDetails = () => {
   );
 
   console.log(userError);
+
+  // const allMaterialForms = Array.from(document.querySelectorAll("form"));
+  // const allLoadedCheck =
+  //   allMaterialForms.filter((el) => el.dataset.loaded === "true").length ===
+  //   allMaterialForms.length
+  //     ? true
+  //     : false;
+
+  // console.log(allLoadedCheck);
 
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
@@ -227,18 +237,39 @@ const TaskPageDetails = () => {
     return new Promise((resolve, reject) => {
       if (materials.length > 0) {
         resolve(
+          // dispatch(usersActions.removeUserError({ email: userEmail })),
           dispatch(
             tasksActions.addMaterials({
               index: taskIndex,
               materials,
             })
-          )
+          ),
+          usersActions.removeUserError({ email: userEmail })
         );
       } else if (materials.length === 0) {
         reject(new Error("No data to be send to the server!"));
+        dispatch(
+          usersActions.addUserError({ email: userEmail, error: "Error" })
+        );
       }
     });
   };
+
+  /*
+  // Note: the second argument to action callback is 
+// a function that returns the whole store
+const conditionalAction = () => (dispatch, getState) => {
+  // Retrieve the whole store object and check what you need from it
+  const { dataPresent } = getState();
+
+  // Conditionally dispatch an action
+  if (dataPresent) {
+    dispatch({ type: "MAIN_ACTION" });
+  } else {
+    dispatch({ type: "OTHER_ACTION" });
+  }
+}
+  */
 
   const sendSpecificationDataHandler = () => {
     sendingDataPromise()
@@ -246,11 +277,13 @@ const TaskPageDetails = () => {
         const currentProjectTasks = stateTasks.filter(
           (el) => el.project === projectName
         );
-        if (
-          currentProjectTasks[0].materials.length ===
-          result.payload.materials.length
-        ) {
-          return true;
+        const currentTask = currentProjectTasks.find(
+          (el) =>
+            el.area === areaName && el.dk === deck && el.fireZone === fireZone
+        );
+
+        if (currentTask.materials.length === result.payload.materials.length) {
+          dispatch(usersActions.removeUserError({ email: userEmail }));
         } else {
           dispatch(
             usersActions.addUserError({ email: userEmail, error: "Error" })
@@ -266,9 +299,7 @@ const TaskPageDetails = () => {
           });
         }
         if (userError) {
-          throw new Error(
-            "Problem with sending data! Please check your internet connection and try again."
-          );
+          throw new Error("Problem with sending data!");
         }
       })
       .catch((err) => {

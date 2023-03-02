@@ -37,6 +37,11 @@ const usersSlice = createSlice({
       state.find((user) => user.email === action.payload.email).error =
         action.payload.error;
     },
+    removeUserError(state, action) {
+      const user = state.find((el) => el.email === action.payload.email);
+      console.log(user);
+      if (user.error) delete user.error;
+    },
     replceUsers(_, action) {
       initialPersistLS = action.payload;
       return action.payload;

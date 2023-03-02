@@ -17,6 +17,7 @@ import { Fragment } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStateData } from "./store/all-actions";
+import { usersActions } from "./store/users-slice";
 import HomePage from "./pages/HomePage";
 import swal from "sweetalert";
 
@@ -24,6 +25,8 @@ let isInitial = true;
 
 function App() {
   const dispatch = useDispatch();
+
+  const userEmail = localStorage?.getItem("login");
 
   let store = useSelector((state) => state);
   let tasksData = store.tasks;

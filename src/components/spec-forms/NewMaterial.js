@@ -2,6 +2,7 @@ import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 import swal from "sweetalert";
 import { Fragment, useState, useRef, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -32,6 +33,7 @@ const NewMaterial = (props) => {
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
+  const [imageLoaded, setIsImageLoaded] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
   const materialState = useSelector((state) => state.library);
@@ -126,6 +128,7 @@ const NewMaterial = (props) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
+          setIsImageLoaded(true);
         });
       });
     });
@@ -211,7 +214,6 @@ const NewMaterial = (props) => {
       ","
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
-    // setSelectedMaterial(true);
     setEnteredDescription(selectedMat.info);
     setFormInputType("entered");
   };
@@ -297,7 +299,6 @@ const NewMaterial = (props) => {
               accept="image/*"
               disabled={!checked ? false : true}
               onChange={pictureInputChangeHandler}
-              // value={enteredTaskPicture ? enteredTaskPicture : ""}
             />
           )}
         </div>
@@ -374,6 +375,7 @@ const NewMaterial = (props) => {
       onSubmit={formSubmissionHandler}
       data-order={props.data}
       data-checked={checked}
+      data-loaded={imageLoaded}
     >
       {formJSX(formInputType)}
     </form>
