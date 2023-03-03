@@ -20,7 +20,7 @@ import {
   PageNumber,
 } from "docx";
 
-const generateDOC = (
+const generateDOC = async (
   projectName,
   areaName,
   yardNumber,
@@ -35,8 +35,23 @@ const generateDOC = (
   revDate,
   revPerson,
   revId
+  //url
 ) => {
   const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
+
+  const imgBlob = await fetch(
+    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F1%2F1-3.png?alt=media&token=a1e2ae03-4ee5-4d37-ad5e-d080639c4bab"
+  ).then((r) => r.blob());
+
+  const imgBlob1 = await fetch(
+    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F2%2F2-2.png?alt=media&token=c8e0f67b-bd53-481d-95fe-f913cd44ca45"
+  ).then((r) => r.blob());
+
+  const imgBlob2 = await fetch(
+    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F3%2F3-1.png?alt=media&token=ff97bdc2-d20e-4950-a849-73c95e9f32aa"
+  ).then((r) => r.blob());
+
+  const imgBobArr = [imgBlob, imgBlob1, imgBlob2];
 
   const document = new Document({
     styles: {
@@ -299,7 +314,7 @@ const generateDOC = (
                 ],
               }),
               //
-              ...data.map((el) => {
+              ...data.map((el, index) => {
                 return new TableRow({
                   height: { value: 1900, rule: HeightRule.EXACT },
                   children: [
@@ -353,7 +368,19 @@ const generateDOC = (
                         },
                       },
                       width: { size: 100 / 6, type: WidthType.PERCENTAGE },
-                      children: [new Paragraph("IMAGE")],
+                      children: [
+                        new Paragraph({
+                          children: [
+                            new ImageRun({
+                              data: imgBobArr[index],
+                              transformation: {
+                                width: 100,
+                                height: 100,
+                              },
+                            }),
+                          ],
+                        }),
+                      ],
                     }),
                   ],
                 });
@@ -362,7 +389,7 @@ const generateDOC = (
             ],
           }),
           new Paragraph({
-            children: [new TextRun("sda"), new PageBreak()],
+            children: [new TextRun(""), new PageBreak()],
           }),
         ],
       },
@@ -370,7 +397,6 @@ const generateDOC = (
   });
 
   Packer.toBlob(document).then((blob) => {
-    console.log(blob);
     saveAs(blob, `${areaName}-${specType}.docx`);
     console.log("Document created successfully");
   });

@@ -28,8 +28,6 @@ const TaskPageDetails = () => {
     (state) => state.users.find((el) => el.email === userEmail).error
   );
 
-  console.log(userError);
-
   // const allMaterialForms = Array.from(document.querySelectorAll("form"));
   // const allLoadedCheck =
   //   allMaterialForms.filter((el) => el.dataset.loaded === "true").length ===
@@ -160,6 +158,7 @@ const TaskPageDetails = () => {
       revDate.current.value,
       revPerson.current.value,
       revId.current.value
+      //urls
     );
   };
 
@@ -237,7 +236,6 @@ const TaskPageDetails = () => {
     return new Promise((resolve, reject) => {
       if (materials.length > 0) {
         resolve(
-          // dispatch(usersActions.removeUserError({ email: userEmail })),
           dispatch(
             tasksActions.addMaterials({
               index: taskIndex,
@@ -255,31 +253,18 @@ const TaskPageDetails = () => {
     });
   };
 
-  /*
-  // Note: the second argument to action callback is 
-// a function that returns the whole store
-const conditionalAction = () => (dispatch, getState) => {
-  // Retrieve the whole store object and check what you need from it
-  const { dataPresent } = getState();
-
-  // Conditionally dispatch an action
-  if (dataPresent) {
-    dispatch({ type: "MAIN_ACTION" });
-  } else {
-    dispatch({ type: "OTHER_ACTION" });
-  }
-}
-  */
-
   const sendSpecificationDataHandler = () => {
     sendingDataPromise()
       .then((result) => {
+        console.log(result);
         const currentProjectTasks = stateTasks.filter(
           (el) => el.project === projectName
         );
         const currentTask = currentProjectTasks.find(
           (el) =>
-            el.area === areaName && el.dk === deck && el.fireZone === fireZone
+            el.area.toLowerCase() === areaName.toLowerCase() &&
+            el.dk === deck &&
+            el.fireZone === fireZone
         );
 
         if (currentTask.materials.length === result.payload.materials.length) {

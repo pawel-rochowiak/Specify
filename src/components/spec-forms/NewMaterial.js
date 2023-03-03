@@ -33,6 +33,7 @@ const NewMaterial = (props) => {
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
   const [imageLoaded, setIsImageLoaded] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
@@ -41,6 +42,7 @@ const NewMaterial = (props) => {
 
   useEffect(() => {
     if (props.dataObj) {
+      console.log(props.dataObj);
       setFormInputType("entered");
       setChecked(true);
       setEnteredCode(props.dataObj.number);
@@ -48,6 +50,7 @@ const NewMaterial = (props) => {
       setEnteredDescription(props.dataObj.description);
       setEnteredSupplier(props.dataObj.supplier);
       setEnteredTaskDate(props.dataObj.date);
+      setImageUrl(props.dataObj.url);
       setIsProp(true);
       downloadAllImgs();
     }
@@ -103,8 +106,8 @@ const NewMaterial = (props) => {
   const uploadImage = () => {
     if (imageUpload === null) return;
     const imgRef = ref(storage, imageFileName);
+    deleteImage(imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
-      deleteImage(imageFileName);
       downloadImg();
       setImageUpload(null);
     });
@@ -118,6 +121,7 @@ const NewMaterial = (props) => {
         .forEach((item) => {
           getDownloadURL(item).then((url) => {
             setImageList([url]);
+            setImageUrl(url);
           });
         });
     });
@@ -129,6 +133,7 @@ const NewMaterial = (props) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
           setIsImageLoaded(true);
+          setImageUrl(url);
         });
       });
     });
@@ -147,6 +152,7 @@ const NewMaterial = (props) => {
         .filter((el) => el._location.path !== image)
         .forEach((item) => {
           const imgRef = ref(storage, item._location.path);
+          console.log(imgRef);
           deleteObject(imgRef)
             .then(() => {
               setImageUpload(null);
@@ -167,6 +173,7 @@ const NewMaterial = (props) => {
       supplier: enteredSupplier,
       date: enteredTaskDate,
       picture: enteredTaskPicture,
+      url: imageUrl,
     };
 
     const arrIndex = +event.target.dataset.order;
@@ -187,7 +194,6 @@ const NewMaterial = (props) => {
     }
 
     if (currentIndex === arrIndex || isProps === true) {
-      console.log(isProps);
       props.replaceData(data, arrIndex);
     }
 
