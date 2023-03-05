@@ -58,7 +58,6 @@ const generateDOC = async (
   const imgBlob = await fetch(
     "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FAzamara%2FRESTAURANT%2F1%2F1-geoMapa_.jpg?alt=media&token=e7c7b262-fa3e-4378-990f-9e4c7d5ab38c"
   ).then((r) => {
-    console.log(r);
     r.blob();
   });
 
