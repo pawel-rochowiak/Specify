@@ -46,6 +46,7 @@ const generateDOC = async (
 
   const urlsBlobs = await Promise.all(
     itemsArr.map(async (url) => {
+      console.log(url);
       const resp = await fetch(url);
       console.log(resp);
       const respBlob = await resp.blob();
@@ -53,15 +54,13 @@ const generateDOC = async (
     })
   );
 
-  console.log(urlsBlobs);
+  // const imgBlob = await fetch(
+  //   "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FAzamara%2FRESTAURANT%2F1%2F1-geoMapa_.jpg?alt=media&token=e7c7b262-fa3e-4378-990f-9e4c7d5ab38c"
+  // ).then((r) => {
+  //   r.blob();
+  // });
 
-  const imgBlob = await fetch(
-    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FAzamara%2FRESTAURANT%2F1%2F1-geoMapa_.jpg?alt=media&token=e7c7b262-fa3e-4378-990f-9e4c7d5ab38c"
-  ).then((r) => {
-    r.blob();
-  });
-
-  console.log(imgBlob);
+  // console.log(imgBlob);
 
   // const imgBlob1 = await fetch(
   //   "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F2%2F2-2.png?alt=media&token=c8e0f67b-bd53-481d-95fe-f913cd44ca45"
