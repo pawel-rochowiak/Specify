@@ -39,19 +39,38 @@ const generateDOC = async (
 ) => {
   const data = JSON.parse(localStorage.getItem(`${projectName}-${areaName}`));
 
+  const items = { ...localStorage };
+  const itemsArr = Object.entries(items)
+    .filter(([key, value]) => key.includes("IMAGES-"))
+    .map((el) => el[1]);
+
+  const urlsBlobs = await Promise.all(
+    itemsArr.map(async (url) => {
+      const resp = await fetch(url);
+      console.log(resp);
+      const respBlob = await resp.blob();
+      return respBlob;
+    })
+  );
+
+  console.log(urlsBlobs);
+
   const imgBlob = await fetch(
-    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F1%2F1-3.png?alt=media&token=a1e2ae03-4ee5-4d37-ad5e-d080639c4bab"
-  ).then((r) => r.blob());
+    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FAzamara%2FRESTAURANT%2F1%2F1-geoMapa_.jpg?alt=media&token=e7c7b262-fa3e-4378-990f-9e4c7d5ab38c"
+  ).then((r) => {
+    console.log(r);
+    r.blob();
+  });
 
-  const imgBlob1 = await fetch(
-    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F2%2F2-2.png?alt=media&token=c8e0f67b-bd53-481d-95fe-f913cd44ca45"
-  ).then((r) => r.blob());
+  console.log(imgBlob);
 
-  const imgBlob2 = await fetch(
-    "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F3%2F3-1.png?alt=media&token=ff97bdc2-d20e-4950-a849-73c95e9f32aa"
-  ).then((r) => r.blob());
+  // const imgBlob1 = await fetch(
+  //   "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F2%2F2-2.png?alt=media&token=c8e0f67b-bd53-481d-95fe-f913cd44ca45"
+  // ).then((r) => r.blob());
 
-  const imgBobArr = [imgBlob, imgBlob1, imgBlob2];
+  // const imgBlob2 = await fetch(
+  //   "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FMSC%2FRESTAURANT%2F3%2F3-1.png?alt=media&token=ff97bdc2-d20e-4950-a849-73c95e9f32aa"
+  // ).then((r) => r.blob());
 
   const document = new Document({
     styles: {
@@ -372,7 +391,7 @@ const generateDOC = async (
                         new Paragraph({
                           children: [
                             new ImageRun({
-                              data: imgBobArr[index],
+                              data: urlsBlobs[index],
                               transformation: {
                                 width: 100,
                                 height: 100,
