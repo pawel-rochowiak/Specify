@@ -115,10 +115,6 @@ const NewMaterial = (props) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
           setIsImageLoaded(true);
-          // setImageUrl(url);
-          // const itemsLS = { ...localStorage };
-          // for(const [key,value] of Object.entries(itemsLS)){
-          // }
           localStorage.setItem(
             `IMAGES-${props.project}-${props.area}-${enteredCode}`,
             JSON.stringify(url)
@@ -130,7 +126,7 @@ const NewMaterial = (props) => {
 
   useEffect(() => {
     downloadAllImgs();
-  }, [params, isProps]);
+  }, [params, isProps, downloadAllImgs]);
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {
