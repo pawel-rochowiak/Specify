@@ -33,7 +33,6 @@ const NewMaterial = (props) => {
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
-  const [imageUrl, setImageUrl] = useState([]);
   const [imageLoaded, setIsImageLoaded] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
@@ -55,6 +54,7 @@ const NewMaterial = (props) => {
 
   const codeInputChangeHandler = (event) => {
     setEnteredCode(event.target.value);
+    props.getCode(event.target.value);
   };
 
   const itemInputChangeHandler = (event) => {

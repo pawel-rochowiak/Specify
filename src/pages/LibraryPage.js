@@ -44,6 +44,7 @@ const LibraryPage = (props) => {
                 number={index + 1}
                 name={el.name}
                 collection={el.collection}
+                category={el.category}
                 supplier={el.supplier}
                 certificate={el.certificates}
                 info={el.info}

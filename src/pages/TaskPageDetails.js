@@ -42,6 +42,7 @@ const TaskPageDetails = () => {
   const [specMatArr, setSpecMatArr] = useState([]);
   const [formChecked, setFormChecked] = useState(false);
   const [materialsArr, setMaterialArr] = useState([]);
+  const [matCode, setMatCode] = useState("");
 
   //Picking right task using params to match the task path
 
@@ -177,6 +178,8 @@ const TaskPageDetails = () => {
     });
   };
 
+  useEffect(() => {}, [matCode]);
+
   useEffect(() => {
     addCheckedMaterialToArrays();
   }, [specMatArr, addCheckedMaterialToArrays]);
@@ -192,6 +195,12 @@ const TaskPageDetails = () => {
         btnArr.forEach((el) => (el.disabled = false));
       }
     });
+
+    const getMaterialCodeHandler = (code) => {
+      console.log(code);
+      setMatCode(code);
+      return code;
+    };
 
     setMaterialArr((prevState) => {
       setFormChecked(true);
@@ -209,6 +218,7 @@ const TaskPageDetails = () => {
           checkProps={true}
           project={projectName}
           area={areaName}
+          getCode={getMaterialCodeHandler}
         />,
       ];
     });
@@ -228,6 +238,8 @@ const TaskPageDetails = () => {
       JSON.stringify(specMatArr)
     );
   };
+
+  //`IMAGES-${props.project}-${props.area}-${enteredCode}`,
 
   const sendingDataPromise = () => {
     const materials = JSON.parse(
