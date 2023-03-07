@@ -241,28 +241,74 @@ const TaskPageDetails = () => {
 
   //`IMAGES-${props.project}-${props.area}-${enteredCode}`,
 
+  // const sendingDataPromise = () => {
+  //   const materials = JSON.parse(
+  //     localStorage.getItem(`${projectName}-${areaName}`)
+  //   );
+  //   return new Promise((resolve, reject) => {
+  //     if (materials.length > 0) {
+  //       resolve(
+  //         dispatch(
+  //           tasksActions.addMaterials({
+  //             index: taskIndex,
+  //             materials,
+  //           })
+  //         ),
+  //         usersActions.removeUserError({ email: userEmail })
+  //       );
+  //     } else if (materials.length === 0) {
+  //       reject(new Error("No data to be send to the server!"));
+  //       dispatch(
+  //         usersActions.addUserError({ email: userEmail, error: "Error" })
+  //       );
+  //     }
+  //   });
+  // };
+
   const sendingDataPromise = () => {
-    const materials = JSON.parse(
-      localStorage.getItem(`${projectName}-${areaName}`)
-    );
-    return new Promise((resolve, reject) => {
-      if (materials.length > 0) {
-        resolve(
-          dispatch(
-            tasksActions.addMaterials({
-              index: taskIndex,
-              materials,
-            })
-          ),
-          usersActions.removeUserError({ email: userEmail })
-        );
-      } else if (materials.length === 0) {
-        reject(new Error("No data to be send to the server!"));
-        dispatch(
-          usersActions.addUserError({ email: userEmail, error: "Error" })
-        );
-      }
-    });
+    const data = localStorage.getItem(`${projectName}-${areaName}`);
+
+    if (!data) {
+      return Promise.reject(new Error("No data found in local storage"));
+    }
+
+    let materials;
+
+    try {
+      materials = JSON.parse(data);
+    } catch (err) {
+      return Promise.reject(new Error("Error parsing JSON data"));
+    }
+
+    if (!Array.isArray(materials)) {
+      return Promise.reject(new Error("Data is not an array"));
+    }
+
+    if (materials.length === 0) {
+      dispatch(usersActions.addUserError({ email: userEmail, error: "Error" }));
+      return Promise.reject(new Error("No data to be sent to the server!"));
+    }
+
+    const promises = [
+      dispatch(tasksActions.addMaterials({ index: taskIndex, materials })),
+      dispatch(usersActions.removeUserError({ email: userEmail })),
+    ];
+
+    Promise.all(promises)
+      .then(() => {
+        swal("Data was sent to the server!", {
+          buttons: false,
+          icon: "success",
+          timer: 1500,
+        });
+      })
+      .catch((err) => {
+        swal(`${err.message}`, {
+          buttons: false,
+          icon: "warning",
+          timer: 3000,
+        });
+      });
   };
 
   const sendSpecificationDataHandler = () => {
