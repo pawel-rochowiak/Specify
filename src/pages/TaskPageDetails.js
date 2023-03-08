@@ -197,7 +197,6 @@ const TaskPageDetails = () => {
     });
 
     const getMaterialCodeHandler = (code) => {
-      console.log(code);
       setMatCode(code);
       return code;
     };
@@ -294,13 +293,14 @@ const TaskPageDetails = () => {
       dispatch(usersActions.removeUserError({ email: userEmail })),
     ];
 
-    Promise.all(promises)
-      .then(() => {
+    return Promise.all(promises)
+      .then((results) => {
         swal("Data was sent to the server!", {
           buttons: false,
           icon: "success",
           timer: 1500,
         });
+        return { payload: { materials: materials } };
       })
       .catch((err) => {
         swal(`${err.message}`, {

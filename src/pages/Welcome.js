@@ -76,6 +76,8 @@ const Welcome = () => {
       });
   };
 
+
+
   useEffect(() => {
     document
       .getElementById("password")

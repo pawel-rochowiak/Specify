@@ -39,7 +39,6 @@ const usersSlice = createSlice({
     },
     removeUserError(state, action) {
       const user = state.find((el) => el.email === action.payload.email);
-      console.log(user);
       if (user.error) delete user.error;
     },
     replceUsers(_, action) {

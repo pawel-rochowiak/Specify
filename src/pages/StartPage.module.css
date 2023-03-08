@@ -3,6 +3,8 @@
   width: 100vw;
   height: 100vh;
   padding: 5rem;
+  overflow: hidden;
+  border-radius: 2rem;
 }
 
 .data {
