@@ -32,7 +32,9 @@ const tasksSlice = createSlice({
       state[action.payload.taskIndex].fz = action.payload.fz;
       state[action.payload.taskIndex].area = action.payload.area;
       state[action.payload.taskIndex].date = action.payload.date;
-      // state[action.payload.taskIndex].team = action.payload.team;
+    },
+    addTaskEditDate(state, action) {
+      state[action.payload.taskIndex].editedOn = action.payload.dateString;
     },
     deleteTask(state, action) {
       state.splice(action.payload, 1);

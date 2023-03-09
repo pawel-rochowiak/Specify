@@ -75,6 +75,10 @@
   cursor: pointer;
 }
 
+.projectEditDate {
+  font-size: 1rem;
+}
+
 .edit {
   padding: 5px;
   background-color: #44b3fd;

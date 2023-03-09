@@ -4,12 +4,13 @@ import WarningIcon from "../components/icons/WarningIcon";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
 import swal from "sweetalert";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 
 const Task = (props) => {
   const [isFinished, setIsFinished] = useState(false);
   const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks);
   //Current Date
   const date = new Date().getTime();
   const projectDate = new Date(props.date).getTime();
@@ -18,22 +19,14 @@ const Task = (props) => {
   const venueName = props.venue;
   const taskName = props.task;
 
-  const { taskProject, taskAreaName, taskSpecType, text } = JSON.parse(
-    localStorage.getItem("editDate")
+  const currentTask = tasks.find(
+    (el) =>
+      el.area.toLowerCase() === venueName.toLowerCase() &&
+      el.project.trim() === projectName.trim() &&
+      taskName.trim() === el.specification.trim()
   );
 
-  const editDate =
-    taskProject.trim() === projectName.trim() &&
-    taskSpecType.trim() === taskName.trim() &&
-    taskAreaName.toLowerCase() === venueName.toLowerCase()
-      ? text
-      : "-";
-
-  console.log(
-    taskProject.trim() === projectName.trim(),
-    taskSpecType.trim() === taskName.trim(),
-    taskAreaName.toLowerCase() === venueName.toLowerCase()
-  );
+  const editDate = currentTask.editedOn ? currentTask.editedOn : "-";
 
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);
@@ -98,7 +91,9 @@ const Task = (props) => {
           ""
         )}
       </div>
-      <div className={classes.projectTask}>{editDate}</div>
+      <div className={`${classes.projectTask} ${classes.projectEditDate}`}>
+        {editDate}
+      </div>
       <div className={classes.projectResponsible}>
         <p className={classes.resPerson}>{props.person}</p>
       </div>

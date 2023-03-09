@@ -10,11 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import { usersActions } from "../store/users-slice";
 import generateDOC from "../components/functions/generateDOC";
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 import swal from "sweetalert";
-import LoadingSpinner from "../UI/LoadingSpinner";
 
 const TaskPageDetails = (props) => {
+  const [, , , versionControlHandler] = useOutletContext();
   const dispatch = useDispatch();
 
   const params = useParams();
@@ -150,7 +150,6 @@ const TaskPageDetails = (props) => {
       revDate.current.value,
       revPerson.current.value,
       revId.current.value
-      //urls
     );
   };
 
@@ -214,24 +213,6 @@ const TaskPageDetails = (props) => {
     });
 
     setIndex(index + 1);
-  };
-
-  const versionControlHandler = () => {
-    const date = new Date();
-    const day = date.toLocaleString("default", { weekday: "long" });
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getFullYear();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    localStorage.setItem(
-      "editDate",
-      JSON.stringify({
-        taskProject: `${projectName}`,
-        taskAreaName: `${areaName}`,
-        taskSpecType: `${specType}`,
-        text: `on ${day} ${month} ${year} at ${hour}:${minutes}`,
-      })
-    );
   };
 
   const deleteMaterialHandler = () => {
@@ -323,7 +304,14 @@ const TaskPageDetails = (props) => {
             icon: "success",
             timer: 1500,
           });
-          versionControlHandler();
+          const dateEdit = versionControlHandler();
+          console.log(dateEdit);
+          dispatch(
+            tasksActions.addTaskEditDate({
+              dateString: dateEdit.text,
+              taskIndex,
+            })
+          );
         }
         if (userError) {
           throw new Error("Problem with sending data!");

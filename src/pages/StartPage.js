@@ -41,7 +41,6 @@ const StartPage = (props) => {
   const [stateTarget, setStateTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
   const [isHome, setIsHome] = useState(true);
-  const [currentVersionDate, setCurentVersionDate] = useState(null);
 
   const userEmail = localStorage.getItem("login");
 
@@ -76,15 +75,16 @@ const StartPage = (props) => {
     setIsFormVisible(false);
   };
 
+  //Getting date string for edited specifications
+
   const versionControlHandler = () => {
     const date = new Date();
-    const day = date.toLocaleString("default", { weekday: "long" });
+    const day = date.toLocaleString();
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
     const hour = date.getHours();
     const minutes = date.getMinutes();
-    setCurentVersionDate(`on ${day} ${month} ${year} at ${hour}:${minutes}`);
-    console.log(`on ${day} ${month} ${year} at ${hour}:${minutes}`);
+    return { text: `on ${day} ${month} ${year} at ${hour}:${minutes}` };
   };
 
   useEffect(() => {
@@ -265,7 +265,12 @@ const StartPage = (props) => {
 
         <div className={classes.mainContent}>
           <Outlet
-            context={[newItemHandler, addNewTaskHandler, closeNewTaskForm]}
+            context={[
+              newItemHandler,
+              addNewTaskHandler,
+              closeNewTaskForm,
+              versionControlHandler,
+            ]}
           />
         </div>
       </div>
