@@ -16,6 +16,7 @@ const HomePage = (props) => {
             <div>Venue</div>
             <div>Type</div>
             <div>Date</div>
+            <div>Edited</div>
             <div>Assigned User</div>
           </div>
         ) : (

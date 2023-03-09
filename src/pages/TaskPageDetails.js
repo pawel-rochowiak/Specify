@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
-const TaskPageDetails = () => {
+const TaskPageDetails = (props) => {
   const dispatch = useDispatch();
 
   const params = useParams();
@@ -27,15 +27,6 @@ const TaskPageDetails = () => {
   let userError = useSelector(
     (state) => state.users.find((el) => el.email === userEmail).error
   );
-
-  // const allMaterialForms = Array.from(document.querySelectorAll("form"));
-  // const allLoadedCheck =
-  //   allMaterialForms.filter((el) => el.dataset.loaded === "true").length ===
-  //   allMaterialForms.length
-  //     ? true
-  //     : false;
-
-  // console.log(allLoadedCheck);
 
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
@@ -225,6 +216,24 @@ const TaskPageDetails = () => {
     setIndex(index + 1);
   };
 
+  const versionControlHandler = () => {
+    const date = new Date();
+    const day = date.toLocaleString("default", { weekday: "long" });
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    localStorage.setItem(
+      "editDate",
+      JSON.stringify({
+        taskProject: `${projectName}`,
+        taskAreaName: `${areaName}`,
+        taskSpecType: `${specType}`,
+        text: `on ${day} ${month} ${year} at ${hour}:${minutes}`,
+      })
+    );
+  };
+
   const deleteMaterialHandler = () => {
     if (materialsArr.length === 1) setFormChecked(false);
     if (materialsArr.length === 0) return;
@@ -237,32 +246,6 @@ const TaskPageDetails = () => {
       JSON.stringify(specMatArr)
     );
   };
-
-  //`IMAGES-${props.project}-${props.area}-${enteredCode}`,
-
-  // const sendingDataPromise = () => {
-  //   const materials = JSON.parse(
-  //     localStorage.getItem(`${projectName}-${areaName}`)
-  //   );
-  //   return new Promise((resolve, reject) => {
-  //     if (materials.length > 0) {
-  //       resolve(
-  //         dispatch(
-  //           tasksActions.addMaterials({
-  //             index: taskIndex,
-  //             materials,
-  //           })
-  //         ),
-  //         usersActions.removeUserError({ email: userEmail })
-  //       );
-  //     } else if (materials.length === 0) {
-  //       reject(new Error("No data to be send to the server!"));
-  //       dispatch(
-  //         usersActions.addUserError({ email: userEmail, error: "Error" })
-  //       );
-  //     }
-  //   });
-  // };
 
   const sendingDataPromise = () => {
     const data = localStorage.getItem(`${projectName}-${areaName}`);
@@ -300,6 +283,7 @@ const TaskPageDetails = () => {
           icon: "success",
           timer: 1500,
         });
+
         return { payload: { materials: materials } };
       })
       .catch((err) => {
@@ -314,7 +298,6 @@ const TaskPageDetails = () => {
   const sendSpecificationDataHandler = () => {
     sendingDataPromise()
       .then((result) => {
-        console.log(result);
         const currentProjectTasks = stateTasks.filter(
           (el) => el.project === projectName
         );
@@ -340,6 +323,7 @@ const TaskPageDetails = () => {
             icon: "success",
             timer: 1500,
           });
+          versionControlHandler();
         }
         if (userError) {
           throw new Error("Problem with sending data!");

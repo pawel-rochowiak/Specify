@@ -41,6 +41,7 @@ const StartPage = (props) => {
   const [stateTarget, setStateTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
   const [isHome, setIsHome] = useState(true);
+  const [currentVersionDate, setCurentVersionDate] = useState(null);
 
   const userEmail = localStorage.getItem("login");
 
@@ -73,6 +74,17 @@ const StartPage = (props) => {
 
   const closeNewTaskForm = () => {
     setIsFormVisible(false);
+  };
+
+  const versionControlHandler = () => {
+    const date = new Date();
+    const day = date.toLocaleString("default", { weekday: "long" });
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    setCurentVersionDate(`on ${day} ${month} ${year} at ${hour}:${minutes}`);
+    console.log(`on ${day} ${month} ${year} at ${hour}:${minutes}`);
   };
 
   useEffect(() => {

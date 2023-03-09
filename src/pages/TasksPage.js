@@ -2,13 +2,15 @@ import classes from "./StartPage.module.css";
 import classesTaskPage from "./TaskPage.module.css";
 import Task from "../components/Task";
 import PlusIcon from "../components/icons/PlusIcon";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const TasksPage = (props) => {
   const stateTasks = useSelector((state) => state.tasks);
   const [createItem] = useOutletContext();
+
+  // versionControlHandler();
 
   return (
     <Fragment>
@@ -20,6 +22,7 @@ const TasksPage = (props) => {
             <div>Venue</div>
             <div>Type</div>
             <div>Date</div>
+            <div>Edited</div>
             <div>Assigned User</div>
           </div>
         ) : (

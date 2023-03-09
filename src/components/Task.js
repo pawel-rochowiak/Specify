@@ -18,6 +18,23 @@ const Task = (props) => {
   const venueName = props.venue;
   const taskName = props.task;
 
+  const { taskProject, taskAreaName, taskSpecType, text } = JSON.parse(
+    localStorage.getItem("editDate")
+  );
+
+  const editDate =
+    taskProject.trim() === projectName.trim() &&
+    taskSpecType.trim() === taskName.trim() &&
+    taskAreaName.toLowerCase() === venueName.toLowerCase()
+      ? text
+      : "-";
+
+  console.log(
+    taskProject.trim() === projectName.trim(),
+    taskSpecType.trim() === taskName.trim(),
+    taskAreaName.toLowerCase() === venueName.toLowerCase()
+  );
+
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);
   }, [date, projectDate]);
@@ -81,6 +98,7 @@ const Task = (props) => {
           ""
         )}
       </div>
+      <div className={classes.projectTask}>{editDate}</div>
       <div className={classes.projectResponsible}>
         <p className={classes.resPerson}>{props.person}</p>
       </div>

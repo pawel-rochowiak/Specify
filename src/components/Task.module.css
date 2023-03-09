@@ -4,7 +4,7 @@
   border-radius: 5px;
   border: 1px solid #c7e7fc;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   font-size: 1.2rem;
   text-transform: uppercase;
   position: relative;
