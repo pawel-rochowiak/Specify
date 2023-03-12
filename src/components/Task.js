@@ -21,12 +21,12 @@ const Task = (props) => {
 
   const currentTask = tasks.find(
     (el) =>
-      el.area.toLowerCase() === venueName.toLowerCase() &&
-      el.project.trim() === projectName.trim() &&
-      taskName.trim() === el.specification.trim()
+      el.area?.toLowerCase() === venueName?.toLowerCase() &&
+      el.project?.trim() === projectName?.trim() &&
+      taskName?.trim() === el.specification?.trim()
   );
 
-  const editDate = currentTask.editedOn ? currentTask.editedOn : "-";
+  const editDate = currentTask?.editedOn ? currentTask?.editedOn : "-";
 
   useEffect(() => {
     if (date > projectDate) setIsFinished(true);

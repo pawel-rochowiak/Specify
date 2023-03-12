@@ -15,7 +15,7 @@ const ProjectPage = (props) => {
         <div className={classes.name}>All projects</div>
 
         {stateProjects.length > 0 ? (
-          <div className={classes.categoriesTask}>
+          <div className={classes.projectCategoriesTask}>
             <div>Project</div>
             <div>Type</div>
             <div>Scope</div>
