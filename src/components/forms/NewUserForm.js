@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Modal from "../../UI/Modal";
 import PasswordIcon from "../icons/PasswordIcon";
 import CheckIcon from "../icons/CheckIcon";
@@ -7,7 +7,13 @@ import UserIcon from "../icons/UserIcon";
 import Logo from "../../Assets/specify_logo.png";
 import classes from "./NewUserForm.module.css";
 import LoadingSpinner from "../../UI/LoadingSpinner";
-
+import { firebaseAuth } from "../../firebase";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  reauthenticateWithCredential,
+  onIdTokenChanged,
+} from "firebase/auth";
 //STATE//
 import { usersActions } from "../../store/users-slice";
 import { useDispatch } from "react-redux";
@@ -21,8 +27,21 @@ const NewUserForm = (props) => {
   const emailInputRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [newUser, setNewUser] = useState(null);
 
-  const submitHandler = (event) => {
+  // useEffect(() => {
+  //   const unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {
+  //     setNewUser(user);
+  //     console.log(user);
+  //     if (user && user.emailVerified) {
+  //       console.log("New user is verified!");
+  //       // ... add new user to database or perform other actions
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, []);
+
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
@@ -34,50 +53,50 @@ const NewUserForm = (props) => {
 
     setIsLoading(true);
 
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCvhJIuwY1ms610WG-tDggIcuKbGrSEd5o",
-      {
-        method: "POST",
-        body: JSON.stringify({
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        enteredEmail,
+        enteredPassword
+      );
+      await sendEmailVerification(userCredential.user);
+      setIsLoading(false);
+      dispatch(
+        usersActions.addUser({
+          name: enteredName,
+          surname: enteredSurname,
+          initials: `${enteredNameFirstLtr}${enteredSurnameFirstLtr}`,
           email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Autenthication failed!";
+          isLoggedIn: false,
+        })
+      );
+    } catch (error) {
+      const errorMessage = error.message;
+      alert(errorMessage);
+    }
 
-            if (data && data.error && data.error.message) {
-              errorMessage = data.error.message;
-            }
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        dispatch(
-          usersActions.addUser({
-            name: enteredName,
-            surname: enteredSurname,
-            initials: `${enteredNameFirstLtr}${enteredSurnameFirstLtr}`,
-            token: "",
-            email: data.email,
-            isLoggedIn: false,
-          })
-        );
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+    // createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+    //   .then((userCredential) => {
+    //     //   // Signed in
+    //     //   console.log(userCredential);
+    //     const user = userCredential.user;
+    //     setIsLoading(false);
+    //     dispatch(
+    //       usersActions.addUser({
+    //         name: enteredName,
+    //         surname: enteredSurname,
+    //         initials: `${enteredNameFirstLtr}${enteredSurnameFirstLtr}`,
+    //         email: user.email,
+    //         isLoggedIn: false,
+    //       })
+    //     );
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     alert(errorMessage);
+    //     // ..
+    //   });
   };
 
   const mainContent = (

@@ -8,6 +8,8 @@ import UserIcon from "../components/icons/UserIcon";
 import Logo from "../Assets/specify_logo.png";
 import NewUserForm from "../components/forms/NewUserForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import { firebaseAuth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import swal from "sweetalert";
 
 //STATE//
@@ -24,7 +26,7 @@ const Welcome = () => {
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
@@ -32,51 +34,75 @@ const Welcome = () => {
 
     setIsLoading(true);
 
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCvhJIuwY1ms610WG-tDggIcuKbGrSEd5o",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage =
-              "Autenthication failed! Please check your login and password!";
-
-            if (data && data.error && data.error.message) {
-              errorMessage = data.error.message;
-            }
-
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
+    try {
+      const result = await signInWithEmailAndPassword(
+        firebaseAuth,
+        enteredEmail,
+        enteredPassword
+      );
+      const user = result.user;
+      if (user.emailVerified) {
+        console.log("User is verified!");
         navigate("/home");
-        localStorage.setItem("login", data.email);
-        dispatch(usersActions.login(data));
-      })
-      .catch((err) => {
-        swal(`${err.message}`, {
+        localStorage.setItem("login", enteredEmail);
+        // dispatch(usersActions.login(data));
+      } else {
+        swal(`User is not verified!`, {
           buttons: false,
           timer: 2000,
         });
+      }
+    } catch (error) {
+      swal(`Invalid email or password. Please try again`, {
+        buttons: false,
+        timer: 2000,
       });
+    }
+    setIsLoading(false);
+
+    // fetch(
+    //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCvhJIuwY1ms610WG-tDggIcuKbGrSEd5o",
+    //   {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       email: enteredEmail,
+    //       password: enteredPassword,
+    //       returnSecureToken: true,
+    //     }),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // )
+    //   .then((res) => {
+    //     setIsLoading(false);
+    //     if (res.ok) {
+    //       return res.json();
+    //     } else {
+    //       return res.json().then((data) => {
+    //         let errorMessage =
+    //           "Autenthication failed! Please check your login and password!";
+
+    //         if (data && data.error && data.error.message) {
+    //           errorMessage = data.error.message;
+    //         }
+
+    //         throw new Error(errorMessage);
+    //       });
+    //     }
+    //   })
+    //   .then((data) => {
+    //     navigate("/home");
+    //     localStorage.setItem("login", data.email);
+    //     dispatch(usersActions.login(data));
+    //   })
+    //   .catch((err) => {
+    //     swal(`${err.message}`, {
+    //       buttons: false,
+    //       timer: 2000,
+    //     });
+    //   });
   };
-
-
 
   useEffect(() => {
     document

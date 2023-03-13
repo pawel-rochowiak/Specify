@@ -305,7 +305,6 @@ const TaskPageDetails = (props) => {
             timer: 1500,
           });
           const dateEdit = versionControlHandler();
-          console.log(dateEdit);
           dispatch(
             tasksActions.addTaskEditDate({
               dateString: dateEdit.text,
