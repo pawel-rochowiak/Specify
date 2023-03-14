@@ -36,18 +36,26 @@ const generatePDF = async (
   );
 
   const docDef = {
-    header: "simple text",
+    pageSize: "A4",
+    pageOrientation: "portrait",
+    pageMargins: [40, 0, 40, 0],
 
+    info: {
+      title: `${areaName.toUpperCase()}-${specType}`,
+    },
     footer: {
-      columns: ["Left part", { text: "Right part", alignment: "right" }],
+      style: "footerMargin",
+      text:
+        "GENERAL REGULATIONS AND REQUIREMENTS: Manufacturer to provide Interior Designer with finish samples for review prior to production. Manufacturer to provide Interior Designer with shop drawings for review prior to production. Items must be suitable for contract quality and commercial use in the location that it will be used in. Fixed material must meet all IMO standards and regulations in accordance with classification societies. Final quantity calculation is on Manufacturers/Owners responsibility. Manufacturers guarantee will be maintained as per contract with the Owner. TD has provided the Yard with a specification of the products and designs, which the Manufacturer is obligated to follow and execute. The Manufacturer assumes product liability for such product.",
+      alignment: "justify",
+      fontSize: 7,
     },
 
     content: [
       {
-        text:
-          "This paragraph uses header style and extends the alignment property",
+        text: `PROJECT:${projectName}`,
         style: "header",
-        alignment: "center",
+        alignment: "left",
       },
       {
         alignment: "justify",
@@ -64,7 +72,24 @@ const generatePDF = async (
         ],
       },
       {
-        style: "tableExample",
+        style: "column",
+        table: {
+          widths: ["*"],
+          body: [[{ border: [false, true, false, false], text: "" }]],
+        },
+      },
+      {
+        text: `${specType.toUpperCase()}`,
+        style: "header",
+        alignment: "left",
+      },
+      {
+        text: `DK 0${deck} FZ 0${fireZone} ${areaName}`,
+        style: "headerSM",
+        alignment: "left",
+      },
+      {
+        style: "column",
         table: {
           widths: ["16,6%", "16,6%", "16,6%", "16,6%", "16,6%", "16,6%"],
           body: [
@@ -125,27 +150,25 @@ const generatePDF = async (
           ],
         },
       },
-      {
-        text: [
-          "This paragraph uses header style and overrides bold value setting it back to false.\n",
-          "Header style in this example sets alignment to justify, so this paragraph should be rendered \n",
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Malit profecta versatur nomine ocurreret multavit, officiis viveremus aeternum superstitio suspicor alia nostram, quando nostros congressus susceperant concederetur leguntur iam, vigiliae democritea tantopere causae, atilii plerumque ipsas potitur pertineant multis rem quaeri pro, legendum didicisse credere ex maluisset per videtis. Cur discordans praetereat aliae ruinae dirigentur orestem eodem, praetermittenda divinum. Collegisti, deteriora malint loquuntur officii cotidie finitas referri doleamus ambigua acute. Adhaesiones ratione beate arbitraretur detractis perdiscere, constituant hostis polyaeno. Diu concederetur.",
-        ],
-        style: "header",
-        bold: false,
-      },
     ],
     styles: {
       header: {
-        fontSize: 10,
+        fontSize: 14,
         bold: true,
-        alignment: "right",
-        margin: [0, 190, 0, 80],
+        color: "#808080",
+      },
+      headerSM: {
+        fontSize: 12,
       },
       column: {
         fontSize: 9,
         columnGap: 20,
         italics: false,
+      },
+
+      footerMargin: {
+        margin: [40, 0, 40, 0],
+        fontSize: 7,
       },
     },
   };
