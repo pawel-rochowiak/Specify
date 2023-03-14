@@ -12,15 +12,15 @@ const usersSlice = createSlice({
   reducers: {
     login(state, action) {
       if (action.payload) {
-        const user = state.find((el) => el.email === action.payload.email);
+        const user = state.find((el) => el.email === action.payload);
         user.isLoggedIn = true;
-        user.token = action.payload.idToken;
+        // user.token = action.payload.idToken;
       }
     },
     logout(state, action) {
       if (action.payload) {
         const user = state.find((el) => el.email === action.payload);
-        user.token = "";
+        // user.token = "";
         user.isLoggedIn = !user.isLoggedIn;
         localStorage.clear();
       }

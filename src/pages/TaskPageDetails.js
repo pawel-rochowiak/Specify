@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import { usersActions } from "../store/users-slice";
 import generateDOC from "../components/functions/generateDOC";
+import generatePDF from "../components/functions/generatePDF";
 import { useParams, useOutletContext } from "react-router-dom";
 import swal from "sweetalert";
 
@@ -136,6 +137,25 @@ const TaskPageDetails = (props) => {
 
   const saveToWord = () => {
     generateDOC(
+      projectName,
+      areaName,
+      yardNumber.current.value,
+      projectNumber,
+      fireZone,
+      deck,
+      specType,
+      year,
+      month,
+      day,
+      resPerson.current.value,
+      revDate.current.value,
+      revPerson.current.value,
+      revId.current.value
+    );
+  };
+
+  const saveToPDF = () => {
+    generatePDF(
       projectName,
       areaName,
       yardNumber.current.value,
@@ -449,6 +469,13 @@ const TaskPageDetails = (props) => {
           >
             <ArrowDown size="1.6rem"></ArrowDown>
             <WordIcon size="1.6rem" />
+          </div>
+          <div
+            className={`${classes.item} ${classes.action}`}
+            onClick={saveToPDF}
+          >
+            <ArrowDown size="1.6rem"></ArrowDown>
+            <p>PDF</p>
           </div>
         </div>
       </div>

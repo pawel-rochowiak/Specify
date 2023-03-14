@@ -45,7 +45,7 @@ const Welcome = () => {
         console.log("User is verified!");
         navigate("/home");
         localStorage.setItem("login", enteredEmail);
-        // dispatch(usersActions.login(data));
+        dispatch(usersActions.login(enteredEmail));
       } else {
         swal(`User is not verified!`, {
           buttons: false,
