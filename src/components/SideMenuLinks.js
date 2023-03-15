@@ -6,6 +6,7 @@ import ArrowLeft from "../components/icons/ArrowLeft";
 
 const SideMenuLinks = (props) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [search, setSearch] = useState("");
 
   const sidebarVisibilityHandler = () => {
     setIsVisible(!isVisible);
@@ -17,7 +18,18 @@ const SideMenuLinks = (props) => {
 
   return (
     <div id="dropdown" className={classList}>
-      <ul>{props.links}</ul>
+      <input
+        type="text"
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search"
+      />
+      <ul>
+        {props.links.filter((item) => {
+          return search.toLowerCase() === ""
+            ? item
+            : item.props.children.props.children.toLowerCase().includes(search);
+        })}
+      </ul>
       {!isVisible ? (
         <ArrowLeft
           unit="4.5rem"
