@@ -26,40 +26,173 @@ const generatePDF = async (
     .filter(([key, value]) => key.includes("IMAGES-"))
     .map((el) => el[1]);
 
-  const urlsBlobs = await Promise.all(
+  const imageBase64 = await Promise.all(
     itemsArr.map(async (url) => {
       const urlTrim = url.replace(/['"]+/g, "");
       const resp = await fetch(urlTrim);
       const respBlob = await resp.blob();
-      return respBlob;
+      let dataUrl = await new Promise((resolve) => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(respBlob);
+      });
+      return dataUrl;
     })
   );
+
+  const materials = data.map((el, index) => {
+    return [
+      {
+        border: [false, true, true, true],
+        text: `${el.number}`,
+        alignment: "center",
+        color: "gray",
+      },
+      {
+        border: [true, true, true, true],
+        text: `${el.item}`,
+        alignment: "center",
+        color: "gray",
+      },
+      {
+        border: [true, true, true, true],
+        text: `${el.description}`,
+        alignment: "center",
+        color: "gray",
+      },
+      {
+        border: [true, true, true, true],
+        text: `${el.supplier}`,
+        alignment: "center",
+        color: "gray",
+      },
+      {
+        border: [true, true, true, true],
+        text: `${el.date}`,
+        alignment: "center",
+        color: "gray",
+      },
+      {
+        border: [true, true, false, true],
+        image: imageBase64[index],
+        width: 90,
+        height: 90,
+        alignment: "center",
+        color: "gray",
+      },
+    ];
+  });
 
   const docDef = {
     pageSize: "A4",
     pageOrientation: "portrait",
-    pageMargins: [40, 0, 40, 0],
+    pageMargins: [40, 40, 40, 100],
 
     info: {
       title: `${areaName.toUpperCase()}-${specType}`,
     },
-    footer: {
-      style: "footerMargin",
-      text:
-        "GENERAL REGULATIONS AND REQUIREMENTS: Manufacturer to provide Interior Designer with finish samples for review prior to production. Manufacturer to provide Interior Designer with shop drawings for review prior to production. Items must be suitable for contract quality and commercial use in the location that it will be used in. Fixed material must meet all IMO standards and regulations in accordance with classification societies. Final quantity calculation is on Manufacturers/Owners responsibility. Manufacturers guarantee will be maintained as per contract with the Owner. TD has provided the Yard with a specification of the products and designs, which the Manufacturer is obligated to follow and execute. The Manufacturer assumes product liability for such product.",
-      alignment: "justify",
-      fontSize: 7,
+
+    footer: function (currentPage, pageCount) {
+      return {
+        table: {
+          widths: ["*"],
+          body: [
+            [
+              {
+                margin: [40, 10, 40, 0],
+                color: "#808080",
+                text:
+                  "GENERAL REGULATIONS AND REQUIREMENTS: Manufacturer to provide Interior Designer with finish samples for review prior to production. Manufacturer to provide Interior Designer with shop drawings for review prior to production. Items must be suitable for contract quality and commercial use in the location that it will be used in. Fixed material must meet all IMO standards and regulations in accordance with classification societies. Final quantity calculation is on Manufacturers/Owners responsibility. Manufacturers guarantee will be maintained as per contract with the Owner. TD has provided the Yard with a specification of the products and designs, which the Manufacturer is obligated to follow and execute. The Manufacturer assumes product liability for such product.",
+                alignment: "justify",
+                style: "footer",
+              },
+            ],
+            [
+              {
+                style: "columnSM",
+                margin: [40, 0, 40, 0],
+                table: {
+                  widths: ["*"],
+                  body: [[{ border: [false, true, false, false], text: "" }]],
+                },
+              },
+            ],
+
+            [
+              {
+                margin: [40, 0, 40, 0],
+                color: "#000000",
+                style: "footerColumn",
+                columns: [
+                  {
+                    width: "auto",
+                    text: "TILLBERG DESIGN",
+                    alignment: "center",
+                  },
+                  { width: "auto", text: "•", alignment: "center" },
+                  {
+                    width: "auto",
+                    text: "Småbåtshamnen 24",
+                    alignment: "center",
+                  },
+                  { width: "auto", text: "•", alignment: "center" },
+                  {
+                    width: "auto",
+                    text: "263 39 Höganäs",
+                    alignment: "center",
+                  },
+                  { width: "auto", text: "•", alignment: "center" },
+                  { width: "auto", text: "SWEDEN", alignment: "center" },
+                  { width: "auto", text: "•", alignment: "center" },
+                  {
+                    width: "auto",
+                    text: "+46 42 23 80 90",
+                    alignment: "center",
+                  },
+                  { width: "auto", text: "•", alignment: "center" },
+                  {
+                    width: "auto",
+                    text: "td@tillbergdesign.com",
+                    alignment: "center",
+                  },
+                  { width: "auto", text: "•", alignment: "center" },
+                  {
+                    width: "auto",
+                    text: "tillbergdesign.com",
+                    link: "https://tillbergdesign.com/",
+                    alignment: "center",
+                  },
+                  {
+                    width: "auto",
+                    text: `Page ${currentPage}/${pageCount}`,
+                    alignment: "center",
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+
+        layout: "noBorders",
+      };
     },
 
     content: [
       {
-        text: `PROJECT:${projectName}`,
-        style: "header",
+        columns: [
+          { width: "auto", text: `PROJECT:`, style: "headerGray" },
+          {
+            width: "auto",
+            text: ` ${projectName.toUpperCase()}`,
+            style: "headerBlack",
+          },
+        ],
         alignment: "left",
       },
       {
         alignment: "justify",
-        style: "column",
+        margin: [0, 10, 0, 0],
+        style: "columnMD",
         columns: [
           { width: "auto", text: `PROJECT:${projectName}` },
           { width: "auto", text: `Yard Proj.# ${yardNumber}` },
@@ -72,15 +205,16 @@ const generatePDF = async (
         ],
       },
       {
-        style: "column",
+        style: "columnSM",
         table: {
           widths: ["*"],
           body: [[{ border: [false, true, false, false], text: "" }]],
         },
       },
       {
+        margin: [0, 10, 0, 0],
         text: `${specType.toUpperCase()}`,
-        style: "header",
+        style: "headerGray",
         alignment: "left",
       },
       {
@@ -89,85 +223,86 @@ const generatePDF = async (
         alignment: "left",
       },
       {
-        style: "column",
+        style: "columnSM",
+        margin: [0, 20, 0, 5],
         table: {
-          widths: ["16,6%", "16,6%", "16,6%", "16,6%", "16,6%", "16,6%"],
+          widths: ["5%", "10%", "27,5%", "20%", "12,5%", "25%"],
           body: [
             [
-              { border: [false, false, false, false], text: "CODE" },
-              { border: [false, false, false, false], text: "ITEM" },
-              { border: [false, false, false, false], text: "DESCRIPTION" },
-              { border: [false, false, false, false], text: "SUPPLIER" },
-              { border: [false, false, false, false], text: "DATE" },
-              { border: [false, false, false, false], text: "PICTURE" },
+              {
+                border: [false, false, false, false],
+                text: "CODE",
+                alignment: "center",
+              },
+              {
+                border: [false, false, false, false],
+                text: "ITEM",
+                alignment: "center",
+              },
+              {
+                border: [false, false, false, false],
+                text: "DESCRIPTION",
+                alignment: "center",
+              },
+              {
+                border: [false, false, false, false],
+                text: "SUPPLIER",
+                alignment: "center",
+              },
+              {
+                border: [false, false, false, false],
+                text: "DATE",
+                alignment: "center",
+              },
+              {
+                border: [false, false, false, false],
+                text: "PICTURE",
+                alignment: "center",
+              },
             ],
           ],
         },
       },
+
       {
         style: "tableExample",
         table: {
-          widths: ["16,6%", "16,6%", "16,6%", "16,6%", "16,6%", "16,6%"],
-          body: [
-            [
-              {
-                border: [false, true, true, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-              {
-                border: [true, true, true, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-              {
-                border: [true, true, true, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-              {
-                border: [true, true, true, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-              {
-                border: [true, true, true, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-              {
-                border: [true, true, false, true],
-                text: "nothing interesting here",
-                italics: true,
-                color: "gray",
-              },
-            ],
-          ],
+          widths: ["5%", "10%", "27,5%", "20%", "12,5%", "25%"],
+          body: [...materials],
         },
       },
     ],
     styles: {
-      header: {
+      headerGray: {
         fontSize: 14,
         bold: true,
         color: "#808080",
       },
+
+      headerBlack: {
+        fontSize: 14,
+        bold: false,
+        color: "#000000",
+      },
       headerSM: {
         fontSize: 12,
       },
-      column: {
+      columnSM: {
+        fontSize: 7,
+        columnGap: 20,
+        italics: false,
+      },
+      columnMD: {
         fontSize: 9,
         columnGap: 20,
         italics: false,
       },
-
-      footerMargin: {
-        margin: [40, 0, 40, 0],
+      footerColumn: {
+        fontSize: 7,
+        columnGap: 7,
+        italics: false,
+      },
+      footer: {
         fontSize: 7,
       },
     },
@@ -180,18 +315,6 @@ const generatePDF = async (
       window.open(url, "_blank");
     });
   })();
-
-  // (async function () {
-  //   let blob = await fetch(
-  //     "https://firebasestorage.googleapis.com/v0/b/specify-ec0ca.appspot.com/o/images%2FAzamara%2FRESTAURANT%2F1%2F1-1.png?alt=media&token=d58ed6be-ee15-4be4-af0e-a7872f104266"
-  //   ).then((r) => r.blob());
-  //   let dataUrl = await new Promise((resolve) => {
-  //     let reader = new FileReader();
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.readAsDataURL(blob);
-  //   });
-  //   console.log(dataUrl);
-  // })();
 };
 
 export default generatePDF;
