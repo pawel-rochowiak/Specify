@@ -15,13 +15,14 @@ const DetailsItem = (props) => {
   const dispatch = useDispatch();
 
   if (props.type === "projectsState") {
-    itemsArr = Object.entries(props.items).slice(0, 5);
+    const { name, deck, fz, subcontractor } = props.items;
+    itemsArr = [name, deck, fz, subcontractor];
   }
 
   elArray = itemsArr.map((el, index) => {
     return (
       <div key={index + 1} className={classes.itemLabel}>
-        {el[1]}
+        {el}
       </div>
     );
   });

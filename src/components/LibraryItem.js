@@ -24,8 +24,6 @@ const LibraryItem = (props) => {
     storage,
     `library/${materialCategory}/${materialSupplier}/${materialCollection}`
   );
-
-  console.log(imageListRef);
   const dispatch = useDispatch();
 
   const targetEditHandler = (ev) => {
@@ -104,7 +102,6 @@ const LibraryItem = (props) => {
       <div className={classes.materialInfo}>{props.info}</div>
       <div className={classes.materialImg}>
         {imageList.map((url, index) => {
-          console.log(url);
           return (
             <img
               key={index}

@@ -1,5 +1,5 @@
 import classes from "./LibraryPage.module.css";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import LibraryItem from "../components/LibraryItem";
 import PlusIcon from "../components/icons/PlusIcon";
 import { useSelector } from "react-redux";
@@ -8,10 +8,29 @@ import { useOutletContext } from "react-router-dom";
 const LibraryPage = (props) => {
   const stateMaterials = useSelector((state) => state.library);
   const [createItem] = useOutletContext();
+  const [search, setSearch] = useState("");
 
   const materialArray = stateMaterials.flatMap((el) =>
     el.materials ? el.materials : []
   );
+
+  const libraryItemsComponentsArr = materialArray.map((el, index) => (
+    <LibraryItem
+      key={index + 1}
+      number={index + 1}
+      name={el.name}
+      collection={el.collection}
+      category={el.category}
+      supplier={el.supplier}
+      certificate={el.certificates}
+      info={el.info}
+      imageUrl={el.imageUrl}
+      link={el.link}
+      dataset={index}
+      edit={createItem}
+      disabled={true}
+    />
+  ));
 
   return (
     <Fragment>
@@ -23,6 +42,12 @@ const LibraryPage = (props) => {
               <span>Please note:</span> Materials can be edited or deleted from
               within a specific category.
             </p>
+
+            <input
+              type="text"
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+            />
             <div className={classes.categoriesTask}>
               <div>No.</div>
               <div>Name</div>
@@ -38,35 +63,23 @@ const LibraryPage = (props) => {
         )}
         <div className={classes.taskList}>
           {materialArray.length > 0 ? (
-            materialArray.map((el, index) => (
-              <LibraryItem
-                key={index + 1}
-                number={index + 1}
-                name={el.name}
-                collection={el.collection}
-                category={el.category}
-                supplier={el.supplier}
-                certificate={el.certificates}
-                info={el.info}
-                imageUrl={el.imageUrl}
-                link={el.link}
-                dataset={index}
-                edit={createItem}
-                disabled={true}
-              />
-            ))
+            libraryItemsComponentsArr.filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.props.name.toLowerCase().includes(search);
+            })
           ) : (
             <div className={classes.info_message}>
               No material has been added. Please press
-              <span className={classes.highlight}>"Create item"</span> button to
-              add new material.
+              <span className={classes.highlight}>"Add material"</span> button
+              to add new material.
             </div>
           )}
           <div
             className={`${classes.item} ${classes.action}`}
             onClick={createItem}
           >
-            Create material
+            Add material
             <PlusIcon size="1.6rem" />
           </div>
         </div>

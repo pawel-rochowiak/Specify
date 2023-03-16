@@ -13,6 +13,7 @@ const ProjectPageDetails = () => {
 
   const element = stateProjects.find((el) => el.path === path);
   const currentProjectTasks = element.projectTasks;
+  console.log(currentProjectTasks);
 
   const userInitials = localStorage.getItem("currentUser");
 
@@ -54,7 +55,7 @@ const ProjectPageDetails = () => {
                           venue={el2.area}
                           name={element.name}
                           person={userInitials}
-                          task={el2.specification}
+                          task={el2.task}
                           date={el2.date}
                           disabled={true}
                         />

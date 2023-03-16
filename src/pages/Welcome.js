@@ -42,7 +42,6 @@ const Welcome = () => {
       );
       const user = result.user;
       if (user.emailVerified) {
-        console.log("User is verified!");
         navigate("/home");
         localStorage.setItem("login", enteredEmail);
         dispatch(usersActions.login(enteredEmail));
@@ -59,49 +58,6 @@ const Welcome = () => {
       });
     }
     setIsLoading(false);
-
-    // fetch(
-    //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCvhJIuwY1ms610WG-tDggIcuKbGrSEd5o",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       email: enteredEmail,
-    //       password: enteredPassword,
-    //       returnSecureToken: true,
-    //     }),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //     if (res.ok) {
-    //       return res.json();
-    //     } else {
-    //       return res.json().then((data) => {
-    //         let errorMessage =
-    //           "Autenthication failed! Please check your login and password!";
-
-    //         if (data && data.error && data.error.message) {
-    //           errorMessage = data.error.message;
-    //         }
-
-    //         throw new Error(errorMessage);
-    //       });
-    //     }
-    //   })
-    //   .then((data) => {
-    //     navigate("/home");
-    //     localStorage.setItem("login", data.email);
-    //     dispatch(usersActions.login(data));
-    //   })
-    //   .catch((err) => {
-    //     swal(`${err.message}`, {
-    //       buttons: false,
-    //       timer: 2000,
-    //     });
-    //   });
   };
 
   useEffect(() => {

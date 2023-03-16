@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import PasswordIcon from "../icons/PasswordIcon";
 import CheckIcon from "../icons/CheckIcon";
@@ -11,35 +11,21 @@ import { firebaseAuth } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  reauthenticateWithCredential,
-  onIdTokenChanged,
 } from "firebase/auth";
 //STATE//
 import { usersActions } from "../../store/users-slice";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
+import { uCharHexNumber } from "docx";
 
 const NewUserForm = (props) => {
   const dispatch = useDispatch();
-
   const nameInputRef = useRef();
   const surnameInputRef = useRef();
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [newUser, setNewUser] = useState(null);
-
-  // useEffect(() => {
-  //   const unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {
-  //     setNewUser(user);
-  //     console.log(user);
-  //     if (user && user.emailVerified) {
-  //       console.log("New user is verified!");
-  //       // ... add new user to database or perform other actions
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -59,7 +45,16 @@ const NewUserForm = (props) => {
         enteredEmail,
         enteredPassword
       );
+
       await sendEmailVerification(userCredential.user);
+      swal(
+        `A verification email was sent! Please check your mail and follow the link to verify your account.`,
+        {
+          buttons: false,
+          icon: "success",
+          timer: 2000,
+        }
+      );
       setIsLoading(false);
       dispatch(
         usersActions.addUser({
@@ -72,7 +67,12 @@ const NewUserForm = (props) => {
       );
     } catch (error) {
       const errorMessage = error.message;
-      alert(errorMessage);
+      swal(`${errorMessage}`, {
+        buttons: false,
+        icon: "warning",
+        timer: 2000,
+      });
+      setIsLoading(false);
     }
 
     // createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)

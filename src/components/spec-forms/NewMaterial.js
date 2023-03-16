@@ -205,8 +205,8 @@ const NewMaterial = (props) => {
       ","
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
+    setEnteredItem(selectedMat.category);
     setEnteredDescription(selectedMat.info);
-    setEnteredItem(selectedMat.item);
     setEnteredSupplier(selectedMat.supplier);
     setFormInputType("entered");
   };

@@ -62,6 +62,10 @@ input:focus {
   flex-wrap: nowrap;
 }
 
+.searchBox {
+  margin-top: 1rem;
+}
+
 .label_row__material {
   display: grid;
   width: 100%;
