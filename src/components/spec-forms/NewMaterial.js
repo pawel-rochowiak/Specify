@@ -109,6 +109,8 @@ const NewMaterial = (props) => {
     });
   };
 
+  //trzeba dodac list ref do images z library potzebne przy dodawaniu materialow z biblioteki
+
   const downloadAllImgs = () => {
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
@@ -204,6 +206,8 @@ const NewMaterial = (props) => {
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
     setEnteredDescription(selectedMat.info);
+    setEnteredItem(selectedMat.item);
+    setEnteredSupplier(selectedMat.supplier);
     setFormInputType("entered");
   };
 

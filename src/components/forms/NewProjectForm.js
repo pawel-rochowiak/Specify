@@ -8,7 +8,7 @@ const NewProjectForm = (props) => {
   const dispatch = useDispatch();
   const [enteredName, setEnteredName] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
-  const [enteredTeam, setEnteredTeam] = useState("");
+  // const [enteredTeam, setEnteredTeam] = useState("");
 
   const enteredType = useRef();
   const enteredScope = useRef();
@@ -21,17 +21,18 @@ const NewProjectForm = (props) => {
     setEnteredDate(event.target.value);
   };
 
-  const teamInputChangeHandler = (event) => {
-    setEnteredTeam(event.target.value);
-  };
+  // const teamInputChangeHandler = (event) => {
+  //   setEnteredTeam(event.target.value);
+  // };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
     if (
       enteredName.trim() === "" ||
-      enteredDate.trim() === "" ||
-      enteredTeam.trim() === ""
+      enteredDate.trim() === "" 
+      //||
+      // enteredTeam.trim() === ""
     ) {
       console.log("empty");
       return;
@@ -46,7 +47,7 @@ const NewProjectForm = (props) => {
           type: enteredType.current.value,
           scope: enteredScope.current.value,
           date: enteredDate,
-          team: enteredTeam,
+          // team: enteredTeam,
           projectIndex,
         })
       );
@@ -57,14 +58,14 @@ const NewProjectForm = (props) => {
           type: enteredType.current.value,
           scope: enteredScope.current.value,
           date: enteredDate,
-          team: enteredTeam,
+          // team: enteredTeam,
         })
       );
     }
 
     setEnteredName("");
     setEnteredDate("");
-    setEnteredTeam("");
+    // setEnteredTeam("");
 
     props.onExit();
   };
@@ -113,7 +114,7 @@ const NewProjectForm = (props) => {
           </select>
           <p className={classes.description}>Scope</p>
         </div>
-        <div className={classes.formGroup}>
+        {/* <div className={classes.formGroup}>
           <input
             type="text"
             id="team"
@@ -121,7 +122,7 @@ const NewProjectForm = (props) => {
             value={enteredTeam}
           ></input>
           <p className={classes.description}>Team</p>
-        </div>
+        </div> */}
 
         <button type="submit">submit</button>
       </form>

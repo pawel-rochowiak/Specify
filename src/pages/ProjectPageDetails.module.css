@@ -23,14 +23,36 @@ input:focus {
   box-shadow: none;
 }
 
-.info_row,
-.label_row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1rem;
-  text-align: left;
-  color: #888;
-  text-transform: uppercase;
+/* “If [device width] is greater than or equal to 11.5rem, then do {…}” */
+
+@media screen and (min-width: 100rem) {
+  .info_row,
+  .label_row {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    font-size: 1rem;
+    text-align: left;
+    color: #888;
+    text-transform: uppercase;
+  }
+}
+
+/* “If [device width] is less than or equal to 11rem, then do {…}” */
+
+@media screen and (max-width: 100rem) {
+  .info_row,
+  .label_row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 1rem;
+    text-align: left;
+    color: #888;
+    text-transform: uppercase;
+  }
 }
 
 .materialLabel_container {
