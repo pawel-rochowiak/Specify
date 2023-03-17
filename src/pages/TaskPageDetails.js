@@ -13,6 +13,8 @@ import generateDOC from "../components/functions/generateDOC";
 import generatePDF from "../components/functions/generatePDF";
 import { useParams, useOutletContext } from "react-router-dom";
 import swal from "sweetalert";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const TaskPageDetails = (props) => {
   const [, , , versionControlHandler] = useOutletContext();
@@ -154,8 +156,52 @@ const TaskPageDetails = (props) => {
     );
   };
 
-  const saveToPDF = () => {
-    generatePDF(
+  // const saveToPDF = () => {
+  //   const pdfBlob = generatePDF(
+  //     projectName,
+  //     areaName,
+  //     yardNumber.current.value,
+  //     projectNumber,
+  //     fireZone,
+  //     deck,
+  //     specType,
+  //     year,
+  //     month,
+  //     day,
+  //     resPerson.current.value,
+  //     revDate.current.value,
+  //     revPerson.current.value,
+  //     revId.current.value
+  //   );
+
+  //   const fileRef = ref(
+  //     storage,
+  //     `specifications/${projectName}/${areaName.toUpperCase()}-${specType}`
+  //   );
+
+  //   console.log(pdfBlob);
+  // };
+
+  async function uploadPDFToFirebaseStorage(blob) {
+    // Create a unique filename for the PDF
+    const filename = `specifications/${projectName}/${areaName.toUpperCase()}-${specType}.pdf`;
+
+    console.log(filename);
+
+    // Convert the PDF blob to a Uint8Array
+    const arrayBuffer = new Uint8Array(await blob.arrayBuffer());
+
+    // Upload the PDF to Firebase storage
+    const fileRef = ref(storage, filename);
+    console.log(fileRef);
+    return uploadBytes(fileRef, arrayBuffer).then((snapshot) => {
+      // Get the download URL of the PDF
+      return getDownloadURL(snapshot.ref);
+    });
+  }
+
+  async function handleGeneratePDFButtonClick() {
+    const pdfBlob = await generatePDF(
       projectName,
       areaName,
       yardNumber.current.value,
@@ -171,7 +217,12 @@ const TaskPageDetails = (props) => {
       revPerson.current.value,
       revId.current.value
     );
-  };
+
+    uploadPDFToFirebaseStorage(pdfBlob).then((downloadURL) => {
+      console.log("PDF file uploaded to Firebase storage:", downloadURL);
+      // Do something with the download URL, e.g., display it in the UI
+    });
+  }
 
   const addCheckedMaterialToArrays = () => {
     localStorage.setItem(
@@ -472,7 +523,7 @@ const TaskPageDetails = (props) => {
           </div>
           <div
             className={`${classes.item} ${classes.action}`}
-            onClick={saveToPDF}
+            onClick={handleGeneratePDFButtonClick}
           >
             <ArrowDown size="1.6rem"></ArrowDown>
             <p>PDF</p>

@@ -308,13 +308,21 @@ const generatePDF = async (
     },
   };
 
-  (async function () {
-    const pdfGen = pdfMake.createPdf(docDef);
-    pdfGen.getBlob((blob) => {
-      const url = URL.createObjectURL(blob);
-      window.open(url, "_blank");
+  // Generate the PDF
+  const getBlob = (docDef) => {
+    return new Promise((resolve, reject) => {
+      try {
+        pdfMake.createPdf(docDef).getBlob((blob) => {
+          resolve(blob);
+        });
+      } catch (error) {
+        reject(error);
+      }
     });
-  })();
+  };
+
+  const blob = await getBlob(docDef);
+  return blob;
 };
 
 export default generatePDF;

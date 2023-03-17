@@ -7,6 +7,7 @@
     "buffer": "^6.0.3",
     "docx": "^7.8.0",
     "file-saver": "^2.0.5",
+    "firebase": "^9.18.0",
     "history": "^4.10.1",
     "pdfmake": "^0.2.7",
     "react": "^18.2.0",

@@ -36,6 +36,7 @@ const NewMaterial = (props) => {
   const [imageLoaded, setIsImageLoaded] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState();
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
@@ -324,7 +325,6 @@ const NewMaterial = (props) => {
     <div className={classes.materialInput_dropdown}>
       <select ref={pickedMaterial} onChange={testHandler}>
         <option disabled selected value>
-          {" "}
           Select material
         </option>
         {materialState.map((el, indexCat) => {
