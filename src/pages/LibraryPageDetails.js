@@ -34,7 +34,7 @@ const LibraryPageDetails = (props) => {
         certificate={el.certificates}
         category={el.category}
         info={el.info}
-        imageUrl={el.imageUrl}
+        imageUrl={el.url}
         link={el.link}
         dataset={index}
         edit={createItem}

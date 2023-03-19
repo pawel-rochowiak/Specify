@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let initialState = [
-  // { name: "Wood", path: "cat1", materials: [] },
-  // { name: "Tiles", path: "cat2", materials: [] },
-  // { name: "Curtain", path: "cat3", materials: [] },
-  // { name: "Upholstery", path: "cat4", materials: [] },
-];
+let initialState = [];
 
 let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))?.library
   ? JSON.parse(window.localStorage.getItem("store")).library
@@ -29,6 +24,7 @@ const librarySlice = createSlice({
         info: action.payload.info,
         image: action.payload.image,
         link: action.payload.link,
+        url: action.payload.url,
         // path: `cat${state.length + 1}`,
       };
 
@@ -45,21 +41,30 @@ const librarySlice = createSlice({
       }
     },
     editMaterial(state, action) {
-      state.find((el) => el.name === action.payload.category).materials[
-        action.payload.materialIndex
-      ] = {
-        name: action.payload.name,
-        supplier: action.payload.supplier,
-        collection: action.payload.collection,
-        category: action.payload.category,
-        certificates: action.payload.certificates,
-        info: action.payload.info,
-        image: action.payload.image,
-        link: action.payload.link,
-      };
+      const stateMat = state.find((el) => el.name === action.payload.category)
+        .materials[action.payload.materialIndex];
+
+      stateMat.name = action.payload.name ? action.payload.name : stateMat.name;
+      stateMat.supplier = action.payload.supplier
+        ? action.payload.supplier
+        : stateMat.supplier;
+      stateMat.collection = action.payload.collection
+        ? action.payload.collection
+        : stateMat.collection;
+      stateMat.category = action.payload.category
+        ? action.payload.category
+        : stateMat.category;
+      stateMat.certificates = action.payload.certificates
+        ? action.payload.certificates
+        : stateMat.certificates;
+      stateMat.info = action.payload.info ? action.payload.info : stateMat.info;
+      stateMat.image = action.payload.image
+        ? action.payload.image
+        : stateMat.image;
+      stateMat.link = action.payload.link ? action.payload.link : stateMat.link;
+      stateMat.url = action.payload.url ? action.payload.url : stateMat.url;
     },
     deleteMaterial(state, action) {
-      console.log(action.payload);
       if (action.payload.index === "") {
         const materialIndex = state
           .find((el) => el.name === action.payload.category)

@@ -5,7 +5,7 @@ import { libraryActions } from "../../store/library-slice";
 import { suppliersActions } from "../../store/suppliers-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { storage } from "../../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import swal from "sweetalert";
 
 const NewMaterialForm = (props) => {
@@ -140,20 +140,40 @@ const NewMaterialForm = (props) => {
     setSelectedSupplier(event.target.value);
   };
 
+  ///przy edit ogarnac dleted
+
   const imageFileName = imageUpload
     ? `library/${
         enteredCategory === "" ? enteredCat.current.value : enteredCategory
-      }/${pickedSupplier.current.value}/${enteredCollection}/${enteredName}-${
-        imageUpload.name
-      }`
+      }/${pickedSupplier.current.value}/${
+        enteredCollection
+          ? enteredCollection
+          : enteredExistingCollection.current.value
+      }/${enteredName}-${imageUpload.name}`
     : "";
 
-  //Fn for uploading image to Firebase
   const uploadImage = () => {
     if (imageUpload === null) return;
     const imgRef = ref(storage, imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
       setImageUpload(null);
+      getDownloadURL(imgRef).then((url) => {
+        dispatch(
+          libraryActions.editMaterial({
+            materialIndex: props.itemToEdit,
+            category: props.item.category,
+            url,
+          })
+        );
+        dispatch(
+          suppliersActions.editMaterial({
+            category: props.item.category,
+            materialToEdit: props.item,
+            materialIndex: props.itemToEdit,
+            url,
+          })
+        );
+      });
     });
   };
 
@@ -169,7 +189,8 @@ const NewMaterialForm = (props) => {
       (enteredCollection.trim() === "" ||
         enteredExistingCollection.current.value === "") &&
       (enteredCategory.trim() === "" || enteredCat.current.value === "") &&
-      (pickedSupplier.current.value === "" || selectedSupplier.trim() === "")
+      (pickedSupplier.current.value === "" || selectedSupplier.trim() === "") &&
+      props.editing !== true
     ) {
       swal({
         title: "Empty inputs!",
@@ -347,6 +368,7 @@ const NewMaterialForm = (props) => {
     setEnteredImage("");
     setEnteredLink("");
     setSelectedSupplier("");
+    // setImageUrl(null);
 
     props.onExit();
   };

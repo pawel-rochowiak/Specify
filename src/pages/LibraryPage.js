@@ -24,7 +24,7 @@ const LibraryPage = (props) => {
       supplier={el.supplier}
       certificate={el.certificates}
       info={el.info}
-      imageUrl={el.imageUrl}
+      imageUrl={el.url}
       link={el.link}
       dataset={index}
       edit={createItem}

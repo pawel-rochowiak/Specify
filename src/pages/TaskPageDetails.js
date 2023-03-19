@@ -31,6 +31,8 @@ const TaskPageDetails = (props) => {
     (state) => state.users.find((el) => el.email === userEmail).error
   );
 
+  console.log(userError);
+
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
   const [specMatArr, setSpecMatArr] = useState([]);
@@ -155,32 +157,6 @@ const TaskPageDetails = (props) => {
       revId.current.value
     );
   };
-
-  // const saveToPDF = () => {
-  //   const pdfBlob = generatePDF(
-  //     projectName,
-  //     areaName,
-  //     yardNumber.current.value,
-  //     projectNumber,
-  //     fireZone,
-  //     deck,
-  //     specType,
-  //     year,
-  //     month,
-  //     day,
-  //     resPerson.current.value,
-  //     revDate.current.value,
-  //     revPerson.current.value,
-  //     revId.current.value
-  //   );
-
-  //   const fileRef = ref(
-  //     storage,
-  //     `specifications/${projectName}/${areaName.toUpperCase()}-${specType}`
-  //   );
-
-  //   console.log(pdfBlob);
-  // };
 
   async function uploadPDFToFirebaseStorage(blob) {
     // Create a unique filename for the PDF
@@ -360,9 +336,18 @@ const TaskPageDetails = (props) => {
             el.fireZone === fireZone
         );
 
+        console.log(
+          result.payload.materials.length,
+          currentTask.materials.length
+        );
+
+        //th ve checked  important!!!!!!!
+
         if (currentTask.materials.length === result.payload.materials.length) {
           dispatch(usersActions.removeUserError({ email: userEmail }));
-        } else {
+        } else if (
+          currentTask.materials.length !== result.payload.materials.length
+        ) {
           dispatch(
             usersActions.addUserError({ email: userEmail, error: "Error" })
           );
@@ -383,7 +368,7 @@ const TaskPageDetails = (props) => {
             })
           );
         }
-        if (userError) {
+        if (userError && userError !== undefined) {
           throw new Error("Problem with sending data!");
         }
       })
