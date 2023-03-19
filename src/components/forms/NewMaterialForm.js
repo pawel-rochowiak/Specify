@@ -157,23 +157,26 @@ const NewMaterialForm = (props) => {
     const imgRef = ref(storage, imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
       setImageUpload(null);
-      getDownloadURL(imgRef).then((url) => {
-        dispatch(
-          libraryActions.editMaterial({
-            materialIndex: props.itemToEdit,
-            category: props.item.category,
-            url,
-          })
-        );
-        dispatch(
-          suppliersActions.editMaterial({
-            category: props.item.category,
-            materialToEdit: props.item,
-            materialIndex: props.itemToEdit,
-            url,
-          })
-        );
-      });
+
+      if (props.editing === true) {
+        getDownloadURL(imgRef).then((url) => {
+          dispatch(
+            libraryActions.editMaterial({
+              materialIndex: props.itemToEdit,
+              category: props.item.category,
+              url,
+            })
+          );
+          dispatch(
+            suppliersActions.editMaterial({
+              category: props.item.category,
+              materialToEdit: props.item,
+              materialIndex: props.itemToEdit,
+              url,
+            })
+          );
+        });
+      }
     });
   };
 

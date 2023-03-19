@@ -17,6 +17,7 @@ export const fetchStateData = () => {
       }
 
       const data = await response.json();
+      console.log(data);
 
       return data;
     };
@@ -79,7 +80,7 @@ export const fetchStateData = () => {
       dispatch(globalActions.replaceTarget(stateData.global));
       dispatch(usersActions.replceUsers(stateData.users));
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 };

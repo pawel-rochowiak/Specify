@@ -44,7 +44,7 @@ const StartPage = (props) => {
 
   const userEmail = localStorage.getItem("login");
 
-  const { email, isLoggedIn, name, surname } = stateUsers.find(
+  const { email, isLoggedIn, name, surname } = stateUsers?.find(
     (el) => el.email === userEmail
   );
 

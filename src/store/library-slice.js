@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let initialState = [];
+let initialState = [
+  { name: "Wood", path: "cat1", materials: [] },
+  { name: "Tiles", path: "cat2", materials: [] },
+  { name: "Curtain", path: "cat3", materials: [] },
+  { name: "Upholstery", path: "cat4", materials: [] },
+];
 
 let initialPersistLS = JSON.parse(window.localStorage.getItem("store"))?.library
   ? JSON.parse(window.localStorage.getItem("store")).library

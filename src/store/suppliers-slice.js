@@ -56,8 +56,6 @@ const suppliersSlice = createSlice({
           (el) => el.name === action.payload.materialToEdit.collection
         ).materials[action.payload.materialIndex];
 
-      console.log(stateMat);
-
       stateMat.name = action.payload.name ? action.payload.name : stateMat.name;
       stateMat.supplier = action.payload.supplier
         ? action.payload.supplier

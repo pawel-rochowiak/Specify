@@ -10,7 +10,6 @@ const NewTaskForm = (props) => {
   const dispatch = useDispatch();
   const currentTasks = useSelector((state) => state.tasks);
   const allProjects = useSelector((state) => state.projects);
-  console.log(allProjects);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredAreaName, setEnteredAreaName] = useState("");
