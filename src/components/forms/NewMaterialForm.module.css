@@ -12,6 +12,15 @@
   text-align: center;
 }
 
+.subHeader {
+  margin-top: 1rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #6ca3c7;
+  text-align: center;
+}
+
 .form {
   margin-top: 2rem;
   display: grid;

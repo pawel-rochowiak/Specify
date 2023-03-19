@@ -18,7 +18,7 @@ const LibraryItem = (props) => {
   //State for the image
   const [imageList, setImageList] = useState([]);
 
-  useEffect(() => downloadAllImgs(), []);
+  useEffect(() => downloadAllImgs(), [props.imageUrl]);
 
   // const imageListRef = ref(
   //   storage,

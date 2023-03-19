@@ -381,6 +381,9 @@ const NewMaterialForm = (props) => {
       <p className={classes.header}>
         {props.editing ? "Editing material" : "New material"}
       </p>
+      <p className={classes.subHeader}>
+        the empty field will keep the property unchanged
+      </p>
       <form className={classes.form} onSubmit={formSubmissionHandler}>
         <div className={classes.flex}>
           <div className={classes.formGroup}>
