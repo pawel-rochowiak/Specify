@@ -18,27 +18,25 @@ export const fetchStateData = () => {
 
       const data = await response.json();
       console.log(data);
-
       return data;
     };
 
     try {
       const stateData = await fetchData();
 
-      const sortedStateData = stateData.projects.map((el) => {
+      const sortedStateData = stateData.projects?.map((el) => {
         return {
           name: el.name,
           type: el.type,
           scope: el.scope,
           date: el.date,
-          team: el.team,
           path: el.path,
           area: el.area ? el.area : [],
           projectTasks: el.projectTasks ? el.projectTasks : [],
         };
       });
 
-      const newDataLibrary = stateData.library.map((el) => {
+      const newDataLibrary = stateData.library?.map((el) => {
         return {
           name: el.name,
           path: el.path,
@@ -46,14 +44,14 @@ export const fetchStateData = () => {
         };
       });
 
-      const newDataTasks = stateData.tasks.map((el) => {
+      const newDataTasks = stateData.tasks?.map((el) => {
         return {
           ...el,
           materials: el.materials ? el.materials : [],
         };
       });
 
-      const newDataSupplier = stateData.suppliers.map((el) => {
+      const newDataSupplier = stateData.suppliers?.map((el) => {
         return {
           name: el.name,
           field: el.field,

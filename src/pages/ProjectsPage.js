@@ -20,7 +20,6 @@ const ProjectPage = (props) => {
             <div>Type</div>
             <div>Scope</div>
             <div>Date</div>
-            <div>Team</div>
           </div>
         ) : (
           ""
@@ -31,7 +30,7 @@ const ProjectPage = (props) => {
               <DetailsItem
                 key={`project${index + 1}`}
                 items={el}
-                grid="5"
+                grid="4"
                 dataset={index}
                 edit={createItem}
                 type="projectsState"

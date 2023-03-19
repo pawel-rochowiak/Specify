@@ -42,7 +42,7 @@ const ProjectPageDetails = () => {
                   items={el}
                   grid="4"
                   edit={createItem}
-                  type="projectsState"
+                  type="projectsAreaState"
                 />
 
                 {currentProjectTasks

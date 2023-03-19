@@ -17,7 +17,7 @@ const projectSlice = createSlice({
         type: action.payload.type,
         scope: action.payload.scope,
         date: action.payload.date,
-        // team: action.payload.team,
+
         path: `p${state.length + 1}`,
         area: [],
         projectTasks: [],
@@ -32,7 +32,6 @@ const projectSlice = createSlice({
       state[action.payload.projectIndex].type = action.payload.type;
       state[action.payload.projectIndex].scope = action.payload.scope;
       state[action.payload.projectIndex].date = action.payload.date;
-      // state[action.payload.projectIndex].team = action.payload.team;
     },
     addAreas(state, action) {
       state[action.payload.project].area.push({

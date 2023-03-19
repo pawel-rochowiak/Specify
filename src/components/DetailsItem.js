@@ -8,15 +8,22 @@ import { useSelector, useDispatch } from "react-redux";
 const DetailsItem = (props) => {
   let gridClass, itemsArr, elArray;
 
+  console.log(props.items);
+
   const itemName = props.items.name;
 
   const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
-  if (props.type === "projectsState") {
+  if (props.type === "projectsAreaState") {
     const { name, deck, fz, subcontractor } = props.items;
     itemsArr = [name, deck, fz, subcontractor];
+  }
+
+  if (props.type === "projectsState") {
+    const { name, type, scope, date } = props.items;
+    itemsArr = [name, type, scope, date];
   }
 
   elArray = itemsArr.map((el, index) => {
@@ -26,6 +33,8 @@ const DetailsItem = (props) => {
       </div>
     );
   });
+
+  console.log(elArray);
 
   if (props.grid === "4") {
     gridClass = `DetailsItem_col_${props.grid}__qscj9`;
