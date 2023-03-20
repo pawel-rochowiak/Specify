@@ -18,12 +18,12 @@ const LibraryItem = (props) => {
   //State for the image
   const [imageList, setImageList] = useState([]);
 
-  useEffect(() => downloadAllImgs(), [props.imageUrl]);
+  useEffect(() => downloadAllImgs(), [props.imageUrl, imageList]);
 
-  // const imageListRef = ref(
-  //   storage,
-  //   `library/${materialCategory}/${materialSupplier}/${materialCollection}`
-  // );
+  const imageListRef = ref(
+    storage,
+    `library/${materialCategory}/${materialSupplier}/${materialCollection}`
+  );
 
   // const imageListRef = ref(
   //   storage,
@@ -85,15 +85,15 @@ const LibraryItem = (props) => {
   };
 
   const downloadAllImgs = () => {
-    // listAll(imageListRef).then((response) => {
-    //   response.items.forEach((item) => {
-    //     getDownloadURL(item).then((url) => {
-    //       setImageList([url]);
-    //     });
-    //   });
-    // });
-    console.log(props.imageUrl);
-    setImageList([props.imageUrl]);
+    if (!props.imageUrl)
+      listAll(imageListRef).then((response) => {
+        response.items.forEach((item) => {
+          getDownloadURL(item).then((url) => {
+            setImageList([url]);
+          });
+        });
+      });
+    if (props.imageUrl) setImageList([props.imageUrl]);
   };
 
   return (

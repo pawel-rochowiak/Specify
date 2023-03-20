@@ -5,7 +5,13 @@ import { libraryActions } from "../../store/library-slice";
 import { suppliersActions } from "../../store/suppliers-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { storage } from "../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  listAll,
+} from "firebase/storage";
 import swal from "sweetalert";
 
 const NewMaterialForm = (props) => {
@@ -23,6 +29,8 @@ const NewMaterialForm = (props) => {
   const [enteredCategory, setEnteredCategory] = useState("");
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([]);
+
   //
   const enteredExistingCollection = useRef();
   const enteredCat = useRef();
@@ -142,53 +150,104 @@ const NewMaterialForm = (props) => {
 
   ///przy edit ogarnac dleted
 
+  // const imageFileName = imageUpload
+  //   ? `library/${
+  //       enteredCategory === "" ? enteredCat.current.value : enteredCategory
+  //     }/${pickedSupplier.current.value}/${
+  //       enteredCollection
+  //         ? enteredCollection
+  //         : enteredExistingCollection.current.value
+  //     }/${enteredName}-${imageUpload.name}`
+  //   : "";
+
+  // const uploadImage = () => {
+  //   if (imageUpload === null) return;
+  //   const imgRef = ref(storage, imageFileName);
+  //   uploadBytes(imgRef, imageUpload).then(() => {
+  //     setImageUpload(null);
+
+  //     if (props.editing === true) {
+  //       getDownloadURL(imgRef).then((url) => {
+  //         dispatch(
+  //           libraryActions.editMaterial({
+  //             materialIndex: props.itemToEdit,
+  //             category: props.item.category,
+  //             url,
+  //           })
+  //         );
+  //         dispatch(
+  //           suppliersActions.editMaterial({
+  //             category: props.item.category,
+  //             materialToEdit: props.item,
+  //             materialIndex: props.itemToEdit,
+  //             url,
+  //           })
+  //         );
+  //       });
+  //     }
+
+  //     if (props.editing !== true) {
+  //       console.log(
+  //         enteredName,
+  //         enteredCategory,
+  //         enteredCat.current?.value,
+  //         pickedSupplier.current?.value,
+  //         selectedSupplier,
+  //         enteredExistingCollection.current?.value,
+  //         enteredCollection
+  //       );
+  //     }
+  //   });
+  // };
+
   const imageFileName = imageUpload
     ? `library/${
         enteredCategory === "" ? enteredCat.current.value : enteredCategory
       }/${pickedSupplier.current.value}/${
-        enteredCollection
+        enteredCollection !== ""
           ? enteredCollection
-          : enteredExistingCollection.current.value
+          : enteredExistingCollection.current?.value
       }/${enteredName}-${imageUpload.name}`
     : "";
 
+  const imageListRef = ref(
+    storage,
+    `library/${
+      enteredCategory === "" ? enteredCat.current?.value : enteredCategory
+    }/${pickedSupplier.current?.value}/${
+      enteredCollection !== ""
+        ? enteredCollection
+        : enteredExistingCollection.current?.value
+    }`
+  );
+
+  //Fn for uploading image to Firebase
   const uploadImage = () => {
     if (imageUpload === null) return;
     const imgRef = ref(storage, imageFileName);
+    deleteImage(imageFileName);
     uploadBytes(imgRef, imageUpload).then(() => {
       setImageUpload(null);
+    });
+  };
 
-      if (props.editing === true) {
-        getDownloadURL(imgRef).then((url) => {
-          dispatch(
-            libraryActions.editMaterial({
-              materialIndex: props.itemToEdit,
-              category: props.item.category,
-              url,
+  //Fn for deleting image from Firebase
+  const deleteImage = (image) => {
+    if (imageUpload === null) return;
+
+    listAll(imageListRef).then((response) => {
+      response.items
+        //.filter((el) => el._location.path !== image)
+        .forEach((item) => {
+          const imgRef = ref(storage, item._location.path);
+          deleteObject(imgRef)
+            .then(() => {
+              setImageUpload(null);
             })
-          );
-          dispatch(
-            suppliersActions.editMaterial({
-              category: props.item.category,
-              materialToEdit: props.item,
-              materialIndex: props.itemToEdit,
-              url,
-            })
-          );
+            .catch((error) => {
+              console.log(error.message);
+            });
         });
-      }
-
-      if (props.editing !== true) {
-        console.log(
-          enteredName,
-          setEnteredCategory,
-          enteredCat,
-          pickedSupplier,
-          selectedSupplier,
-          enteredExistingCollection,
-          enteredCollection
-        );
-      }
     });
   };
 
