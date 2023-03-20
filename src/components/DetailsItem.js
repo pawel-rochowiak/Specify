@@ -8,8 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 const DetailsItem = (props) => {
   let gridClass, itemsArr, elArray;
 
-  console.log(props.items);
-
   const itemName = props.items.name;
 
   const state = useSelector((state) => state);
@@ -33,8 +31,6 @@ const DetailsItem = (props) => {
       </div>
     );
   });
-
-  console.log(elArray);
 
   if (props.grid === "4") {
     gridClass = `DetailsItem_col_${props.grid}__qscj9`;

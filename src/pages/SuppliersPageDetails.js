@@ -88,9 +88,9 @@ const SuppliersPageDetails = (props) => {
             <h3>material collections</h3>
             <div className={classes.collections_container}>
               {noCollectionsInfo}
-              {supplierCollections?.map((el) => (
+              {supplierCollections?.map((el, index) => (
                 <Fragment>
-                  <div className={classes.collection}>
+                  <div className={classes.collection} key={index}>
                     <h4>{el.name}</h4>
                   </div>
                   {el.materials?.map((el, index) => (

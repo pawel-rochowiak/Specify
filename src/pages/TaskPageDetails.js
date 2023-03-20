@@ -167,7 +167,7 @@ const TaskPageDetails = (props) => {
 
     // Upload the PDF to Firebase storage
     const fileRef = ref(storage, filename);
-    console.log(fileRef);
+
     return uploadBytes(fileRef, arrayBuffer).then((snapshot) => {
       // Get the download URL of the PDF
       return getDownloadURL(snapshot.ref);
