@@ -1,4 +1,5 @@
-.spinner {
+.spinner,
+.spinnerWhite {
   display: inline-block;
   width: 25px;
   height: 25px;
@@ -12,6 +13,17 @@
   border-radius: 50%;
   border: 5px solid #6ca3c7;
   border-color: #6ca3c7 transparent #6ca3c7 transparent;
+  animation: spinner 1.2s linear infinite;
+}
+
+.spinnerWhite:after {
+  content: " ";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  border-color: #fff transparent #fff transparent;
   animation: spinner 1.2s linear infinite;
 }
 @keyframes spinner {

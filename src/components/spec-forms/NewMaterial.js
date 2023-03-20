@@ -130,7 +130,7 @@ const NewMaterial = (props) => {
 
   useEffect(() => {
     downloadAllImgs();
-  }, [params, isProps]);
+  }, [params, isProps, imageUpload]);
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {

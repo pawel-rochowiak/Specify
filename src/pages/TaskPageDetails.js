@@ -1,4 +1,5 @@
 import classes from "./ProjectPageDetails.module.css";
+import classesSpinner from "../UI/LoadingSpinner.module.css";
 import NewMaterial from "../components/spec-forms/NewMaterial";
 import PlusIcon from "../components/icons/PlusIcon";
 import MinusIcon from "../components/icons/MinusIcon";
@@ -15,6 +16,7 @@ import { useParams, useOutletContext } from "react-router-dom";
 import swal from "sweetalert";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const TaskPageDetails = (props) => {
   const [, , , versionControlHandler] = useOutletContext();
@@ -39,6 +41,7 @@ const TaskPageDetails = (props) => {
   const [formChecked, setFormChecked] = useState(false);
   const [materialsArr, setMaterialArr] = useState([]);
   const [matCode, setMatCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   //Picking right task using params to match the task path
 
@@ -175,6 +178,8 @@ const TaskPageDetails = (props) => {
   }
 
   async function handleGeneratePDFButtonClick() {
+    setIsLoading(true);
+
     const pdfBlob = await generatePDF(
       projectName,
       areaName,
@@ -192,14 +197,17 @@ const TaskPageDetails = (props) => {
       revId.current.value
     );
 
-    uploadPDFToFirebaseStorage(pdfBlob).then((downloadURL) => {
-      swal({
-        title: `PDF was uploaded to the storage!`,
-        text: `${downloadURL}`,
-        icon: "success",
-        className: `${classes.pdf_link}`,
-      });
-    });
+    uploadPDFToFirebaseStorage(pdfBlob)
+      .then((downloadURL) => {
+        swal({
+          title: `PDF was uploaded to the storage!`,
+          text: `${downloadURL}`,
+          icon: "success",
+          className: `${classes.pdf_link}`,
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => setIsLoading(false));
   }
 
   const addCheckedMaterialToArrays = () => {
@@ -505,8 +513,14 @@ const TaskPageDetails = (props) => {
             className={`${classes.item} ${classes.action}`}
             onClick={handleGeneratePDFButtonClick}
           >
-            <ArrowDown size="1.6rem"></ArrowDown>
-            <p>PDF</p>
+            {!isLoading ? (
+              <>
+                <ArrowDown size="1.6rem"></ArrowDown>
+                <p>PDF</p>
+              </>
+            ) : (
+              <LoadingSpinner className={classesSpinner.spinnerWhite} />
+            )}
           </div>
         </div>
       </div>
