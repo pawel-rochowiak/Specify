@@ -162,8 +162,6 @@ const TaskPageDetails = (props) => {
     // Create a unique filename for the PDF
     const filename = `specifications/${projectName}/${areaName.toUpperCase()}-${specType}.pdf`;
 
-    console.log(filename);
-
     // Convert the PDF blob to a Uint8Array
     const arrayBuffer = new Uint8Array(await blob.arrayBuffer());
 
@@ -335,13 +333,6 @@ const TaskPageDetails = (props) => {
             el.dk === deck &&
             el.fireZone === fireZone
         );
-
-        console.log(
-          result.payload.materials.length,
-          currentTask.materials.length
-        );
-
-        //th ve checked  important!!!!!!!
 
         if (currentTask.materials.length === result.payload.materials.length) {
           dispatch(usersActions.removeUserError({ email: userEmail }));

@@ -3,7 +3,6 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 
 //CSS module//
 import classes from "./StartPage.module.css";
-import classesAccordion from "../components/Accordion.module.css";
 //ICONS//
 import HomeIcon from "../components/icons/HomeIcon";
 //FORMS//
@@ -13,7 +12,6 @@ import NewSupplierForm from "../components/forms/NewSupplierForm";
 import NewMaterialForm from "../components/forms/NewMaterialForm";
 import NewProjectForm from "../components/forms/NewProjectForm";
 import NewTaskForm from "../components/forms/NewTaskForm";
-import LoadingSpinner from "../UI/LoadingSpinner";
 import SideMenuLinks from "../components/SideMenuLinks";
 import LogOutIcon from "../components/icons/LogOutIcon";
 //STATE//
@@ -25,7 +23,7 @@ const StartPage = (props) => {
   const dispatch = useDispatch();
 
   const params = useParams();
-
+  const url = window.location.href.split("/").at(-1);
   //State slices//
   const stateUsers = useSelector((state) => state.users);
   const stateTasks = useSelector((state) => state.tasks);
@@ -88,26 +86,34 @@ const StartPage = (props) => {
   };
 
   useEffect(() => {
-    if (stateTarget === "tasks") {
+    if (stateTarget === "tasks" || url === "tasks") {
+      setIsHome(false);
       setDetailTarget("");
       setData(stateTasks);
     }
-    if (stateTarget === "projects") {
+    if (stateTarget === "projects" || url === "projects") {
+      setIsHome(false);
       setDetailTarget("");
       setData(stateProjects);
     }
-    if (stateTarget === "suppliers") {
+    if (stateTarget === "suppliers" || url === "suppliers") {
+      setIsHome(false);
       setDetailTarget("");
       setData(stateSuppliers);
     }
-    if (stateTarget === "library") {
+    if (stateTarget === "library" || url === "library") {
+      setIsHome(false);
       setDetailTarget("");
       setData(stateLibrary);
     }
     if (params.projectId?.includes("p")) {
+      setIsHome(false);
+      setData(stateProjects);
       setDetailTarget(["detailProject", params.projectId]);
     }
     if (params.supplierId?.includes("s")) {
+      setIsHome(false);
+      setData(stateSuppliers);
       setDetailTarget(["detailSupplier", params.supplierId]);
     }
   }, [
@@ -117,6 +123,7 @@ const StartPage = (props) => {
     stateSuppliers,
     stateLibrary,
     params,
+    url,
   ]);
   const getTargetHandler = (target) => {
     setStateTarget(target);
