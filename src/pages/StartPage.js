@@ -24,6 +24,7 @@ const StartPage = (props) => {
 
   const params = useParams();
   const url = window.location.href.split("/").at(-1);
+
   //State slices//
   const stateUsers = useSelector((state) => state.users);
   const stateTasks = useSelector((state) => state.tasks);
@@ -127,12 +128,17 @@ const StartPage = (props) => {
   ]);
   const getTargetHandler = (target) => {
     setStateTarget(target);
+    localStorage.setItem("target", target);
   };
 
+  const targetFromLS = localStorage.getItem("target");
   //Creating Router Links to be used inside the sidebar items by SideMenuLinks component
 
   const routerLinks = data.map(({ name, path }) => (
-    <Link key={path} to={`/home/${stateTarget}/${path}`}>
+    <Link
+      key={path}
+      to={`/home/${stateTarget !== "" ? stateTarget : targetFromLS}/${path}`}
+    >
       <li className={classes.item}>{name}</li>
     </Link>
   ));
@@ -141,7 +147,7 @@ const StartPage = (props) => {
 
   //Logic for displaying proper form for creating new items
 
-  if (stateTarget === "tasks") {
+  if (stateTarget === "tasks" || url === "tasks") {
     TargetForm = (
       <NewTaskForm
         onClick={addNewTaskHandler}
@@ -151,7 +157,7 @@ const StartPage = (props) => {
       />
     );
   }
-  if (stateTarget === "projects") {
+  if (stateTarget === "projects" || url === "projects") {
     TargetForm = (
       <NewProjectForm
         onClick={addNewTaskHandler}
@@ -161,7 +167,7 @@ const StartPage = (props) => {
       />
     );
   }
-  if (stateTarget === "suppliers") {
+  if ((stateTarget === "suppliers") | (url === "suppliers")) {
     TargetForm = (
       <NewSupplierForm
         onClick={addNewTaskHandler}
@@ -171,7 +177,7 @@ const StartPage = (props) => {
       />
     );
   }
-  if (stateTarget === "library") {
+  if (stateTarget === "library" || url === "library") {
     TargetForm = (
       <NewMaterialForm
         onClick={addNewTaskHandler}

@@ -179,7 +179,15 @@ const NewMaterialForm = (props) => {
       }
 
       if (props.editing !== true) {
-        console.log("empty");
+        console.log(
+          enteredName,
+          setEnteredCategory,
+          enteredCat,
+          pickedSupplier,
+          selectedSupplier,
+          enteredExistingCollection,
+          enteredCollection
+        );
       }
     });
   };
