@@ -55,7 +55,6 @@ const LibraryItem = (props) => {
       text: "Once deleted, material informations will be lost!",
       icon: "warning",
       buttons: true,
-      dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
         swal(`${materialName} was deleted!`, {

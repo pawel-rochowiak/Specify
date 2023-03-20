@@ -55,6 +55,11 @@ input:focus {
   }
 }
 
+.pdf_link {
+  font-size: 0.8rem !important;
+  text-align: center !important;
+}
+
 .materialLabel_container {
   display: flex;
   gap: 2rem;

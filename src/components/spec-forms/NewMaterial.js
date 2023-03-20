@@ -34,6 +34,7 @@ const NewMaterial = (props) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [imageLoaded, setIsImageLoaded] = useState(false);
+  const [enteredExisting, setEnteredExisting] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState();
@@ -112,8 +113,8 @@ const NewMaterial = (props) => {
 
   //trzeba dodac list ref do images z library potzebne przy dodawaniu materialow z biblioteki
 
-  const downloadAllImgs = () => {
-    listAll(imageListRef).then((response) => {
+  const downloadAllImgs = (reference) => {
+    listAll(!reference ? imageListRef : reference).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList([url]);
@@ -129,7 +130,7 @@ const NewMaterial = (props) => {
 
   useEffect(() => {
     downloadAllImgs();
-  }, [params, isProps, downloadAllImgs]);
+  }, [params, isProps]);
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {
@@ -206,10 +207,17 @@ const NewMaterial = (props) => {
       ","
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
+
     setEnteredItem(selectedMat.category);
     setEnteredDescription(selectedMat.info);
     setEnteredSupplier(selectedMat.supplier);
+    setEnteredExisting(true);
     setFormInputType("entered");
+    const libraryImageListRef = ref(
+      storage,
+      `library/${selectedMat.category}/${selectedMat.supplier}/${selectedMat.collection}`
+    );
+    downloadAllImgs(libraryImageListRef);
   };
 
   //Condicionally picking the classes by the form "version/state" (default,picked,entered)

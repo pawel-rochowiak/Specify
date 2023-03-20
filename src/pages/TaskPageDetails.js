@@ -193,8 +193,12 @@ const TaskPageDetails = (props) => {
     );
 
     uploadPDFToFirebaseStorage(pdfBlob).then((downloadURL) => {
-      console.log("PDF file uploaded to Firebase storage:", downloadURL);
-      // Do something with the download URL, e.g., display it in the UI
+      swal({
+        title: `PDF was uploaded to the storage!`,
+        text: `${downloadURL}`,
+        icon: "success",
+        className: `${classes.pdf_link}`,
+      });
     });
   }
 
