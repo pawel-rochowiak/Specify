@@ -16,7 +16,6 @@ import {
 import { usersActions } from "../../store/users-slice";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
-import { uCharHexNumber } from "docx";
 
 const NewUserForm = (props) => {
   const dispatch = useDispatch();
@@ -24,7 +23,10 @@ const NewUserForm = (props) => {
   const surnameInputRef = useRef();
   const passwordInputRef = useRef();
   const emailInputRef = useRef();
-
+  const passwordInputRefConf = useRef();
+  const emailInputRefConf = useRef();
+  const [warningPassword, setWarningPassword] = useState(false);
+  const [warningEmail, setWarningEmail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (event) => {
@@ -32,6 +34,8 @@ const NewUserForm = (props) => {
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    const enteredEmailConfirmation = emailInputRefConf.current.value;
+    const enteredPasswordConfirmation = passwordInputRefConf.current.value;
     const enteredName = nameInputRef.current.value;
     const enteredSurname = surnameInputRef.current.value;
     const enteredNameFirstLtr = nameInputRef.current.value[0];
@@ -40,6 +44,24 @@ const NewUserForm = (props) => {
     setIsLoading(true);
 
     try {
+      if (enteredEmail !== enteredEmailConfirmation) {
+        console.log("1");
+        setWarningEmail(true);
+      }
+
+      if (enteredPassword !== enteredPasswordConfirmation) {
+        console.log("2");
+        setWarningPassword(true);
+      }
+
+      if (
+        enteredEmail !== enteredEmailConfirmation ||
+        enteredPassword !== enteredPasswordConfirmation
+      ) {
+        setIsLoading(false);
+        return;
+      }
+
       const userCredential = await createUserWithEmailAndPassword(
         firebaseAuth,
         enteredEmail,
@@ -74,30 +96,11 @@ const NewUserForm = (props) => {
       });
       setIsLoading(false);
     }
-
-    // createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
-    //   .then((userCredential) => {
-    //     //   // Signed in
-    //     //   console.log(userCredential);
-    //     const user = userCredential.user;
-    //     setIsLoading(false);
-    //     dispatch(
-    //       usersActions.addUser({
-    //         name: enteredName,
-    //         surname: enteredSurname,
-    //         initials: `${enteredNameFirstLtr}${enteredSurnameFirstLtr}`,
-    //         email: user.email,
-    //         isLoggedIn: false,
-    //       })
-    //     );
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     const errorMessage = error.message;
-    //     alert(errorMessage);
-    //     // ..
-    //   });
   };
+
+  const warnEmailClass = warningEmail === true ? `${classes.warning}` : "";
+  const warnPasswordClass =
+    warningPassword === true ? `${classes.warning}` : "";
 
   const mainContent = (
     <div className={classes.container}>
@@ -122,25 +125,43 @@ const NewUserForm = (props) => {
         </div>
         <div className={classes.formGroup}>
           <EmailIcon className={classes.icon} />
-          <input required type="text" id="mail"></input>
+          <input
+            required
+            className={warnEmailClass}
+            ref={emailInputRef}
+            type="text"
+            id="mail"
+          ></input>
           <p className={classes.description}>E-mail (to be used as login)</p>
         </div>
         <div className={classes.formGroup}>
           <PasswordIcon className={classes.icon} />
-          <input required type="text" id="password"></input>
+          <input
+            required
+            className={warnPasswordClass}
+            ref={passwordInputRef}
+            type="text"
+            id="password"
+          ></input>
           <p className={classes.description}>password</p>
         </div>
         <div className={classes.formGroup}>
           <EmailIcon className={classes.icon} />
-          <input ref={emailInputRef} type="text" id="confirmMail"></input>
+          <input
+            type="text"
+            ref={emailInputRefConf}
+            id="confirmMail"
+            className={warnEmailClass}
+          ></input>
           <p className={classes.description}>confirm e-mail</p>
         </div>
         <div className={classes.formGroup}>
           <CheckIcon className={classes.icon} />
           <input
-            ref={passwordInputRef}
+            ref={passwordInputRefConf}
             type="text"
             id="confirmPassword"
+            className={warnPasswordClass}
           ></input>
           <p className={classes.description}>confirm password</p>
         </div>

@@ -177,6 +177,10 @@ const NewMaterialForm = (props) => {
           );
         });
       }
+
+      if (props.editing !== true) {
+        console.log("empty");
+      }
     });
   };
 
@@ -292,7 +296,7 @@ const NewMaterialForm = (props) => {
           name: enteredName,
           supplier: selectedSupplier,
           collection: enteredCollection,
-          category: enteredCategory,
+          category: enteredCategory ? enteredCollection : enteredCat,
           certificates: enteredCertificates,
           info: enteredDescription,
           image: enteredImage,
