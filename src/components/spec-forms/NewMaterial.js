@@ -97,9 +97,9 @@ const NewMaterial = (props) => {
 
   const imageListRef = ref(
     storage,
-    !props.dataObj.libraryRef
+    !props.dataObj?.libraryRef || props.dataObj?.libraryRef === undefined
       ? `images/${props.project}/${props.area}/${enteredCode}`
-      : props.dataObj.libraryRef
+      : props.dataObj?.libraryRef
   );
 
   //Fn for uploading image to Firebase
