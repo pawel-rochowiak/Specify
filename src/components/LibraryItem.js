@@ -15,21 +15,10 @@ const LibraryItem = (props) => {
   const materialSupplier = props.supplier;
   const materialCollection = props.collection;
 
-  const stateMaterials = useSelector((state) => state.library);
-  const collectionMaterials = stateMaterials.find(
-    (el) => el.name === materialCategory
-  ).materials;
   //State for the image
   const [imageList, setImageList] = useState([]);
 
   useEffect(() => downloadAllImgs(), [props.imageUrl, imageList]);
-
-  // const imageListRef = ref(
-  //   storage,
-  //   `library/${materialCategory}/${materialSupplier}/${materialCollection}/${
-  //     collectionMaterials.length - 1
-  //   }/${materialName}`
-  // );
 
   const imageListRef = ref(
     storage,

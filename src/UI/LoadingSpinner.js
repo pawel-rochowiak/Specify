@@ -4,7 +4,6 @@ const LoadingSpinner = (props) => {
   const spinnerClass = !props.className
     ? `${classes.spinner}`
     : `${props.className}`;
-  console.log(spinnerClass);
   return <div className={spinnerClass}></div>;
 };
 

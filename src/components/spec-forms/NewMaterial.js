@@ -4,7 +4,7 @@ import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import swal from "sweetalert";
-import { Fragment, useState, useRef, useEffect, useCallback } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { storage } from "../../firebase";
 import {
@@ -30,15 +30,13 @@ const NewMaterial = (props) => {
   const [checked, setChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
   const [formInputType, setFormInputType] = useState("default");
+  const [matFromLibrary, setMatFormLibrary] = useState("");
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [imageLoaded, setIsImageLoaded] = useState(false);
-  const [enteredExisting, setEnteredExisting] = useState(false);
   //Other
   const [isProps, setIsProp] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
@@ -99,7 +97,9 @@ const NewMaterial = (props) => {
 
   const imageListRef = ref(
     storage,
-    `images/${props.project}/${props.area}/${enteredCode}`
+    !props.dataObj.libraryRef
+      ? `images/${props.project}/${props.area}/${enteredCode}`
+      : props.dataObj.libraryRef
   );
 
   //Fn for uploading image to Firebase
@@ -114,17 +114,17 @@ const NewMaterial = (props) => {
 
   //trzeba dodac list ref do images z library potzebne przy dodawaniu materialow z biblioteki
 
-  const downloadAllImgs = (reference) => {
-    listAll(!reference ? imageListRef : reference).then((response) => {
+  const downloadAllImgs = () => {
+    listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
+          console.log(url);
           setImageList([url]);
           setIsImageLoaded(true);
           localStorage.setItem(
             `IMAGES-${props.project}-${props.area}-${enteredCode}`,
             JSON.stringify(url)
           );
-          setIsLoading(false);
         });
       });
     });
@@ -139,18 +139,16 @@ const NewMaterial = (props) => {
     if (imageUpload === null) return;
 
     listAll(imageListRef).then((response) => {
-      response.items
-        //.filter((el) => el._location.path !== image)
-        .forEach((item) => {
-          const imgRef = ref(storage, item._location.path);
-          deleteObject(imgRef)
-            .then(() => {
-              setImageUpload(null);
-            })
-            .catch((error) => {
-              console.log(error.message);
-            });
-        });
+      response.items.forEach((item) => {
+        const imgRef = ref(storage, item._location.path);
+        deleteObject(imgRef)
+          .then(() => {
+            setImageUpload(null);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      });
     });
   };
 
@@ -163,6 +161,7 @@ const NewMaterial = (props) => {
       supplier: enteredSupplier,
       date: enteredTaskDate,
       picture: enteredTaskPicture,
+      libraryRef: matFromLibrary,
     };
 
     const arrIndex = +event.target.dataset.order;
@@ -213,13 +212,10 @@ const NewMaterial = (props) => {
     setEnteredItem(selectedMat.category);
     setEnteredDescription(selectedMat.info);
     setEnteredSupplier(selectedMat.supplier);
-    setEnteredExisting(true);
     setFormInputType("entered");
-    const libraryImageListRef = ref(
-      storage,
+    setMatFormLibrary(
       `library/${selectedMat.category}/${selectedMat.supplier}/${selectedMat.collection}`
     );
-    downloadAllImgs(libraryImageListRef);
   };
 
   //Condicionally picking the classes by the form "version/state" (default,picked,entered)

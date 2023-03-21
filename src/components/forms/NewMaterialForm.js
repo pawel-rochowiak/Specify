@@ -5,13 +5,7 @@ import { libraryActions } from "../../store/library-slice";
 import { suppliersActions } from "../../store/suppliers-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { storage } from "../../firebase";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-  listAll,
-} from "firebase/storage";
+import { ref, uploadBytes, deleteObject, listAll } from "firebase/storage";
 import swal from "sweetalert";
 
 const NewMaterialForm = (props) => {
@@ -29,8 +23,6 @@ const NewMaterialForm = (props) => {
   const [enteredCategory, setEnteredCategory] = useState("");
   //State for the image
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageList, setImageList] = useState([]);
-
   //
   const enteredExistingCollection = useRef();
   const enteredCat = useRef();
@@ -153,64 +145,14 @@ const NewMaterialForm = (props) => {
     (el) => el.name === enteredCategory || enteredCat
   ).materials;
 
-  console.log(collectionMaterials);
-
-  ///przy edit ogarnac dleted
-
-  // const imageFileName = imageUpload
-  //   ? `library/${
-  //       enteredCategory === "" ? enteredCat.current.value : enteredCategory
-  //     }/${pickedSupplier.current.value}/${
-  //       enteredCollection
-  //         ? enteredCollection
-  //         : enteredExistingCollection.current.value
-  //     }/${enteredName}-${imageUpload.name}`
-  //   : "";
-
-  // const uploadImage = () => {
-  //   if (imageUpload === null) return;
-  //   const imgRef = ref(storage, imageFileName);
-  //   uploadBytes(imgRef, imageUpload).then(() => {
-  //     setImageUpload(null);
-
-  //     if (props.editing === true) {
-  //       getDownloadURL(imgRef).then((url) => {
-  //         dispatch(
-  //           libraryActions.editMaterial({
-  //             materialIndex: props.itemToEdit,
-  //             category: props.item.category,
-  //             url,
-  //           })
-  //         );
-  //         dispatch(
-  //           suppliersActions.editMaterial({
-  //             category: props.item.category,
-  //             materialToEdit: props.item,
-  //             materialIndex: props.itemToEdit,
-  //             url,
-  //           })
-  //         );
-  //       });
-  //     }
-
-  //     if (props.editing !== true) {
-  //       console.log(
-  //         enteredName,
-  //         enteredCategory,
-  //         enteredCat.current?.value,
-  //         pickedSupplier.current?.value,
-  //         selectedSupplier,
-  //         enteredExistingCollection.current?.value,
-  //         enteredCollection
-  //       );
-  //     }
-  //   });
-  // };
-
   const imageFileName = imageUpload
     ? `library/${
         enteredCategory === "" ? enteredCat.current.value : enteredCategory
-      }/${pickedSupplier.current.value}/${
+      }/${
+        pickedSupplier.current?.value
+          ? pickedSupplier.current?.value
+          : selectedSupplier
+      }/${
         enteredCollection !== ""
           ? enteredCollection
           : enteredExistingCollection.current?.value
@@ -221,7 +163,11 @@ const NewMaterialForm = (props) => {
     storage,
     `library/${
       enteredCategory === "" ? enteredCat.current?.value : enteredCategory
-    }/${pickedSupplier.current?.value}/${
+    }/${
+      pickedSupplier.current?.value
+        ? pickedSupplier.current?.value
+        : selectedSupplier
+    }/${
       enteredCollection !== ""
         ? enteredCollection
         : enteredExistingCollection.current?.value
@@ -455,7 +401,6 @@ const NewMaterialForm = (props) => {
     setEnteredImage("");
     setEnteredLink("");
     setSelectedSupplier("");
-    // setImageUrl(null);
 
     props.onExit();
   };
