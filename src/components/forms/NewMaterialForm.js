@@ -369,8 +369,12 @@ const NewMaterialForm = (props) => {
         libraryActions.addMaterials({
           name: enteredName,
           supplier: selectedSupplier,
-          collection: enteredCollection,
-          category: enteredCategory ? enteredCollection : enteredCat,
+          collection: enteredCollection
+            ? enteredCollection
+            : enteredExistingCollection.current.value,
+          category: enteredCategory
+            ? enteredCategory
+            : enteredCat.current.value,
           certificates: enteredCertificates,
           info: enteredDescription,
           image: enteredImage,
@@ -382,7 +386,9 @@ const NewMaterialForm = (props) => {
         suppliersActions.addCollection({
           name: enteredName,
           supplier: selectedSupplier,
-          collection: enteredCollection,
+          collection: enteredCollection
+            ? enteredCollection
+            : enteredExistingCollection.current.value,
           category: materialState.find(findCategory)
             ? enteredCat.current.value
             : enteredCategory,

@@ -86,6 +86,10 @@
   justify-items: center;
 }
 
+.materialInfo {
+  overflow-y: scroll;
+}
+
 .materialImg {
   min-width: 12rem;
   min-height: 12rem;

@@ -2,13 +2,16 @@ import React, { useState, useRef } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./NewTaskForm.module.css";
 import { projectActions } from "../../store/projects-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const NewProjectForm = (props) => {
+  console.log(props);
   const dispatch = useDispatch();
   const [enteredName, setEnteredName] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
-  // const [enteredTeam, setEnteredTeam] = useState("");
+  const projectsStateEditProject = useSelector(
+    (state) => state.projects[props.itemToEdit]
+  );
 
   const enteredType = useRef();
   const enteredScope = useRef();
@@ -21,22 +24,13 @@ const NewProjectForm = (props) => {
     setEnteredDate(event.target.value);
   };
 
-  // const teamInputChangeHandler = (event) => {
-  //   setEnteredTeam(event.target.value);
-  // };
-
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    if (
-      enteredName.trim() === "" ||
-      enteredDate.trim() === "" 
-      //||
-      // enteredTeam.trim() === ""
-    ) {
-      console.log("empty");
-      return;
-    }
+    // if (enteredName.trim() === "" || enteredDate.trim() === "") {
+    //   console.log("empty");
+    //   return;
+    // }
 
     const projectIndex = props.itemToEdit;
 
@@ -72,24 +66,28 @@ const NewProjectForm = (props) => {
 
   const mainContent = (
     <div className={classes.container}>
-      <p className={classes.header}>New project</p>
+      <p className={classes.header}>
+        {props.editing ? "Editing project" : "New project"}
+      </p>
       <form className={classes.form} onSubmit={formSubmissionHandler}>
         <div className={classes.formGroup}>
           <input
             type="text"
             id="project"
             onChange={nameInputChangeHandler}
+            // value={props.editing ? projectsStateEditProject.name : enteredName}
             value={enteredName}
           ></input>
           <p className={classes.description}>Project name</p>
         </div>
         <div className={classes.formGroup}>
           <input
-            type="text"
+            type="date"
             id="date"
             onChange={dateInputChangeHandler}
             value={enteredDate}
           ></input>
+
           <p className={classes.description}>Delivery date</p>
         </div>
         <div className={`${classes.formGroup} ${classes.custom_select}`}>
@@ -114,16 +112,6 @@ const NewProjectForm = (props) => {
           </select>
           <p className={classes.description}>Scope</p>
         </div>
-        {/* <div className={classes.formGroup}>
-          <input
-            type="text"
-            id="team"
-            onChange={teamInputChangeHandler}
-            value={enteredTeam}
-          ></input>
-          <p className={classes.description}>Team</p>
-        </div> */}
-
         <button type="submit">submit</button>
       </form>
     </div>
