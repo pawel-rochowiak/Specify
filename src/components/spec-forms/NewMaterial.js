@@ -38,6 +38,7 @@ const NewMaterial = (props) => {
   //Other
   const [isProps, setIsProp] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const materialState = useSelector((state) => state.library);
   const pickedMaterial = useRef();
 
@@ -123,6 +124,7 @@ const NewMaterial = (props) => {
             `IMAGES-${props.project}-${props.area}-${enteredCode}`,
             JSON.stringify(url)
           );
+          setIsLoading(false);
         });
       });
     });
@@ -349,6 +351,12 @@ const NewMaterial = (props) => {
           );
         })}
       </select>
+      <button
+        className={`${classes.button} ${classes.delete_btn}`}
+        onClick={props.removeMatForm}
+      >
+        <CloseIcon className={`${classes.delete_btn} ${classes.delete_btn}`} />
+      </button>
     </div>
   );
 

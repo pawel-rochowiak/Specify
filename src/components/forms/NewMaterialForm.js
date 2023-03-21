@@ -148,6 +148,13 @@ const NewMaterialForm = (props) => {
     setSelectedSupplier(event.target.value);
   };
 
+  const stateMaterials = useSelector((state) => state.library);
+  const collectionMaterials = stateMaterials.find(
+    (el) => el.name === enteredCategory || enteredCat
+  ).materials;
+
+  console.log(collectionMaterials);
+
   ///przy edit ogarnac dleted
 
   // const imageFileName = imageUpload

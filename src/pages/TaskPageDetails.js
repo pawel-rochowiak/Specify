@@ -335,27 +335,27 @@ const TaskPageDetails = (props) => {
 
   const sendSpecificationDataHandler = () => {
     sendingDataPromise()
-      .then((result) => {
-        const currentProjectTasks = stateTasks.filter(
-          (el) => el.project === projectName
-        );
-        const currentTask = currentProjectTasks.find(
-          (el) =>
-            el.area.toLowerCase() === areaName.toLowerCase() &&
-            el.dk === deck &&
-            el.fireZone === fireZone
-        );
+      // .then((result) => {
+      // const currentProjectTasks = stateTasks.filter(
+      //   (el) => el.project === projectName
+      // );
+      // const currentTask = currentProjectTasks.find(
+      //   (el) =>
+      //     el.area.toLowerCase() === areaName.toLowerCase() &&
+      //     el.dk === deck &&
+      //     el.fireZone === fireZone
+      // );
 
-        if (currentTask.materials.length === result.payload.materials.length) {
-          dispatch(usersActions.removeUserError({ email: userEmail }));
-        } else if (
-          currentTask.materials.length !== result.payload.materials.length
-        ) {
-          dispatch(
-            usersActions.addUserError({ email: userEmail, error: "Error" })
-          );
-        }
-      })
+      // if (currentTask.materials.length === result.payload.materials.length) {
+      //   dispatch(usersActions.removeUserError({ email: userEmail }));
+      // } else if (
+      //   currentTask.materials.length !== result.payload.materials.length
+      // ) {
+      //   dispatch(
+      //     usersActions.addUserError({ email: userEmail, error: "Error" })
+      //   );
+      // }
+      // })
       .then(() => {
         if (!userError) {
           swal("Data was sent to the server!", {
