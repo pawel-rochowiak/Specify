@@ -39,7 +39,6 @@ const StartPage = (props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [stateTarget, setStateTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
-  const [isHome, setIsHome] = useState(true);
 
   const userEmail = localStorage.getItem("login");
 
@@ -50,14 +49,6 @@ const StartPage = (props) => {
   const userInitials = `${name[0]}${surname[0]}`;
 
   localStorage.setItem("currentUser", userInitials);
-
-  const isNotHomeHandler = () => {
-    setIsHome(false);
-  };
-
-  const isHomeHandler = () => {
-    setIsHome(true);
-  };
 
   const newItemHandler = (edit, index = "", itemProps = "") => {
     setIsEditing(edit);
@@ -88,32 +79,26 @@ const StartPage = (props) => {
 
   useEffect(() => {
     if (stateTarget === "tasks" || url === "tasks") {
-      setIsHome(false);
       setDetailTarget("");
       setData(stateTasks);
     }
     if (stateTarget === "projects" || url === "projects") {
-      setIsHome(false);
       setDetailTarget("");
       setData(stateProjects);
     }
     if (stateTarget === "suppliers" || url === "suppliers") {
-      setIsHome(false);
       setDetailTarget("");
       setData(stateSuppliers);
     }
     if (stateTarget === "library" || url === "library") {
-      setIsHome(false);
       setDetailTarget("");
       setData(stateLibrary);
     }
     if (params.projectId?.includes("p")) {
-      setIsHome(false);
       setData(stateProjects);
       setDetailTarget(["detailProject", params.projectId]);
     }
     if (params.supplierId?.includes("s")) {
-      setIsHome(false);
       setData(stateSuppliers);
       setDetailTarget(["detailSupplier", params.supplierId]);
     }
@@ -128,6 +113,7 @@ const StartPage = (props) => {
   ]);
   const getTargetHandler = (target) => {
     setStateTarget(target);
+    console.log(target);
     localStorage.setItem("target", target);
   };
 
@@ -167,7 +153,7 @@ const StartPage = (props) => {
       />
     );
   }
-  if ((stateTarget === "suppliers") | (url === "suppliers")) {
+  if (stateTarget === "suppliers" || url === "suppliers") {
     TargetForm = (
       <NewSupplierForm
         onClick={addNewTaskHandler}
@@ -233,7 +219,6 @@ const StartPage = (props) => {
           <div className={classes.accordionContainer}>
             <NavLink
               to="/home"
-              onClick={isHomeHandler}
               getTarget={getTargetHandler}
               className={({ isActive }) =>
                 isActive ? classes.active : classes.accordionItem
@@ -248,33 +233,25 @@ const StartPage = (props) => {
               </div>
             </NavLink>
 
-            <Accordion
-              name="Tasks"
-              data="Tasks"
-              onClick={isNotHomeHandler}
-              getTarget={getTargetHandler}
-            />
+            <Accordion name="Tasks" data="Tasks" getTarget={getTargetHandler} />
             <Accordion
               name="Projects"
               data="Projects"
-              onClick={isNotHomeHandler}
               getTarget={getTargetHandler}
             />
             <Accordion
               name="Suppliers"
               data="Suppliers"
-              onClick={isNotHomeHandler}
               getTarget={getTargetHandler}
             />
             <Accordion
               name="Library"
               data="Library"
-              onClick={isNotHomeHandler}
               getTarget={getTargetHandler}
             />
           </div>
         </div>
-        {isHome === false ? <SideMenuLinks links={routerLinks} /> : ""}
+        {url !== "home" ? <SideMenuLinks links={routerLinks} /> : ""}
 
         <div className={classes.mainContent}>
           <Outlet

@@ -13,7 +13,6 @@ const ProjectPageDetails = () => {
 
   const element = stateProjects.find((el) => el.path === path);
   const currentProjectTasks = element.projectTasks;
-  console.log(currentProjectTasks);
 
   const userInitials = localStorage.getItem("currentUser");
 

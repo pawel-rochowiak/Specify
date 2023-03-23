@@ -2,7 +2,6 @@ import classes from "./NewMaterial.module.css";
 import CheckIcon from "../icons/SingleCheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import EditIcon from "../icons/EditIcon";
-import LoadingSpinner from "../../UI/LoadingSpinner";
 import swal from "sweetalert";
 import { Fragment, useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -111,8 +110,6 @@ const NewMaterial = (props) => {
       setImageUpload(null);
     });
   };
-
-  //trzeba dodac list ref do images z library potzebne przy dodawaniu materialow z biblioteki
 
   const downloadAllImgs = () => {
     listAll(imageListRef).then((response) => {

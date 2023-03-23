@@ -17,6 +17,7 @@ import swal from "sweetalert";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import cors from "cors";
 
 const TaskPageDetails = (props) => {
   const [, , , versionControlHandler] = useOutletContext();

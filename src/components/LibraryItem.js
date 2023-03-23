@@ -1,7 +1,7 @@
 import classes from "./LibraryItem.module.css";
 import EditIcon from "../components/icons/EditIcon";
 import CloseIcon from "../components/icons/CloseIcon";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { libraryActions } from "../store/library-slice";
 import { suppliersActions } from "../store/suppliers-slice";
 import { useState, useEffect } from "react";
