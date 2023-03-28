@@ -79,9 +79,7 @@ const StartPage = (props) => {
 
   const userEmail = localStorage.getItem("login");
 
-  const { email, isLoggedIn, name, surname } = stateUsers?.find(
-    (el) => el.email === userEmail
-  );
+  const { name, surname } = stateUsers?.find((el) => el.email === userEmail);
 
   const userInitials = `${name[0]}${surname[0]}`;
 
@@ -148,6 +146,7 @@ const StartPage = (props) => {
     params,
     url,
   ]);
+
   const getTargetHandler = (target) => {
     setStateTarget(target);
     console.log(target);
@@ -161,6 +160,8 @@ const StartPage = (props) => {
     <Link
       key={path}
       to={`/home/${stateTarget !== "" ? stateTarget : targetFromLS}/${path}`}
+      //temporary solution beacuse of current react router rerender problem
+      // to={`/home/tasks/${path}`}
     >
       <li className={classes.item}>{name}</li>
     </Link>

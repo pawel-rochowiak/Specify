@@ -13,7 +13,6 @@ const Accordion = (props) => {
 
     const target = targetStart.toLowerCase();
 
-    props.onClick();
     props.getTarget(target);
   };
 

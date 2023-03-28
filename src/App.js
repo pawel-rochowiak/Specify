@@ -26,8 +26,6 @@ let isInitial = true;
 function App() {
   const dispatch = useDispatch();
 
-  const userEmail = localStorage?.getItem("login");
-
   let store = useSelector((state) => state);
   let tasksData = store.tasks;
 
