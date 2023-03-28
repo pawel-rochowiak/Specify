@@ -7,7 +7,9 @@
   flex-direction: column;
   gap: 2rem;
   transition: all 0.4s;
-  width: fit-content;
+  width: 5rem;
+  height: 5rem;
+  margin-left: -0.5rem;
 }
 
 .accordionItem:hover {
@@ -29,7 +31,6 @@
 .accordionItemLabel {
   position: absolute;
   top: 50%;
-
   transform: translateY(-50%);
   font-size: 1.5rem;
   text-transform: uppercase;
@@ -75,16 +76,12 @@
   gap: 2rem;
   transition: all 0.4s;
   width: fit-content;
+  margin-left: -0.5rem;
 }
 
 .data {
   display: inline-block;
 }
-/* .label {
-  position: absolute;
-  padding: 1rem;
-  background-color: #44b3fd;
-} */
 
 @keyframes slide-down {
   from {

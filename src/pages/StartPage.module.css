@@ -14,6 +14,8 @@
 .sidebar {
   position: relative;
   display: flex;
+  flex-basis: 10rem;
+  flex-shrink: 0;
   flex-direction: column;
   overflow: hidden;
   background-color: #fff;
@@ -52,6 +54,7 @@
   flex-direction: column;
   gap: 1rem;
 }
+
 .hidden {
   display: none;
   visibility: hidden;
@@ -76,8 +79,9 @@
 }
 
 .user {
+  min-height: 15rem;
   width: 100%;
-  padding: 3rem;
+  padding: 3.5rem 1rem 3.5rem 1rem;
   display: flex;
   justify-content: center;
 }
@@ -132,6 +136,61 @@
   overflow-x: hidden;
 }
 
+.accordionContainerTooltip {
+  position: relative;
+  padding: 2rem 0.5rem 2rem 2rem;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.3rem;
+  color: #fff;
+  text-transform: uppercase;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.accordionItemTooltip {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 5px;
+  background-color: #3a6887;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: max-content;
+  height: 5rem;
+  transition: all 0.4s;
+  clip-path: polygon(25% 25%, 100% 25%, 100% 75%, 23% 75%, 0% 50%);
+  -webkit-clip-path: polygon(25% 25%, 100% 25%, 100% 75%, 23% 75%, 0% 50%);
+}
+
+.accordionItemTooltip span {
+  margin-top: 1px;
+  margin-left: 1.5rem;
+}
+
+.toolTipVisible {
+  /* visibility: visible; */
+  opacity: 1;
+}
+
+.toolTipInvisible {
+  height: 5rem;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.labels_container {
+  position: absolute;
+  left: 11rem;
+  z-index: 9999999999;
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
 .accordionItem {
   position: relative;
   padding: 1.5rem;
@@ -140,8 +199,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: fit-content;
+  width: max-content;
+  height: 5rem;
   transition: all 0.4s;
+  margin-left: -0.5rem;
 }
 
 .accordionItem:hover {
@@ -180,6 +241,7 @@
   gap: 2rem;
   transition: all 0.4s;
   width: fit-content;
+  margin-left: -0.5rem;
 }
 
 .itemDescription {

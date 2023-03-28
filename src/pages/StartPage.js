@@ -20,6 +20,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const StartPage = (props) => {
+  //SIDEBAR DOM ELEMENTS//
+
+  const homeBtn = document.getElementById("sidebar_home");
+  const tasksBtn = document.getElementById("sidebar_tasks");
+  const projectsBtn = document.getElementById("sidebar_projects");
+  const suppliersBtn = document.getElementById("sidebar_suppliers");
+  const libraryBtn = document.getElementById("sidebar_library");
+
+  const showFunction = (el) => {
+    const sectionName = el.target.id.split("_")[1];
+    document
+      .getElementById(`toolTip_${sectionName}`)
+      .classList.add("StartPage_accordionItemTooltip__fpiWC");
+    document
+      .getElementById(`toolTip_${sectionName}`)
+      .classList.remove("StartPage_toolTipInvisible__VqsBQ");
+  };
+
+  const hideFunction = (el) => {
+    const sectionName = el.target.id.split("_")[1];
+
+    document
+      .getElementById(`toolTip_${sectionName}`)
+      .classList.remove("StartPage_accordionItemTooltip__fpiWC");
+    document
+      .getElementById(`toolTip_${sectionName}`)
+      .classList.add("StartPage_toolTipInvisible__VqsBQ");
+  };
+
+  [homeBtn, tasksBtn, projectsBtn, suppliersBtn, libraryBtn].forEach((el) =>
+    el?.addEventListener("mouseenter", showFunction)
+  );
+
+  [homeBtn, tasksBtn, projectsBtn, suppliersBtn, libraryBtn].forEach((el) =>
+    el?.addEventListener("mouseleave", hideFunction)
+  );
+
   const dispatch = useDispatch();
 
   const params = useParams();
@@ -216,10 +253,11 @@ const StartPage = (props) => {
               </Link>
             </div>
           </div>
-          <div className={classes.accordionContainer}>
+          <div className={classes.accordionContainer} id="sideMenu">
             <NavLink
               to="/home"
               getTarget={getTargetHandler}
+              id="sidebar_home"
               className={({ isActive }) =>
                 isActive ? classes.active : classes.accordionItem
               }
@@ -228,7 +266,6 @@ const StartPage = (props) => {
               <div data-accordion="home">
                 <div className={classes.itemDescription}>
                   <HomeIcon unit="2rem" />
-                  {/* <span className={classes.accordionItemLabel}>Home</span> */}
                 </div>
               </div>
             </NavLink>
@@ -251,6 +288,27 @@ const StartPage = (props) => {
             />
           </div>
         </div>
+        <div className={classes.labels_container}>
+          <div className={classes.user}></div>
+          <div className={classes.accordionContainerTooltip} id="toolTip">
+            <div id="toolTip_home" className={classes.toolTipInvisible}>
+              <span>HOME</span>
+            </div>
+            <div id="toolTip_tasks" className={classes.toolTipInvisible}>
+              <span>TASKS</span>
+            </div>
+            <div id="toolTip_projects" className={classes.toolTipInvisible}>
+              <span>PROJECTS</span>
+            </div>
+            <div id="toolTip_suppliers" className={classes.toolTipInvisible}>
+              <span>SUPPLIERS</span>
+            </div>
+            <div id="toolTip_library" className={classes.toolTipInvisible}>
+              <span>LIBRARY</span>
+            </div>
+          </div>
+        </div>
+
         {url !== "home" ? <SideMenuLinks links={routerLinks} /> : ""}
 
         <div className={classes.mainContent}>

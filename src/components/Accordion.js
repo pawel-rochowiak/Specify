@@ -36,11 +36,11 @@ const Accordion = (props) => {
       }
       onClick={liftTargetHandler}
       data-accordion={props.data}
+      id={`sidebar_${props.name.toLowerCase()}`}
     >
       <div className={classes.data}>
         <div className={classes.itemDescription}>
           <DynamicComponent unit="2rem" />
-          {/* <span className={classes.accordionItemLabel}>{props.name}</span> */}
         </div>
       </div>
     </NavLink>
