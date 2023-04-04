@@ -9,7 +9,10 @@ import Logo from "../Assets/specify_logo.png";
 import NewUserForm from "../components/forms/NewUserForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import { firebaseAuth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import swal from "sweetalert";
 
 //STATE//
@@ -41,15 +44,20 @@ const Welcome = () => {
         enteredPassword
       );
       const user = result.user;
+
       if (user.emailVerified) {
         navigate("/home");
         localStorage.setItem("login", enteredEmail);
         dispatch(usersActions.login(enteredEmail));
       } else {
-        swal(`User is not verified!`, {
-          buttons: false,
-          timer: 2000,
-        });
+        await sendEmailVerification(user);
+        swal(
+          `The user is not verified! A new verification email was sent. Please check your email and SPAM folder!`,
+          {
+            buttons: false,
+            timer: 3500,
+          }
+        );
       }
     } catch (error) {
       swal(`Invalid email or password. Please try again`, {

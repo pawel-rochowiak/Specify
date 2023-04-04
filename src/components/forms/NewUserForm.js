@@ -79,12 +79,6 @@ const NewUserForm = (props) => {
     let userCredential;
 
     try {
-      // if (users.find((el) => el.email === enteredEmail)) {
-      //   console.log(
-      //     "User with this email already exist! If you forgot you password please change it. If you accout is not varified please click resend button"
-      //   );
-      // }
-
       if (
         enteredEmail !== enteredEmailConfirmation ||
         enteredPassword !== enteredPasswordConfirmation
@@ -92,9 +86,6 @@ const NewUserForm = (props) => {
         setIsLoading(false);
         return;
       }
-      // console.log(firebaseAuth.currentUser);
-      // firebaseAuth.currentUser.sendEmailVerification().then(()=>console.log("emsil send"));
-      // console.log(users.find((el) => el.email === enteredEmail));
 
       userCredential = await createUserWithEmailAndPassword(
         firebaseAuth,
@@ -130,21 +121,8 @@ const NewUserForm = (props) => {
         text:
           "In case you didn't receive your verification email please click on the 'Verify email' button.",
         icon: "warning",
-        // buttons: ["Email verification", "Reset password"],
       });
       setShowReVerificationBtn(true);
-      // .then((reValidate) => {
-      //   if (reValidate) {
-      //     swal(`${passwordResetText}`, {
-      //       icon: "success",
-      //     });
-      //   } else {
-      //     sendEmailVerification(userCridentialPersist.user);
-      //     swal(`${verificationText}`, {
-      //       icon: "success",
-      //     });
-      //   }
-      // });
       setIsLoading(false);
     }
   };
