@@ -209,11 +209,6 @@ const TaskPageDetails = (props) => {
         setIsLoading(false);
       })
       .catch((err) => setIsLoading(false));
-
-    const storageREF = ref(storage, `specifications/${projectName}`);
-
-    const listResult = listAll(storageREF);
-    console.log(listResult);
   }
 
   const addCheckedMaterialToArrays = () => {
