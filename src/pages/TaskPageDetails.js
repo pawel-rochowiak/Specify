@@ -15,7 +15,7 @@ import generatePDF from "../components/functions/generatePDF";
 import { useParams, useOutletContext } from "react-router-dom";
 import swal from "sweetalert";
 import { storage } from "../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import cors from "cors";
 
@@ -209,6 +209,11 @@ const TaskPageDetails = (props) => {
         setIsLoading(false);
       })
       .catch((err) => setIsLoading(false));
+
+    const storageREF = ref(storage, `specifications/${projectName}`);
+
+    const listResult = listAll(storageREF);
+    console.log(listResult);
   }
 
   const addCheckedMaterialToArrays = () => {

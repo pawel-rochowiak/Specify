@@ -99,8 +99,6 @@ const NewTaskForm = (props) => {
         (el) => el.name === enteredName
       );
 
-      console.log(isProjectExisting);
-
       // /*
       if (isProjectExisting === false || isProjectExisting === undefined) {
         dispatch(
@@ -114,19 +112,26 @@ const NewTaskForm = (props) => {
         );
       }
 
-      dispatch(
-        projectActions.addAreas({
-          name: enteredAreaName,
-          deck: enteredDeck,
-          fz: enteredFz,
-          subcontractor: "",
-          project:
-            isProjectExisting === false || isProjectExisting === undefined
-              ? allProjects.length
-              : projectIndex,
-        })
+      const isAreaExisting = allProjects[projectIndex]?.area.find(
+        (el) => el.name === enteredAreaName
       );
-      // */
+
+      console.log(isAreaExisting);
+
+      if (!isAreaExisting) {
+        dispatch(
+          projectActions.addAreas({
+            name: enteredAreaName,
+            deck: enteredDeck,
+            fz: enteredFz,
+            subcontractor: "",
+            project:
+              isProjectExisting === false || isProjectExisting === undefined
+                ? allProjects.length
+                : projectIndex,
+          })
+        );
+      }
 
       dispatch(
         tasksActions.addTasks({
