@@ -22,10 +22,8 @@ import cors from "cors";
 const TaskPageDetails = (props) => {
   const [, , , versionControlHandler] = useOutletContext();
   const dispatch = useDispatch();
-
   const params = useParams();
   const path = params.taskId;
-
   const userEmail = localStorage.getItem("login");
 
   let stateTasks = useSelector((state) => state.tasks);
@@ -276,7 +274,6 @@ const TaskPageDetails = (props) => {
   const deleteMaterialHandler = () => {
     if (materialsArr.length === 1) setFormChecked(false);
     if (materialsArr.length === 0) return;
-
     setMaterialArr(materialsArr.slice(0, -1));
     setSpecMatArr(specMatArr.slice(0, -1));
 

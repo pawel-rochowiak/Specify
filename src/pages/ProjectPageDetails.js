@@ -11,16 +11,19 @@ import FileSaver from "file-saver";
 
 const ProjectPageDetails = () => {
   const stateProjects = useSelector((state) => state.projects);
+  const stateTasks = useSelector((state) => state.tasks);
   const [createItem] = useOutletContext();
   const params = useParams();
   const path = params.projectId;
 
   const element = stateProjects.find((el) => el.path === path);
-  const currentProjectTasks = element.projectTasks;
   const projectName = element.name;
+  const currentProjectTasks = stateTasks.map((el) => {
+    if (el.project === projectName) {
+      return el;
+    }
+  });
   const userInitials = localStorage.getItem("currentUser");
-
-  // const listResult = listAll(storageREF).then((res) => console.log(res.items));
 
   const handleGeneratePDFButtonClick = async () => {
     const zip = new JSZip();

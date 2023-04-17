@@ -6,6 +6,7 @@ import CloseIcon from "../components/icons/CloseIcon";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
+import { projectActions } from "../store/projects-slice";
 
 const Task = (props) => {
   const [isFinished, setIsFinished] = useState(false);

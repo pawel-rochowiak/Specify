@@ -59,11 +59,6 @@ const projectSlice = createSlice({
         action.payload.areaToEdit
       ] = editedArea;
     },
-    addAreaTasks(state, action) {
-      state
-        .find((el) => el.name === action.payload.name)
-        ?.projectTasks.push(action.payload);
-    },
 
     replceProjects(state, action) {
       initialPersistLS = action.payload;

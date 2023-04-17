@@ -5,6 +5,7 @@ import { tasksActions } from "../../store/tasks-slice";
 import { projectActions } from "../../store/projects-slice";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
+import { useEffect } from "react";
 
 const NewTaskForm = (props) => {
   const dispatch = useDispatch();
@@ -116,8 +117,6 @@ const NewTaskForm = (props) => {
         (el) => el.name === enteredAreaName
       );
 
-      console.log(isAreaExisting);
-
       if (!isAreaExisting) {
         dispatch(
           projectActions.addAreas({
@@ -135,12 +134,6 @@ const NewTaskForm = (props) => {
 
       dispatch(
         tasksActions.addTasks({
-          ...payload,
-        })
-      );
-
-      dispatch(
-        projectActions.addAreaTasks({
           ...payload,
         })
       );
