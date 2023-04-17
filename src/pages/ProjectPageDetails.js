@@ -64,40 +64,48 @@ const ProjectPageDetails = () => {
         )}
         <div className={classes.taskList}>
           {element.area.length !== 0 ? (
-            element.area.map((el, index) => (
-              <div className={classes.area__spec_container}>
-                <DetailItem
-                  key={index + 1}
-                  dataset={index}
-                  section="projects"
-                  items={el}
-                  grid="4"
-                  edit={createItem}
-                  type="projectsAreaState"
-                />
+            element.area.map((el, index) => {
+              if (
+                currentProjectTasks.find(
+                  (el) => el.area === element.area[index].name
+                )
+              ) {
+                return (
+                  <div className={classes.area__spec_container}>
+                    <DetailItem
+                      key={index + 1}
+                      dataset={index}
+                      section="projects"
+                      items={el}
+                      grid="4"
+                      edit={createItem}
+                      type="projectsAreaState"
+                    />
 
-                {currentProjectTasks
-                  .filter((el1) => el1.area === el.name)
-                  .map((el2) => (
-                    <div className={classes.area__specifications}>
-                      <Link key={path} to={`/home/tasks/${el2.path}`}>
-                        <Task
-                          key={path}
-                          venue={el2.area}
-                          name={element.name}
-                          person={userInitials}
-                          task={el2.task}
-                          date={el2.date}
-                          disabled={true}
-                        />
-                      </Link>
-                    </div>
-                  ))}
-                <button onClick={handleGeneratePDFButtonClick}>
-                  DOWNLOAD ALL
-                </button>
-              </div>
-            ))
+                    {currentProjectTasks
+                      .filter((el1) => el1.area === el.name)
+                      .map((el2) => (
+                        <div className={classes.area__specifications}>
+                          <Link key={path} to={`/home/tasks/${el2.path}`}>
+                            <Task
+                              key={path}
+                              venue={el2.area}
+                              name={element.name}
+                              person={userInitials}
+                              task={el2.task}
+                              date={el2.date}
+                              disabled={true}
+                            />
+                          </Link>
+                        </div>
+                      ))}
+                    <button onClick={handleGeneratePDFButtonClick}>
+                      DOWNLOAD ALL
+                    </button>
+                  </div>
+                );
+              }
+            })
           ) : (
             <div className={classes.info_message}>
               No area has been added. Please press
