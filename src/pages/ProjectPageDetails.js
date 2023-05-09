@@ -12,10 +12,9 @@ import FileSaver from "file-saver";
 const ProjectPageDetails = () => {
   const stateProjects = useSelector((state) => state.projects);
   const stateTasks = useSelector((state) => state.tasks);
-  const [createItem] = useOutletContext();
+  const [createItem, , , , previewPDF] = useOutletContext();
   const params = useParams();
   const path = params.projectId;
-
   const element = stateProjects.find((el) => el.path === path);
   const projectName = element.name;
   const currentProjectTasks = stateTasks.map((el) => {
@@ -28,20 +27,17 @@ const ProjectPageDetails = () => {
   const handleGeneratePDFButtonClick = async () => {
     const zip = new JSZip();
     const storageRef = ref(storage, `specifications/${projectName}`);
-
     try {
       const listResult = await listAll(storageRef);
       const downloadPromises = listResult.items.map(async (item) => {
         const pdfFile = await getDownloadURL(item);
+        console.log(pdfFile);
         const response = await fetch(pdfFile);
         const pdfBlob = await response.blob();
         zip.file(`${item.name}`, pdfBlob);
       });
-
       await Promise.all(downloadPromises);
-
       const content = await zip.generateAsync({ type: "blob" });
-
       FileSaver.saveAs(content, `${projectName}.zip`);
     } catch (error) {
       console.error("Error downloading PDFs:", error);
@@ -99,6 +95,13 @@ const ProjectPageDetails = () => {
                           </Link>
                         </div>
                       ))}
+                    <button
+                      onClick={previewPDF}
+                      data-prev="preview"
+                      data-project={projectName}
+                    >
+                      PREVIEW ALL
+                    </button>
                     <button onClick={handleGeneratePDFButtonClick}>
                       DOWNLOAD ALL
                     </button>

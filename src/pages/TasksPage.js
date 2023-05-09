@@ -2,7 +2,7 @@ import classes from "./StartPage.module.css";
 import classesTaskPage from "./TaskPage.module.css";
 import Task from "../components/Task";
 import PlusIcon from "../components/icons/PlusIcon";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 

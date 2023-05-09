@@ -162,7 +162,7 @@ const TaskPageDetails = (props) => {
 
   async function uploadPDFToFirebaseStorage(blob) {
     // Create a unique filename for the PDF
-    const filename = `specifications/${projectName}/${areaName.toUpperCase()}-${specType}.pdf`;
+    const filename = `specifications/${projectName}/${areaName.toUpperCase()}-${specType.trim()}.pdf`;
 
     // Convert the PDF blob to a Uint8Array
     const arrayBuffer = new Uint8Array(await blob.arrayBuffer());
@@ -170,7 +170,11 @@ const TaskPageDetails = (props) => {
     // Upload the PDF to Firebase storage
     const fileRef = ref(storage, filename);
 
-    return uploadBytes(fileRef, arrayBuffer).then((snapshot) => {
+    const metadata = {
+      contentType: "application/pdf",
+    };
+
+    return uploadBytes(fileRef, arrayBuffer, metadata).then((snapshot) => {
       // Get the download URL of the PDF
       return getDownloadURL(snapshot.ref);
     });

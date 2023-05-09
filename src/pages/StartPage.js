@@ -14,6 +14,7 @@ import NewProjectForm from "../components/forms/NewProjectForm";
 import NewTaskForm from "../components/forms/NewTaskForm";
 import SideMenuLinks from "../components/SideMenuLinks";
 import LogOutIcon from "../components/icons/LogOutIcon";
+import PreviewPDF from "../components/forms/PreviewPDF";
 //STATE//
 import { usersActions } from "../store/users-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,7 +59,6 @@ const StartPage = (props) => {
   );
 
   const dispatch = useDispatch();
-
   const params = useParams();
   const url = window.location.href.split("/").at(-1);
 
@@ -76,6 +76,7 @@ const StartPage = (props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [stateTarget, setStateTarget] = useState("");
   const [detailTarget, setDetailTarget] = useState("");
+  const [projectName, setProjectName] = useState(null);
 
   const userEmail = localStorage.getItem("login");
 
@@ -85,7 +86,15 @@ const StartPage = (props) => {
 
   localStorage.setItem("currentUser", userInitials);
 
-  const newItemHandler = (edit, index = "", itemProps = "") => {
+  const previewPDF = (event) => {
+    event.preventDefault();
+    const targetData = event.target.dataset.prev;
+    setProjectName(event.target.dataset.project);
+    setDetailTarget(targetData);
+    setIsFormVisible(true);
+  };
+
+  const newItemHandler = (edit = "", index = "", itemProps = "") => {
     setIsEditing(edit);
     setEditIndex(index);
     setIsFormVisible(true);
@@ -130,10 +139,12 @@ const StartPage = (props) => {
       setData(stateLibrary);
     }
     if (params.projectId?.includes("p")) {
+      setDetailTarget("");
       setData(stateProjects);
       setDetailTarget(["detailProject", params.projectId]);
     }
     if (params.supplierId?.includes("s")) {
+      setDetailTarget("");
       setData(stateSuppliers);
       setDetailTarget(["detailSupplier", params.supplierId]);
     }
@@ -149,7 +160,6 @@ const StartPage = (props) => {
 
   const getTargetHandler = (target) => {
     setStateTarget(target);
-    console.log(target);
     localStorage.setItem("target", target);
   };
 
@@ -232,6 +242,15 @@ const StartPage = (props) => {
         project={detailTarget[1]}
         editing={isEditing === true ? isEditing : false}
         itemToEdit={isEditing === true ? editIndex : ""}
+      />
+    );
+  }
+  if (detailTarget === "preview") {
+    TargetForm = (
+      <PreviewPDF
+        onClick={addNewTaskHandler}
+        onExit={closeNewTaskForm}
+        project={projectName}
       />
     );
   }
@@ -319,6 +338,7 @@ const StartPage = (props) => {
               addNewTaskHandler,
               closeNewTaskForm,
               versionControlHandler,
+              previewPDF,
             ]}
           />
         </div>

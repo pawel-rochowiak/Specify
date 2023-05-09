@@ -315,11 +315,24 @@ const generatePDF = async (
         pdfMake.createPdf(docDef).getBlob((blob) => {
           resolve(blob);
         });
+        // pdfMake.createPdf(docDef).getDataUrl((dataUrl) => {
+        //   console.log(dataUrl);
+        // });
       } catch (error) {
         reject(error);
       }
     });
   };
+
+  /*
+  const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+pdfDocGenerator.getDataUrl((dataUrl) => {
+	const targetElement = document.querySelector('#iframeContainer');
+	const iframe = document.createElement('iframe');
+	iframe.src = dataUrl;
+	targetElement.appendChild(iframe);
+});
+  */
 
   const blob = await getBlob(docDef);
   return blob;
