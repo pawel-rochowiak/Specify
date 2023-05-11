@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../../UI/Modal";
 import { storage } from "../../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
@@ -6,8 +6,8 @@ import pdfMake from "pdfmake/build/pdfmake";
 import classes from "./PreviewPDF.module.css";
 
 const PreviewPDF = (props) => {
-  const [pdfUrlArr, setPdfUrlArr] = useState([]);
-  const [specNames, setSpecNames] = useState([]);
+  const [pdfUrlArr, setPdfUrlArr] = useState(null);
+  const [specNames, setSpecNames] = useState(null);
 
   useEffect(() => {
     pdfPreviewHandler();
@@ -16,23 +16,24 @@ const PreviewPDF = (props) => {
   const pdfPreviewHandler = async () => {
     const storageRef = ref(storage, `specifications/${props.project}`);
     try {
-      setSpecNames([]);
-      setPdfUrlArr([]);
       const listResult = await listAll(storageRef);
-      listResult.items.map(async (item, index) => {
-        const pdfFile = await getDownloadURL(item);
-        setSpecNames(["Material Specification", "Light Specification"]);
-        // setSpecNames((prev) => [
-        //   ...prev,
-        //   item._location.path_
-        //     .toString()
-        //     .split("/")
-        //     .at(-1)
-        //     .split("-")[1]
-        //     .split(".")[0],
-        // ]);
-        setPdfUrlArr((prev) => [...prev, pdfFile]);
-      });
+      const pdfUrls = await Promise.all(
+        listResult.items.map(async (item) => {
+          const pdfFile = await getDownloadURL(item);
+          return pdfFile;
+        })
+      );
+      const names = listResult.items.map(
+        (item) =>
+          item._location.path_
+            .toString()
+            .split("/")
+            .at(-1)
+            .split("-")[1]
+            .split(".")[0]
+      );
+      setPdfUrlArr(pdfUrls);
+      setSpecNames(names);
     } catch (error) {
       console.error("Error downloading PDFs:", error);
     }
@@ -42,24 +43,22 @@ const PreviewPDF = (props) => {
 
   return (
     <Modal onClose={props.onClick} onExit={props.onExit}>
-      {/* {specNames.map((e) => {
-        const targetElement = document.querySelector("#buttonContainer");
-        const button = document.createElement("button");
-        button.innerHTML = `${e}`;
-        targetElement.appendChild(button);
-      })} */}
+      {specNames && (
+        <div id="buttonContainer">
+          {specNames.map((name, index) => (
+            <button key={index}>{name}</button>
+          ))}
+        </div>
+      )}
 
-      <div id="buttonContainer">
-        <button onClick={pdfPreviewHandler}>Material Specifiaction</button>
-        <button onClick={pdfPreviewHandler}>Light Specifiaction</button>
-      </div>
-
-      <iframe
-        src={pdfUrlArr[0]}
-        frameBorder="0"
-        width="100%"
-        height="600"
-      ></iframe>
+      {pdfUrlArr && (
+        <iframe
+          src={pdfUrlArr[0]}
+          frameBorder="0"
+          width="100%"
+          height="600"
+        ></iframe>
+      )}
     </Modal>
   );
 };
