@@ -1,3 +1,8 @@
 iframe {
+  margin-top: 1rem;
   background-color: #fff;
+}
+
+button:not(:first-child) {
+  margin-left: 1rem;
 }

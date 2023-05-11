@@ -31,7 +31,6 @@ const ProjectPageDetails = () => {
       const listResult = await listAll(storageRef);
       const downloadPromises = listResult.items.map(async (item) => {
         const pdfFile = await getDownloadURL(item);
-        console.log(pdfFile);
         const response = await fetch(pdfFile);
         const pdfBlob = await response.blob();
         zip.file(`${item.name}`, pdfBlob);
