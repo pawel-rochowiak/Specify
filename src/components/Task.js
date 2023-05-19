@@ -6,11 +6,13 @@ import CloseIcon from "../components/icons/CloseIcon";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
+import { projectActions } from "../store/projects-slice.js";
 
 const Task = (props) => {
   const [isFinished, setIsFinished] = useState(false);
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
+  const projects = useSelector((state) => state.projects);
   //Current Date
   const date = new Date().getTime();
   const projectDate = new Date(props.date).getTime();
@@ -49,6 +51,12 @@ const Task = (props) => {
     const targetStart = ev.target.closest("div[class*='Task_task']").dataset
       .order;
 
+    const indexOfProject = projects.findIndex((el) => el.name === projectName);
+
+    const indexOfProjectArea = projects
+      .find((el) => el.name === projectName)
+      .area.findIndex((el) => el.name === venueName);
+
     swal({
       title: `You are about to delete ${taskName} for ${projectName}-${venueName}.`,
       text: "Once deleted, specification details will be lost!",
@@ -61,6 +69,12 @@ const Task = (props) => {
           icon: "success",
         });
         dispatch(tasksActions.deleteTask(targetStart));
+        dispatch(
+          projectActions.deleteProjectArea({
+            sectionMainItemIndex: indexOfProject,
+            index: indexOfProjectArea,
+          })
+        );
       } else {
         swal("Your specification details are safe!");
       }
