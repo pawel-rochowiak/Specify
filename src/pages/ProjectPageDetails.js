@@ -15,14 +15,18 @@ const ProjectPageDetails = () => {
   const [createItem, , , , previewPDF] = useOutletContext();
   const params = useParams();
   const path = params.projectId;
+  console.log(path);
   const element = stateProjects.find((el) => el.path === path);
+  console.log(element.area);
   const projectName = element.name;
-  const currentProjectTasks = stateTasks.map((el) => {
+  const currentProjectTasks = stateTasks.filter((el) => {
     if (el.project === projectName) {
       return el;
     }
   });
   const userInitials = localStorage.getItem("currentUser");
+
+  console.log(currentProjectTasks);
 
   const handleGeneratePDFButtonClick = async () => {
     const zip = new JSZip();
