@@ -7,27 +7,26 @@ import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
 import { tasksActions } from "../store/tasks-slice.js";
 import { projectActions } from "../store/projects-slice.js";
+import { storage } from "../firebase";
+import { ref, deleteObject } from "firebase/storage";
 
 const Task = (props) => {
-  const [isFinished, setIsFinished] = useState(false);
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
   const projects = useSelector((state) => state.projects);
+  const [isFinished, setIsFinished] = useState(false);
   //Current Date
-  const date = new Date().getTime();
-  const projectDate = new Date(props.date).getTime();
-
   const projectName = props.name;
   const venueName = props.venue;
   const taskName = props.task;
-
   const currentTask = tasks.find(
     (el) =>
       el.area?.toLowerCase() === venueName?.toLowerCase() &&
       el.project?.trim() === projectName?.trim() &&
       taskName?.trim() === el.specification?.trim()
   );
-
+  const date = new Date().getTime();
+  const projectDate = new Date(props.date).getTime();
   const editDate = currentTask?.editedOn ? currentTask?.editedOn : "-";
 
   useEffect(() => {
@@ -45,14 +44,21 @@ const Task = (props) => {
     props.edit(true, targetStart, props);
   };
 
+  // FN for deleting PDF specification from firebase storage
+  const deletePDFSpec = () => {
+    const filename = `specifications/${projectName}/${venueName.toUpperCase()}-${taskName.trim()}.pdf`;
+    const imgRef = ref(storage, filename);
+    deleteObject(imgRef).catch((error) => {
+      console.log(error.message);
+    });
+  };
+
+  // FN for deleting task from the UI and database
   const targetDeleteHandler = (ev) => {
     ev.preventDefault();
-
     const targetStart = ev.target.closest("div[class*='Task_task']").dataset
       .order;
-
     const indexOfProject = projects.findIndex((el) => el.name === projectName);
-
     const indexOfProjectArea = projects
       .find((el) => el.name === projectName)
       .area.findIndex((el) => el.name === venueName);
@@ -68,6 +74,7 @@ const Task = (props) => {
         swal(`${venueName} ${taskName} was deleted!`, {
           icon: "success",
         });
+        deletePDFSpec();
         dispatch(tasksActions.deleteTask(targetStart));
         dispatch(
           projectActions.deleteProjectArea({

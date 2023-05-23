@@ -23,7 +23,7 @@ const generatePDF = async (
 
   const items = { ...localStorage };
   const itemsArr = Object.entries(items)
-    .filter(([key, value]) => key.includes("IMAGES-"))
+    .filter(([key, _]) => key.includes("IMAGES-"))
     .map((el) => el[1]);
 
   const imageBase64 = await Promise.all(
@@ -314,25 +314,12 @@ const generatePDF = async (
       try {
         pdfMake.createPdf(docDef).getBlob((blob) => {
           resolve(blob);
-        });
-        // pdfMake.createPdf(docDef).getDataUrl((dataUrl) => {
-        //   console.log(dataUrl);
-        // });
+        }); 
       } catch (error) {
         reject(error);
       }
     });
   };
-
-  /*
-  const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-pdfDocGenerator.getDataUrl((dataUrl) => {
-	const targetElement = document.querySelector('#iframeContainer');
-	const iframe = document.createElement('iframe');
-	iframe.src = dataUrl;
-	targetElement.appendChild(iframe);
-});
-  */
 
   const blob = await getBlob(docDef);
   return blob;

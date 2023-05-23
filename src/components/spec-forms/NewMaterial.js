@@ -134,7 +134,6 @@ const NewMaterial = (props) => {
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {
     if (imageUpload === null) return;
-
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         const imgRef = ref(storage, item._location.path);
@@ -200,12 +199,11 @@ const NewMaterial = (props) => {
     if (checked === false) uploadImage();
   };
 
-  const testHandler = () => {
+  const materialFromLibraryHandler = () => {
     const [categoryIndex, materialIndex] = pickedMaterial.current.value.split(
       ","
     );
     const selectedMat = materialState[+categoryIndex].materials[+materialIndex];
-
     setEnteredItem(selectedMat.category);
     setEnteredDescription(selectedMat.info);
     setEnteredSupplier(selectedMat.supplier);
@@ -326,7 +324,7 @@ const NewMaterial = (props) => {
 
   const materialDropdownJSX = (
     <div className={classes.materialInput_dropdown}>
-      <select ref={pickedMaterial} onChange={testHandler}>
+      <select ref={pickedMaterial} onChange={materialFromLibraryHandler}>
         <option disabled selected value>
           Select material
         </option>
