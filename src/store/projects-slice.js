@@ -18,7 +18,7 @@ const projectSlice = createSlice({
         scope: action.payload.scope,
         date: action.payload.date,
 
-        path: `p${state.length + 1}`,
+        path: `p${state.length}`,
         area: [],
         projectTasks: [],
       });

@@ -202,6 +202,7 @@ const TaskPageDetails = (props) => {
 
     uploadPDFToFirebaseStorage(pdfBlob)
       .then((downloadURL) => {
+        // PDF was uploaded successfully
         swal({
           title: `PDF was uploaded to the storage!`,
           text: `${downloadURL}`,
@@ -210,7 +211,43 @@ const TaskPageDetails = (props) => {
         });
         setIsLoading(false);
       })
-      .catch((err) => setIsLoading(false));
+      .catch((err) => {
+        setIsLoading(false);
+        // Handle the error here
+
+        // Add timeout logic here
+        const timeoutPromise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject(new Error("PDF upload timed out")); // Reject the promise after the specified timeout
+          }, 5000); // Adjust the timeout duration (in milliseconds) as needed
+        });
+
+        Promise.race([uploadPDFToFirebaseStorage(pdfBlob), timeoutPromise])
+          .then((downloadURL) => {
+            // PDF was uploaded within the timeout period
+            swal({
+              title: `PDF was uploaded to the storage!`,
+              text: `${downloadURL}`,
+              icon: "success",
+              className: `${classes.pdf_link}`,
+            });
+          })
+          .catch((error) => {
+            // Handle the timeout or other error
+            if (error.message === "PDF upload timed out") {
+              // Handle timeout error
+              swal({
+                title: "PDF upload timed out",
+                text:
+                  "The upload process took too long. Please try again later.",
+                icon: "error",
+              });
+            } else {
+              // Handle other errors
+              console.error(error);
+            }
+          });
+      });
   }
 
   const addCheckedMaterialToArrays = () => {

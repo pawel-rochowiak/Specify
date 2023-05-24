@@ -14,13 +14,11 @@ const usersSlice = createSlice({
       if (action.payload) {
         const user = state.find((el) => el.email === action.payload);
         user.isLoggedIn = true;
-        // user.token = action.payload.idToken;
       }
     },
     logout(state, action) {
       if (action.payload) {
         const user = state.find((el) => el.email === action.payload);
-        // user.token = "";
         user.isLoggedIn = !user.isLoggedIn;
         localStorage.clear();
       }
