@@ -15,8 +15,6 @@ import {
 } from "firebase/storage";
 import { useParams } from "react-router-dom";
 
-//setMaterialInputType(false); this needs to be changed by the add material btn from TaskDetail page
-
 const NewMaterial = (props) => {
   const params = useParams();
 
@@ -113,6 +111,7 @@ const NewMaterial = (props) => {
 
   const downloadAllImgs = () => {
     listAll(imageListRef).then((response) => {
+      console.log(response);
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           console.log(url);
@@ -129,7 +128,7 @@ const NewMaterial = (props) => {
 
   useEffect(() => {
     downloadAllImgs();
-  }, [params, isProps, imageUpload]);
+  }, [params, isProps, imageUpload, props.dataObj]);
 
   //Fn for deleting image from Firebase
   const deleteImage = (image) => {
