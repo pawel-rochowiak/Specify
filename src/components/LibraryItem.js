@@ -7,7 +7,7 @@ import { suppliersActions } from "../store/suppliers-slice";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import { storage } from "../firebase";
-import { listAll, ref, getDownloadURL } from "firebase/storage";
+import { listAll, ref, getDownloadURL, deleteObject } from "firebase/storage";
 
 const LibraryItem = (props) => {
   const materialName = props.name;
@@ -18,7 +18,7 @@ const LibraryItem = (props) => {
   //State for the image
   const [imageList, setImageList] = useState([]);
 
-  useEffect(() => downloadAllImgs(), [props.imageUrl, imageList]);
+  useEffect(() => downloadAllImgs(), [props.imageUrl]);
 
   const imageListRef = ref(
     storage,
@@ -26,6 +26,23 @@ const LibraryItem = (props) => {
   );
 
   const dispatch = useDispatch();
+
+  //Fn for deleting image from Firebase
+  const deleteImage = (image) => {
+    listAll(imageListRef).then((response) => {
+      const filteredResponse = response.items.find((el) =>
+        el._location.path.includes(`${materialName}`)
+      );
+      const tempArr = [];
+      tempArr.push(filteredResponse);
+      tempArr.forEach((item) => {
+        const imgRef = ref(storage, item._location.path);
+        deleteObject(imgRef).catch((error) => {
+          console.log(error.message);
+        });
+      });
+    });
+  };
 
   const targetEditHandler = (ev) => {
     ev.preventDefault();
@@ -69,6 +86,7 @@ const LibraryItem = (props) => {
             collection: props.collection,
           })
         );
+        deleteImage();
       } else {
         swal("Your material informations are safe!");
       }
